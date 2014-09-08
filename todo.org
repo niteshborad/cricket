@@ -1,0 +1,5 @@
+* Get the pitch conditions working: use an array of 6 integers.
+** Understand how to shuffle an array of a given size N
+* Implement dice of faces 6, 8, and 10.
+** Take uniform_int_in() from  `gaussian'
+
