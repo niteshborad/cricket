@@ -3,7 +3,7 @@
 int uniform_int_in (int min, int max)
 /* Pick a number in [MIN, MAX] with uniform probability. */
 {
-    return min + (rand () / (RAND_MAX / max + 1));
+    return min + rand () % max;
 }
 
 void shuffle_int_array (int array [], int length)

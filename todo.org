@@ -1,5 +1,28 @@
-* Get the pitch conditions working: use an array of 6 integers.
-** Understand how to shuffle an array of a given size N
-* Implement dice of faces 6, 8, and 10.
-** Take uniform_int_in() from  `gaussian'
-
+* DONE Get the pitch conditions working: use an array of 6 integers.
+** DONE Understand how to shuffle an array of a given size N
+*** Pilfered from cookie1.el in the GNU Emacs sources.
+** DONE prepare_pitch(): can print the out_list and also a description of the pitch.
+* DONE Implement dice of faces 6, 8, and 10.
+** Implemented as macros.
+** DONE Take uniform_int_in() from  `gaussian'
+* DONE Write ball()
+** DONE Write one()
+** DONE Write two()
+** DONE Write three()
+** DONE Write four()
+** DONE Write wicket_chance()
+*** DONE Write mode_of_dismissal()
+**** DONE enums for dismissals?  Or some struct or array?
+***** None right now.  Simple switch-case for printing. 
+** DONE Write big-hit()
+** DONE Write extras()
+*** DONE wide
+*** DONE no ball
+*** DONE leg byes
+*** DONE byes
+** DONE Write dot()
+* TODO Manage teams and toss
+* TODO Projected scores and match analysis
+* TODO Two innings
+** TODO Switch innings
+** TODO Targets and chasing
