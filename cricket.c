@@ -4,6 +4,137 @@
 #include "utilities.h"
 
 /*
+ * Teams
+ */
+team *make_team (char *name)
+{
+    team *new_team;
+
+    errno = 0;
+    new_team = malloc (sizeof *new_team);
+    if (new_team == NULL) {
+	fprintf (stderr, "make_team: could not build a new team\n%s\n", strerror (errno));
+	exit (1);
+    }
+
+    new_team->name = name;
+    new_team->overs = 0;
+    new_team->balls = 0;
+    new_team->ball_ordinality = 0;
+    new_team->runs = 0;
+    new_team->wickets = 0;
+    new_team->fours = 0;
+    new_team->sixes = 0;
+
+    return new_team;
+}
+
+void toss (team *a, team *b)
+{
+    char *nl;
+    char decision [6];
+    team *winner, *loser;
+
+    if (rand () % 2 == 0) {
+	winner = a;
+	loser = b;
+    }
+    else {
+	winner = b;
+	loser = a;
+    }
+
+    printf ("%s won the toss.  Bat or bowl? ", winner->name);
+    while (fgets (decision, sizeof decision, stdin) != NULL) {
+	nl = strchr (decision, '\n');
+	if (nl != NULL)
+	    *nl = '\0';
+	if (strcmp (decision, "bat") == 0) {
+	    first = winner;
+	    second = loser;
+	    break;
+	}
+	else if (strcmp (decision, "bowl") == 0) {
+	    first = loser;
+	    second = winner;
+	    break;
+	}
+    }
+
+    t = first;
+    nt = second;
+}    
+
+void get_team_names (team *a, team *b)
+{
+    char *nl;
+    char *one, *two;
+    size_t a_name_size, b_name_size;
+
+    errno = 0;
+    one = malloc (BUFSIZ);
+    if (one == NULL) {
+	fprintf (stderr, "get_teams: allocating memory: %s\n", strerror (errno));
+	exit (1);
+    }
+
+    errno = 0;
+    two = malloc (BUFSIZ);
+    if (two == NULL) {
+	fprintf (stderr, "get_teams: allocating memory: %s\n", strerror (errno));
+	exit (1);
+    }
+
+    puts ("Enter the names of the teams playing on the next two lines.");
+    puts ("(Use only alphabets and digits, please.)");
+    fputs ("> ", stdout);
+    while (fgets (one, BUFSIZ, stdin) != NULL) {
+    	nl = strchr (one, '\n');
+    	if (nl != NULL)
+    	    *nl = '\0';
+    	if (alphabetic_numeric (one) == false) {
+    	    puts ("Please use only alphabets and digits.");
+    	    continue;
+    	}
+    	else
+    	    break;
+    }
+    fputs ("> ", stdout);
+    while (fgets (two, BUFSIZ, stdin) != NULL) {
+    	nl = strchr (two, '\n');
+    	if (nl != NULL)
+    	    *nl = '\0';
+    	if (alphabetic_numeric (two) == false) {
+    	    puts ("Please use only alphabets and digits.");
+    	    continue;
+    	}
+    	else
+    	    break;
+    }
+
+    errno = 0;
+    a_name_size = strlen (one) + 1;
+    a->name = malloc (a_name_size);
+    if (a->name == NULL) {
+	fprintf (stderr, "get_teams: allocating space for a->name: %s\n", strerror (errno));
+	exit (EXIT_FAILURE);
+    }
+    strncpy (a->name, one, a_name_size - 1);
+    a->name [a_name_size] = '\0';
+
+    errno = 0;
+    b_name_size = strlen (two) + 1;
+    b->name = malloc (b_name_size);
+    if (b->name == NULL) {
+	fprintf (stderr, "get_teams: allocating space for b->name: %s\n", strerror (errno));
+	exit (EXIT_FAILURE);
+    }
+    strncpy (b->name, two, b_name_size - 1);
+    b->name [b_name_size] = '\0';
+}
+
+
+/*
  * Engine
  */
 int d6 (void)
@@ -228,7 +359,7 @@ void ball (int die1, int die2)
 	    target = t->runs + 1;
 	return;
     }
-       
+
     if ((die1 == 1 && die2 == 1) ||
 	(die1 == 1 && die2 == 2) ||
 	(die1 == 2 && die2 == 1))
@@ -483,7 +614,10 @@ void scoreline (team *t)
     printf ("%s    ", t->name);
     printf ("Score: %d/%d    ", t->runs, t->wickets);
     printf ("Overs: %d.%d    ", t->overs, t->ball_ordinality);
-    printf ("Run rate: %.2f\n", runrate (t->runs, t->overs));
+    if (t->overs > 0)
+	printf ("Run rate: %.2f\n", runrate (t->runs, t->overs));
+    else
+	putchar ('\n');
 }
 
 void projected_score (void)
@@ -515,39 +649,22 @@ void scorecard (void)
 }    
 
 
+void new_match (team *a, team *b)
+{
+    prepare_pitch ();
+    get_team_names (a, b);
+    toss (a, b);
+}    
+
 int main (void)
 {
     char line [6];
     char *nl;
-    team foo = {
-	"foo",
-	0,
-	0,
-	0,
-	0,
-	0,
-	0,
-	0
-    };
-    team bar = {
-	"bar",
-	0,
-	0,
-	0,
-	0,
-	0,
-	0,
-	0
-    };
+    team *a = make_team (NULL), *b = make_team (NULL);
 
-    first = &foo;
-    second = &bar;
-    t = first;
-    nt = second;
-    
     srand ((unsigned) time (NULL));
 
-    prepare_pitch ();
+    new_match (a, b);
     while (fputs ("# ", stdout), fgets (line, 6, stdin) != NULL) {
 	nl = strchr (line, '\n');
 	if (nl != NULL)

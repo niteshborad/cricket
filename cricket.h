@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 #include <stdbool.h>
 #include <time.h>
 
@@ -26,10 +27,10 @@ typedef enum {
     VDEFENSIVE, DEFENSIVE, NORMAL, AGGRESSIVE, VAGGRESSIVE
 } aggression;
 
+const int max_wickets = 10;
 bool innings_finished = false;
 int which_innings = 1;
 int max_overs = 50;
-int max_wickets = 10;
 
 int target;
 typedef struct {
@@ -48,7 +49,12 @@ team *second;
 team *t;
 team *nt;
 
+/* Teams */
+team *make_team (char *name);
+void toss (team *a, team *b);
+void get_team_names (team *a, team *b);
 
+/* Engine */
 int d6 (void);
 int d8 (void);
 int d10 (void);
@@ -62,9 +68,11 @@ void over (void);
 void change_aggression (aggression agg);
 void change_innings (void);
 
+/* Pitch */
 void prepare_pitch (void);
 void pitch_condition (void);
 
+/* Mechanics */
 void ball (int die1, int die2);
 void one (void);
 void two (void);
@@ -83,10 +91,13 @@ void leg_byes (void);
 void noball (void);
 void dot (void);
 
+/* Match analysis */
 double runrate (int runs, int overs);
 void scoreline (team *t);
 void projected_score (void);
 void match_analysis (void);
 void scorecard (void);
+
+void new_match (team *a, team *b);
 
 #endif

@@ -21,7 +21,7 @@
 *** DONE leg byes
 *** DONE byes
 ** DONE Write dot()
-* TODO Manage teams and toss
+* DONE Manage teams and toss
 * DONE Projected scores and match analysis
 * DONE Two innings
 ** DONE Switch innings

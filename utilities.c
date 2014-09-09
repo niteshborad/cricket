@@ -32,3 +32,16 @@ bool lookup (int array [], size_t length, int key)
 
     return false;
 }    
+
+bool alphabetic_numeric (const char *string)
+/* Is the given string made up only of alphabetic and/or numeric
+ * characters?
+ */
+{
+    const char *sp;
+
+    for (sp = string; *sp != '\0'; sp++)
+	if (!isalnum (*sp))
+	    return false;
+    return true;
+}
