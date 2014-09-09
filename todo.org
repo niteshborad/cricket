@@ -26,3 +26,5 @@
 * DONE Two innings
 ** DONE Switch innings
 ** DONE Targets and chasing
+* TODO Help function
+* TODO Readme
