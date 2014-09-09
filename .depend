@@ -1,2 +1,0 @@
-cricket.o: cricket.c cricket.h utilities.h
-utilities.o: utilities.c utilities.h
