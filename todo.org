@@ -22,7 +22,7 @@
 *** DONE byes
 ** DONE Write dot()
 * TODO Manage teams and toss
-* TODO Projected scores and match analysis
-* TODO Two innings
-** TODO Switch innings
-** TODO Targets and chasing
+* DONE Projected scores and match analysis
+* DONE Two innings
+** DONE Switch innings
+** DONE Targets and chasing
