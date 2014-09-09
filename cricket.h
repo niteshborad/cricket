@@ -27,8 +27,8 @@ typedef enum {
     VDEFENSIVE, DEFENSIVE, NORMAL, AGGRESSIVE, VAGGRESSIVE
 } aggression;
 
-const int max_wickets = 10;
 bool innings_finished = false;
+bool match_under_way = false;
 int which_innings = 1;
 int max_overs = 50;
 
@@ -42,6 +42,7 @@ typedef struct {
     int wickets;
     int fours;
     int sixes;
+    int max_wickets;
 } team;
 
 team *first;
@@ -82,6 +83,11 @@ void four (void);
 void wicket_chance (void);
 void notout (void);
 void mode_of_dismissal (void);
+void runout (void);
+void miscellany (void);
+void stumped (void);
+void hit_wicket (void);
+void retired_hurt (void);
 void big_hit (void);
 void six (void);
 void extras (void);
@@ -99,5 +105,6 @@ void match_analysis (void);
 void scorecard (void);
 
 void new_match (team *a, team *b);
+void help (void);
 
 #endif

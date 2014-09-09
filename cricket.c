@@ -25,6 +25,7 @@ team *make_team (char *name)
     new_team->wickets = 0;
     new_team->fours = 0;
     new_team->sixes = 0;
+    new_team->max_wickets = 10;
 
     return new_team;
 }
@@ -263,7 +264,7 @@ void play_over (void)
     if (innings_finished == true)
 	return;
     
-    /* if (t->overs >= max_overs || t->wickets >= max_wickets) { */
+    /* if (t->overs >= max_overs || t->wickets >= t->max_wickets) { */
     /* 	innings_finished = true; */
     /* 	puts ("Innings over."); */
     /* 	scoreline (); */
@@ -346,7 +347,7 @@ void pitch_condition (void)
 
 void ball (int die1, int die2)
 {
-    if (t->overs >= max_overs || t->wickets >= max_wickets)
+    if (t->overs >= max_overs || t->wickets >= t->max_wickets)
 	innings_finished = true;
 
     if (which_innings == 2 && t->runs >= target)
@@ -481,15 +482,64 @@ void mode_of_dismissal (void)
 	t->wickets++;
 	break;
     case 9:
-	puts ("Runout");
-	t->balls++;
-	t->ball_ordinality++;
-	t->wickets++;
+	runout ();
 	break;
     case 10:
-	puts ("Miscellany");
+	miscellany ();
 	break;
     }
+}
+
+void runout (void)
+{
+    puts ("Runout");
+    t->balls++;
+    t->ball_ordinality++;
+    t->wickets++;
+}
+
+void miscellany (void)
+{
+    switch (d6()) {
+    case 1:
+    case 2:
+	runout ();
+	break;
+    case 3:
+    case 4:
+	stumped ();
+	break;
+    case 5:
+	hit_wicket ();
+	break;
+    case 6:
+	retired_hurt ();
+	break;
+    }
+}    
+
+void stumped (void)
+{
+    puts ("Stumped");
+    t->balls++;
+    t->ball_ordinality++;
+    t->wickets++;
+}    
+
+void hit_wicket (void)
+{
+    puts ("Hit wicket");
+    t->balls++;
+    t->ball_ordinality++;
+    t->wickets++;
+}
+
+void retired_hurt (void)
+{
+    puts ("Retired hurt");
+    t->balls++;
+    t->ball_ordinality++;
+    t->max_wickets--;
 }    
 
 void big_hit (void)
@@ -654,6 +704,26 @@ void new_match (team *a, team *b)
     prepare_pitch ();
     get_team_names (a, b);
     toss (a, b);
+}
+
+void help (void)
+{
+    puts ("    At the prompt '#', you can type any of the following:");
+    puts ("o    - play the next over, unless the innings has ended.");
+    puts ("q    - quit.");
+    puts ("h    - get this help on usage.");
+    puts ("nm   - begin a new match.");
+    puts ("pc   - tell something about the condition of the pitch.");
+    puts ("ma   - analyze the situation in the current innings with some statistics.");
+    puts ("s    - while the match is on, display the score for the team batting;");
+    puts ("       will show the scorecards once the match has ended.");
+    puts ("ci   - after the first innings completes, prepare for the next one.");
+    puts ("c n  - play with a balance between attack and defence.");
+    puts ("c a  - play aggressively while increasing the risk of wickets falling.");
+    puts ("c va - play very aggressively while further increasing risk of wickets falling.");
+    puts ("c d  - play defensively while decreasing the flow of runs.");
+    puts ("c va - play very defensively while further decreasing the flow of runs.");
+    puts ("    No other commands will be recognized.");
 }    
 
 int main (void)
@@ -664,39 +734,83 @@ int main (void)
 
     srand ((unsigned) time (NULL));
 
-    new_match (a, b);
     while (fputs ("# ", stdout), fgets (line, 6, stdin) != NULL) {
 	nl = strchr (line, '\n');
 	if (nl != NULL)
 	    *nl = '\0';
-	if (strcmp (line, "o") == 0)
-	    play_over ();
-	else if (strcmp (line, "q") == 0)
-	    return 1;
-	else if (strcmp (line, "pc") == 0)
-	    pitch_condition ();
-	/* else if (strcmp (line, "ps") == 0) */
-	/*     projected_score (); */
-	else if (strcmp (line, "ma") == 0)
-	    match_analysis ();
-	else if (strcmp (line, "s") == 0) {
-	    if (which_innings == 2 && innings_finished == true)
-		scorecard ();
+	if (strcmp (line, "o") == 0) {
+	    if (match_under_way == true)
+		play_over ();
 	    else
-		scoreline (t);
+		puts ("There is no match under way, yet.");
 	}
-	else if (strcmp (line, "ci") == 0)
-	    change_innings ();
-	else if (strcmp (line, "c n") == 0)
-	    change_aggression (NORMAL);
-	else if (strcmp (line, "c a") == 0)
-	    change_aggression (AGGRESSIVE);
-	else if (strcmp (line, "c d") == 0)
-	    change_aggression (DEFENSIVE);
-	else if (strcmp (line, "c va") == 0)
-	    change_aggression (VAGGRESSIVE);
-	else if (strcmp (line, "c vd") == 0)
-	    change_aggression (VDEFENSIVE);
+	else if (strcmp (line, "q") == 0)
+	    break;
+	else if (strcmp (line, "h") == 0)
+	    help ();
+	else if (strcmp (line, "nm") == 0) {
+	    new_match (a, b);
+	    match_under_way = true;
+	}
+	else if (strcmp (line, "pc") == 0) {
+	    if (match_under_way == true)
+		pitch_condition ();
+	    else
+		puts ("There is no match under way, yet.");
+	}
+
+	else if (strcmp (line, "ma") == 0) {
+	    if (match_under_way == true)
+		match_analysis ();
+	    else
+		puts ("There is no match under way, yet.");
+	}
+	else if (strcmp (line, "s") == 0) {
+	    if (match_under_way == true) {
+		if (which_innings == 2 && innings_finished == true)
+		    scorecard ();
+		else
+		    scoreline (t);
+	    }
+	    else
+		puts ("There is no match under way, yet.");
+	}
+	else if (strcmp (line, "ci") == 0) {
+	    if (match_under_way == true)
+		change_innings ();
+	    else
+		puts ("There is no match under way, yet.");
+	}
+	else if (strcmp (line, "c n") == 0) {
+	    if (match_under_way == true)
+		change_aggression (NORMAL);
+	    else
+		puts ("There is no match under way, yet.");
+	}
+	else if (strcmp (line, "c a") == 0) {
+	    if (match_under_way == true)
+		change_aggression (AGGRESSIVE);
+	    else
+		puts ("There is no match under way, yet.");
+	}
+	else if (strcmp (line, "c d") == 0) {
+	    if (match_under_way == true)
+		change_aggression (DEFENSIVE);
+	    else
+		puts ("There is no match under way, yet.");
+	}
+	else if (strcmp (line, "c va") == 0) {
+	    if (match_under_way == true)
+		change_aggression (VAGGRESSIVE);
+	    else
+		puts ("There is no match under way, yet.");
+	}
+	else if (strcmp (line, "c vd") == 0) {
+	    if (match_under_way == true)
+		change_aggression (VDEFENSIVE);
+	    else
+		puts ("There is no match under way, yet.");
+	}
 	else
 	    fputs ("Unknown command\n", stderr);
     }
