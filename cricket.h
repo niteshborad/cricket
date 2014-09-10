@@ -8,31 +8,7 @@
 #include <stdbool.h>
 #include <time.h>
 
-struct pitch_condition {
-    int number;
-    char *description;
-} pitch_conditions [6] = {
-    {1, "Hard and dry pitch.  Bowlers will perspire."},
-    {2, "A very good wicket for batting."},
-    {3, "Nice, even pitch.  Expect a fine balance."},
-    {4, "Expect a good contest."},
-    {5, "A bowler's paradise.  Runs will be hard to get."},
-    {6, "Abandon hope, all ye that play here."}
-};
-
-int out_list [6] = {1, 2, 3, 4, 5, 6};
-struct pitch_condition pitch;
-
-typedef enum {
-    VDEFENSIVE, DEFENSIVE, NORMAL, AGGRESSIVE, VAGGRESSIVE
-} aggression;
-
-bool innings_finished = false;
-bool match_under_way = false;
-int which_innings = 1;
-int max_overs = 50;
-
-int target;
+/* Teams */
 typedef struct {
     char *name;
     int overs;
@@ -50,12 +26,22 @@ team *second;
 team *t;
 team *nt;
 
-/* Teams */
 team *make_team (char *name);
-void toss (team *a, team *b);
 void get_team_names (team *a, team *b);
 
+
 /* Engine */
+typedef enum {
+    VDEFENSIVE, DEFENSIVE, NORMAL, AGGRESSIVE, VAGGRESSIVE
+} aggression;
+
+bool innings_finished = false;
+bool match_under_way = false;
+int which_innings = 1;
+int max_overs = 50;
+
+int target;
+
 int d6 (void);
 int d8 (void);
 int d10 (void);
@@ -68,10 +54,29 @@ void play_over (void);
 void over (void);
 void change_aggression (aggression agg);
 void change_innings (void);
+void new_match (team *a, team *b);
+void toss (team *a, team *b);
+
 
 /* Pitch */
+struct pitch_condition {
+    int number;
+    char *description;
+} pitch_conditions [6] = {
+    {1, "Hard and dry pitch.  Bowlers will perspire."},
+    {2, "A very good wicket for batting."},
+    {3, "Nice, even pitch.  Expect a fine balance."},
+    {4, "Expect a good contest."},
+    {5, "A bowler's paradise.  Runs will be hard to get."},
+    {6, "Abandon hope, all ye that play here."}
+};
+
+struct pitch_condition pitch;
+int out_list [6] = {1, 2, 3, 4, 5, 6};
+
 void prepare_pitch (void);
 void pitch_condition (void);
+
 
 /* Mechanics */
 void ball (int die1, int die2);
@@ -97,6 +102,7 @@ void leg_byes (void);
 void noball (void);
 void dot (void);
 
+
 /* Match analysis */
 double runrate (int runs, int overs);
 void scoreline (team *t);
@@ -104,7 +110,8 @@ void projected_score (void);
 void match_analysis (void);
 void scorecard (void);
 
-void new_match (team *a, team *b);
+
+/* Help */
 void help (void);
 
 #endif

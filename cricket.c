@@ -30,42 +30,6 @@ team *make_team (char *name)
     return new_team;
 }
 
-void toss (team *a, team *b)
-{
-    char *nl;
-    char decision [6];
-    team *winner, *loser;
-
-    if (rand () % 2 == 0) {
-	winner = a;
-	loser = b;
-    }
-    else {
-	winner = b;
-	loser = a;
-    }
-
-    printf ("%s won the toss.  Bat or bowl? ", winner->name);
-    while (fgets (decision, sizeof decision, stdin) != NULL) {
-	nl = strchr (decision, '\n');
-	if (nl != NULL)
-	    *nl = '\0';
-	if (strcmp (decision, "bat") == 0) {
-	    first = winner;
-	    second = loser;
-	    break;
-	}
-	else if (strcmp (decision, "bowl") == 0) {
-	    first = loser;
-	    second = winner;
-	    break;
-	}
-    }
-
-    t = first;
-    nt = second;
-}    
-
 void get_team_names (team *a, team *b)
 {
     char *nl;
@@ -118,7 +82,7 @@ void get_team_names (team *a, team *b)
     a->name = malloc (a_name_size);
     if (a->name == NULL) {
 	fprintf (stderr, "get_teams: allocating space for a->name: %s\n", strerror (errno));
-	exit (EXIT_FAILURE);
+	exit (1);
     }
     strncpy (a->name, one, a_name_size - 1);
     a->name [a_name_size] = '\0';
@@ -128,7 +92,7 @@ void get_team_names (team *a, team *b)
     b->name = malloc (b_name_size);
     if (b->name == NULL) {
 	fprintf (stderr, "get_teams: allocating space for b->name: %s\n", strerror (errno));
-	exit (EXIT_FAILURE);
+	exit (1);
     }
     strncpy (b->name, two, b_name_size - 1);
     b->name [b_name_size] = '\0';
@@ -263,13 +227,6 @@ void play_over (void)
     over ();
     if (innings_finished == true)
 	return;
-    
-    /* if (t->overs >= max_overs || t->wickets >= t->max_wickets) { */
-    /* 	innings_finished = true; */
-    /* 	puts ("Innings over."); */
-    /* 	scoreline (); */
-    /* 	return; */
-    /* } */
     t->overs++;
     t->ball_ordinality = 0;
     scoreline (t);
@@ -320,6 +277,50 @@ void change_innings (void)
     innings_finished = false;
     change_aggression (NORMAL);
 }    
+
+void new_match (team *a, team *b)
+{
+    prepare_pitch ();
+    get_team_names (a, b);
+    toss (a, b);
+}
+
+void toss (team *a, team *b)
+{
+    char *nl;
+    char decision [6];
+    team *winner, *loser;
+
+    if (rand () % 2 == 0) {
+	winner = a;
+	loser = b;
+    }
+    else {
+	winner = b;
+	loser = a;
+    }
+
+    printf ("%s won the toss.  Bat or bowl? ", winner->name);
+    while (fgets (decision, sizeof decision, stdin) != NULL) {
+	nl = strchr (decision, '\n');
+	if (nl != NULL)
+	    *nl = '\0';
+	if (strcmp (decision, "bat") == 0) {
+	    first = winner;
+	    second = loser;
+	    break;
+	}
+	else if (strcmp (decision, "bowl") == 0) {
+	    first = loser;
+	    second = winner;
+	    break;
+	}
+    }
+
+    t = first;
+    nt = second;
+}    
+
 
 /*
  * Pitch
@@ -699,13 +700,9 @@ void scorecard (void)
 }    
 
 
-void new_match (team *a, team *b)
-{
-    prepare_pitch ();
-    get_team_names (a, b);
-    toss (a, b);
-}
-
+/*
+ * Help
+ */
 void help (void)
 {
     puts ("    At the prompt '#', you can type any of the following:");
@@ -726,6 +723,11 @@ void help (void)
     puts ("    No other commands will be recognized.");
 }    
 
+
+/* Main return codes:
+ * 0 - successful exit
+ * 1 - error allocating memory
+ */
 int main (void)
 {
     char line [6];
