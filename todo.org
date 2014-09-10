@@ -27,4 +27,5 @@
 ** DONE Switch innings
 ** DONE Targets and chasing
 * DONE Help function
+* DONE Sane commands
 * TODO Readme

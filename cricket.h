@@ -21,13 +21,19 @@ typedef struct {
     int max_wickets;
 } team;
 
+team *make_team (char *name);
+void get_team_names (team *a, team *b);
+
+/* For getting data */
+team *team_one;
+team *team_two;
+/* Deciding the order of play */
 team *first;
 team *second;
+/* In an innings, t is the team batting, nt is the one bowling */
 team *t;
 team *nt;
 
-team *make_team (char *name);
-void get_team_names (team *a, team *b);
 
 
 /* Engine */
@@ -54,7 +60,7 @@ void play_over (void);
 void over (void);
 void change_aggression (aggression agg);
 void change_innings (void);
-void new_match (team *a, team *b);
+void new_match (void);
 void toss (team *a, team *b);
 
 
@@ -109,9 +115,57 @@ void scoreline (team *t);
 void projected_score (void);
 void match_analysis (void);
 void scorecard (void);
+void score (void);
 
 
-/* Help */
+/* Welcome and Help */
+void welcome (void);
 void help (void);
+
+
+/* Auxiliary */
+void quit (void);
+
+
+/* Commands */
+typedef struct {
+    char *name;
+    void (*do_it) (void);
+} niladic;
+
+niladic niladic_commands [] = {
+    {"o", play_over},
+    {"q", quit},
+    {"h", help},
+    {"nm", new_match},
+    {"pc", pitch_condition},
+    {"ma", match_analysis},
+    {"s", score},
+    {"ci", change_innings},
+    {NULL, NULL}
+};
+
+niladic *lookup_niladic_command_name (char *command_name);
+void do_niladic_unless_match_underway (niladic *command);
+
+typedef struct {
+    char *name;
+    void (*set_aggression) (aggression aggr);
+    aggression aggr;
+} monadic;
+
+monadic monadic_commands [] = {
+    {"c n", change_aggression, NORMAL},
+    {"c a", change_aggression, AGGRESSIVE},
+    {"c d", change_aggression, DEFENSIVE},
+    {"c va", change_aggression, VAGGRESSIVE},
+    {"c vd", change_aggression, VDEFENSIVE},
+    {NULL, NULL, -1}
+};
+
+monadic *lookup_monadic_command_name (char *command_name);
+void do_monadic_unless_match_underway (monadic *command);
+
+void try_executing (char *command_name);
 
 #endif

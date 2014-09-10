@@ -3,6 +3,7 @@
 #include "cricket.h"
 #include "utilities.h"
 
+
 /*
  * Teams
  */
@@ -39,14 +40,14 @@ void get_team_names (team *a, team *b)
     errno = 0;
     one = malloc (BUFSIZ);
     if (one == NULL) {
-	fprintf (stderr, "get_teams: allocating memory: %s\n", strerror (errno));
+	fprintf (stderr, "get_team_names: allocating memory: %s\n", strerror (errno));
 	exit (1);
     }
 
     errno = 0;
     two = malloc (BUFSIZ);
     if (two == NULL) {
-	fprintf (stderr, "get_teams: allocating memory: %s\n", strerror (errno));
+	fprintf (stderr, "get_team_names: allocating memory: %s\n", strerror (errno));
 	exit (1);
     }
 
@@ -81,21 +82,21 @@ void get_team_names (team *a, team *b)
     a_name_size = strlen (one) + 1;
     a->name = malloc (a_name_size);
     if (a->name == NULL) {
-	fprintf (stderr, "get_teams: allocating space for a->name: %s\n", strerror (errno));
+	fprintf (stderr, "get_team_names: allocating space for a->name: %s\n", strerror (errno));
 	exit (1);
     }
     strncpy (a->name, one, a_name_size - 1);
-    a->name [a_name_size] = '\0';
+    a->name [a_name_size - 1] = '\0';
 
     errno = 0;
     b_name_size = strlen (two) + 1;
     b->name = malloc (b_name_size);
     if (b->name == NULL) {
-	fprintf (stderr, "get_teams: allocating space for b->name: %s\n", strerror (errno));
+	fprintf (stderr, "get_team_names: allocating space for b->name: %s\n", strerror (errno));
 	exit (1);
     }
     strncpy (b->name, two, b_name_size - 1);
-    b->name [b_name_size] = '\0';
+    b->name [b_name_size - 1] = '\0';
 }
 
 
@@ -278,11 +279,12 @@ void change_innings (void)
     change_aggression (NORMAL);
 }    
 
-void new_match (team *a, team *b)
+void new_match ()
 {
     prepare_pitch ();
-    get_team_names (a, b);
-    toss (a, b);
+    get_team_names (team_one, team_one);
+    toss (team_one, team_two);
+    match_under_way = true;
 }
 
 void toss (team *a, team *b)
@@ -301,7 +303,7 @@ void toss (team *a, team *b)
     }
 
     printf ("%s won the toss.  Bat or bowl? ", winner->name);
-    while (fgets (decision, sizeof decision, stdin) != NULL) {
+    while (fgets (decision, 6, stdin) != NULL) {
 	nl = strchr (decision, '\n');
 	if (nl != NULL)
 	    *nl = '\0';
@@ -314,6 +316,10 @@ void toss (team *a, team *b)
 	    first = loser;
 	    second = winner;
 	    break;
+	}
+	else {
+	    puts ("Only umpires can neither bat nor bowl.  Please choose again.");
+	    fputs ("Bat or bowl? ", stdout);
 	}
     }
 
@@ -355,7 +361,7 @@ void ball (int die1, int die2)
 	innings_finished = true;
 
     if (innings_finished == true) {
-	puts ("Innings over");
+	puts ("\tInnings over");
 	scoreline (t);
 	if (which_innings == 1)
 	    target = t->runs + 1;
@@ -697,19 +703,39 @@ void scorecard (void)
     scoreline (first);
     putchar ('\n');
     scoreline (second);
-}    
+}
+
+void score (void)
+{
+    if (which_innings == 2 && innings_finished == true)
+	scorecard ();
+    else
+	scoreline (t);
+}
 
 
 /*
- * Help
+ * Welcome and Help
  */
+void welcome (void)
+{
+    puts ("\"It's not cricket.\"");
+    puts ("A diminutive cricket simulator.");
+    putchar ('\n');
+    puts ("Type 'h' for some help.");
+}    
+
 void help (void)
 {
-    puts ("    At the prompt '#', you can type any of the following:");
-    puts ("o    - play the next over, unless the innings has ended.");
+    puts ("    At the prompt '#', you can type any of the following commands.");
+    putchar ('\n');
+    puts ("    If there is no match in progress:");
     puts ("q    - quit.");
     puts ("h    - get this help on usage.");
     puts ("nm   - begin a new match.");
+    putchar ('\n');
+    puts ("    If there is a match in progress:");
+    puts ("o    - play the next over, unless the innings has ended.");
     puts ("pc   - tell something about the condition of the pitch.");
     puts ("ma   - analyze the situation in the current innings with some statistics.");
     puts ("s    - while the match is on, display the score for the team batting;");
@@ -719,9 +745,75 @@ void help (void)
     puts ("c a  - play aggressively while increasing the risk of wickets falling.");
     puts ("c va - play very aggressively while further increasing risk of wickets falling.");
     puts ("c d  - play defensively while decreasing the flow of runs.");
-    puts ("c va - play very defensively while further decreasing the flow of runs.");
+    puts ("c vd - play very defensively while further decreasing the flow of runs.");
+    putchar ('\n');
     puts ("    No other commands will be recognized.");
 }    
+
+
+/*
+ * Commands
+ */
+niladic *lookup_niladic_command_name (char *command_name)
+{
+    niladic *np;
+    for (np = niladic_commands; np->name != NULL; np++)
+	if (strcmp (command_name, np->name) == 0)
+	    return np;
+    return NULL;
+}
+
+void do_niladic_unless_match_underway (niladic *command)
+{
+    if (match_under_way == true)
+	command->do_it();
+    else
+	puts ("There is no match in progress yet.");
+}    
+
+monadic *lookup_monadic_command_name (char *command_name)
+{
+    monadic *mp;
+    for (mp = monadic_commands; mp->name != NULL; mp++)
+	if (strcmp (command_name, mp->name) == 0)
+	    return mp;
+    return NULL;
+}
+
+void do_monadic_unless_match_underway (monadic *command)
+{
+    if (match_under_way == true)
+	command->set_aggression (command->aggr);
+    else
+	puts ("The is no match in progress yet.");
+}
+
+void try_executing (char *command_name)
+{
+    niladic *ncmd;
+    monadic *mcmd;
+
+    if (strcmp ("nm", command_name) == 0 ||
+	strcmp ("q", command_name) == 0 ||
+	strcmp ("h", command_name) == 0)
+	lookup_niladic_command_name (command_name)->do_it ();
+
+    else if ((ncmd = lookup_niladic_command_name (command_name)) != NULL)
+	do_niladic_unless_match_underway (ncmd);
+    else if ((mcmd = lookup_monadic_command_name (command_name)) != NULL)
+	do_monadic_unless_match_underway (mcmd);
+    else
+	puts ("Unknown command.  Press 'h' for some help.");
+}
+
+
+/*
+ * Auxiliary
+ */
+void quit (void)
+{
+    exit (0);
+}
 
 
 /* Main return codes:
@@ -732,89 +824,18 @@ int main (void)
 {
     char line [6];
     char *nl;
-    team *a = make_team (NULL), *b = make_team (NULL);
 
     srand ((unsigned) time (NULL));
 
+    team_one = make_team (NULL);
+    team_two = make_team (NULL);
+
+    welcome ();
     while (fputs ("# ", stdout), fgets (line, 6, stdin) != NULL) {
 	nl = strchr (line, '\n');
 	if (nl != NULL)
 	    *nl = '\0';
-	if (strcmp (line, "o") == 0) {
-	    if (match_under_way == true)
-		play_over ();
-	    else
-		puts ("There is no match under way, yet.");
-	}
-	else if (strcmp (line, "q") == 0)
-	    break;
-	else if (strcmp (line, "h") == 0)
-	    help ();
-	else if (strcmp (line, "nm") == 0) {
-	    new_match (a, b);
-	    match_under_way = true;
-	}
-	else if (strcmp (line, "pc") == 0) {
-	    if (match_under_way == true)
-		pitch_condition ();
-	    else
-		puts ("There is no match under way, yet.");
-	}
-
-	else if (strcmp (line, "ma") == 0) {
-	    if (match_under_way == true)
-		match_analysis ();
-	    else
-		puts ("There is no match under way, yet.");
-	}
-	else if (strcmp (line, "s") == 0) {
-	    if (match_under_way == true) {
-		if (which_innings == 2 && innings_finished == true)
-		    scorecard ();
-		else
-		    scoreline (t);
-	    }
-	    else
-		puts ("There is no match under way, yet.");
-	}
-	else if (strcmp (line, "ci") == 0) {
-	    if (match_under_way == true)
-		change_innings ();
-	    else
-		puts ("There is no match under way, yet.");
-	}
-	else if (strcmp (line, "c n") == 0) {
-	    if (match_under_way == true)
-		change_aggression (NORMAL);
-	    else
-		puts ("There is no match under way, yet.");
-	}
-	else if (strcmp (line, "c a") == 0) {
-	    if (match_under_way == true)
-		change_aggression (AGGRESSIVE);
-	    else
-		puts ("There is no match under way, yet.");
-	}
-	else if (strcmp (line, "c d") == 0) {
-	    if (match_under_way == true)
-		change_aggression (DEFENSIVE);
-	    else
-		puts ("There is no match under way, yet.");
-	}
-	else if (strcmp (line, "c va") == 0) {
-	    if (match_under_way == true)
-		change_aggression (VAGGRESSIVE);
-	    else
-		puts ("There is no match under way, yet.");
-	}
-	else if (strcmp (line, "c vd") == 0) {
-	    if (match_under_way == true)
-		change_aggression (VDEFENSIVE);
-	    else
-		puts ("There is no match under way, yet.");
-	}
-	else
-	    fputs ("Unknown command\n", stderr);
+	try_executing (line);
     }
 	
     return 0;
