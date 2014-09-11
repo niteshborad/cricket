@@ -55,3 +55,23 @@ and used as per the SFL License Agreement found here:
 The original library is at
 
 <http://legacy.imatix.com/html/sfl/>
+
+
+Origin
+
+Many of the mechanics were adapted from the rules for a postal cricket
+game, /Cosmic Celebrity Cricket/, originally at
+
+<http://www.sholing.force9.co.uk/cosmic.htm>
+
+but which is now unavailable.  However, it has been archived at the Web
+Archive at, for example,
+
+<https://web.archive.org/web/20030930100637/http://www.sholing.force9.co.uk/cosmic.htm>
+
+Changes have been made to the rules described in the above.
+
+The idea for permuting the list of {1, 2, 3, 4, 5, 6}, i.e., the faces
+of a die, and thereby determining the chance of a wicket was partly
+inspired by how a friend of the author handled a similar situation in
+his implementation of the dice game /Ship, Captain, Crew/.
