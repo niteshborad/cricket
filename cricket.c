@@ -36,16 +36,20 @@ team *make_team (char *name)
 void get_team_names (team *a, team *b)
 {
     char *nl;
-    /* char *one, *two; */
     char one [BUFSIZ], two [BUFSIZ];
+    bool found_newline_in_buffer = false;
     size_t a_name_size, b_name_size;
 
     puts ("Enter the names of the teams playing on the next two lines.");
     puts ("(Use only alphabets and digits, please.)");
     while (fputs ("> ", stdout), fgets (one, BUFSIZ, stdin) != NULL) {
     	nl = strchr (one, '\n');
-    	if (nl != NULL)
+    	if (nl != NULL) {
     	    *nl = '\0';
+	    found_newline_in_buffer = true;
+	}
+	else
+	    found_newline_in_buffer = false;
     	if (alphabetic_numeric (one) == false) {
     	    puts ("Please use only alphabets and digits.");
     	    continue;
@@ -53,11 +57,18 @@ void get_team_names (team *a, team *b)
     	else
     	    break;
     }
+    if (found_newline_in_buffer == false)
+	while (getchar () != '\n')
+	    ;
     
     while (fputs ("> ", stdout), fgets (two, BUFSIZ, stdin) != NULL) {
     	nl = strchr (two, '\n');
-    	if (nl != NULL)
+    	if (nl != NULL) {
     	    *nl = '\0';
+	    found_newline_in_buffer = true;
+	}
+	else
+	    found_newline_in_buffer = false;
     	if (alphabetic_numeric (two) == false) {
     	    puts ("Please use only alphabets and digits.");
     	    continue;
@@ -65,6 +76,10 @@ void get_team_names (team *a, team *b)
     	else
     	    break;
     }
+    if (found_newline_in_buffer == false)
+	while (getchar () != '\n')
+	    ;
+
     
     errno = 0;
     a_name_size = strlen (one) + 1;
