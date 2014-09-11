@@ -38,6 +38,14 @@ Enhancements possible
 
 External functionality
 
+A piece of code required case insensitive string comparisons.  There is
+
+        int strcasecmp(const char *s1, const char *s2);
+
+for systems conforming to POSIX.1-2001, but it is not in a Standard C
+library.  The wish to stay within the bounds of the C99 standard
+motivated the search for a portable solution.
+
 For case insensitive string comparison, `lexcmp' from the Standard
 Function Library (c) 1991-2000 by iMatix Corporation has been modified
 and used as per the SFL License Agreement found here:
