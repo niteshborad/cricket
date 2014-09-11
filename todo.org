@@ -29,3 +29,5 @@
 * DONE Help function
 * DONE Sane commands
 * TODO Readme
+* TODO Print a description of the result of the match
+

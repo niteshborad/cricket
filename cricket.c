@@ -21,12 +21,14 @@ team *make_team (char *name)
     new_team->name = name;
     new_team->overs = 0;
     new_team->balls = 0;
-    new_team->ball_ordinality = 0;
     new_team->runs = 0;
     new_team->wickets = 0;
     new_team->fours = 0;
     new_team->sixes = 0;
     new_team->max_wickets = 10;
+    new_team->maidens = 0;
+    new_team->ball_ordinality = 0;
+    new_team->runs_in_over = 0;
 
     return new_team;
 }
@@ -34,27 +36,13 @@ team *make_team (char *name)
 void get_team_names (team *a, team *b)
 {
     char *nl;
-    char *one, *two;
+    /* char *one, *two; */
+    char one [BUFSIZ], two [BUFSIZ];
     size_t a_name_size, b_name_size;
-
-    errno = 0;
-    one = malloc (BUFSIZ);
-    if (one == NULL) {
-	fprintf (stderr, "get_team_names: allocating memory: %s\n", strerror (errno));
-	exit (1);
-    }
-
-    errno = 0;
-    two = malloc (BUFSIZ);
-    if (two == NULL) {
-	fprintf (stderr, "get_team_names: allocating memory: %s\n", strerror (errno));
-	exit (1);
-    }
 
     puts ("Enter the names of the teams playing on the next two lines.");
     puts ("(Use only alphabets and digits, please.)");
-    fputs ("> ", stdout);
-    while (fgets (one, BUFSIZ, stdin) != NULL) {
+    while (fputs ("> ", stdout), fgets (one, BUFSIZ, stdin) != NULL) {
     	nl = strchr (one, '\n');
     	if (nl != NULL)
     	    *nl = '\0';
@@ -65,8 +53,8 @@ void get_team_names (team *a, team *b)
     	else
     	    break;
     }
-    fputs ("> ", stdout);
-    while (fgets (two, BUFSIZ, stdin) != NULL) {
+    
+    while (fputs ("> ", stdout), fgets (two, BUFSIZ, stdin) != NULL) {
     	nl = strchr (two, '\n');
     	if (nl != NULL)
     	    *nl = '\0';
@@ -77,7 +65,7 @@ void get_team_names (team *a, team *b)
     	else
     	    break;
     }
-
+    
     errno = 0;
     a_name_size = strlen (one) + 1;
     a->name = malloc (a_name_size);
@@ -229,6 +217,9 @@ void play_over (void)
     if (innings_finished == true)
 	return;
     t->overs++;
+    if (t->runs_in_over == 0)
+	nt->maidens++;
+    t->runs_in_over = 0;
     t->ball_ordinality = 0;
     scoreline (t);
 }
@@ -272,17 +263,21 @@ void change_aggression (aggression agg)
 
 void change_innings (void)
 {
-    which_innings = 2;
-    t = second;
-    nt = first;
-    innings_finished = false;
-    change_aggression (NORMAL);
+    if (which_innings == 1 && innings_finished == true) {
+	which_innings = 2;
+	t = second;
+	nt = first;
+	innings_finished = false;
+	change_aggression (NORMAL);
+    }
+    else
+	puts ("The innings cannot be changed now");
 }    
 
 void new_match ()
 {
     prepare_pitch ();
-    get_team_names (team_one, team_one);
+    get_team_names (team_one, team_two);
     toss (team_one, team_two);
     match_under_way = true;
 }
@@ -307,12 +302,12 @@ void toss (team *a, team *b)
 	nl = strchr (decision, '\n');
 	if (nl != NULL)
 	    *nl = '\0';
-	if (strcmp (decision, "bat") == 0) {
+	if (lexcmp (decision, "bat") == 0) {
 	    first = winner;
 	    second = loser;
 	    break;
 	}
-	else if (strcmp (decision, "bowl") == 0) {
+	else if (lexcmp (decision, "bowl") == 0) {
 	    first = loser;
 	    second = winner;
 	    break;
@@ -340,10 +335,10 @@ void prepare_pitch (void)
 
 void pitch_condition (void)
 {
-    int i;
-    for (i = 0; i < pitch.number; i++)
-	printf ("%d ", out_list [i]);
-    putchar ('\n');
+    /* int i; */
+    /* for (i = 0; i < pitch.number; i++) */
+    /* 	printf ("%d ", out_list [i]); */
+    /* putchar ('\n'); */
     puts (pitch.description);
 }    
 
@@ -359,7 +354,7 @@ void ball (int die1, int die2)
 
     if (which_innings == 2 && t->runs >= target)
 	innings_finished = true;
-
+    
     if (innings_finished == true) {
 	puts ("\tInnings over");
 	scoreline (t);
@@ -393,6 +388,7 @@ void one (void)
 {
     puts ("1");
     t->runs += 1;
+    t->runs_in_over += 1;
     t->balls++;
     t->ball_ordinality++;
 }
@@ -401,6 +397,7 @@ void two (void)
 {
     puts ("2");
     t->runs += 2;
+    t->runs_in_over += 2;
     t->balls++;
     t->ball_ordinality++;
 }
@@ -428,17 +425,19 @@ void three_configuration (void)
 void three (void)
 {    
     puts ("3");
-    t->balls++;
     t->runs += 3;
+    t->runs_in_over += 3;
+    t->balls++;
     t->ball_ordinality++;
 }
 
 void four (void)
 {
     puts ("4");
-    t->balls++;
-    t->runs += 4;
     t->fours++;
+    t->runs += 4;
+    t->runs_in_over += 4;
+    t->balls++;
     t->ball_ordinality++;
 }
 
@@ -500,9 +499,9 @@ void mode_of_dismissal (void)
 void runout (void)
 {
     puts ("Runout");
+    t->wickets++;
     t->balls++;
     t->ball_ordinality++;
-    t->wickets++;
 }
 
 void miscellany (void)
@@ -528,25 +527,25 @@ void miscellany (void)
 void stumped (void)
 {
     puts ("Stumped");
+    t->wickets++;
     t->balls++;
     t->ball_ordinality++;
-    t->wickets++;
 }    
 
 void hit_wicket (void)
 {
     puts ("Hit wicket");
+    t->wickets++;
     t->balls++;
     t->ball_ordinality++;
-    t->wickets++;
 }
 
 void retired_hurt (void)
 {
     puts ("Retired hurt");
+    t->max_wickets--;
     t->balls++;
     t->ball_ordinality++;
-    t->max_wickets--;
 }    
 
 void big_hit (void)
@@ -568,9 +567,10 @@ void big_hit (void)
 void six (void)
 {
     puts ("6");
-    t->runs += 6;
-    t->balls++;
     t->sixes++;
+    t->runs += 6;
+    t->runs_in_over += 6;
+    t->balls++;
     t->ball_ordinality++;
 }
 
@@ -598,6 +598,7 @@ void wide (void)
 {
     puts ("Wide");
     t->runs++;
+    t->runs_in_over++;
     ball (die1 (), die2 ());
 }
 
@@ -606,17 +607,17 @@ void leg_byes (void)
     switch (d6()) {
     case 1:
     case 2:
-	one ();
+	puts ("1 leg bye");
 	break;
     case 3:
     case 4:
-	two ();
+	puts ("2 leg byes");
 	break;
     case 5:
-	three ();
+	puts ("3 leg byes");
 	break;
     case 6:
-	four ();
+	puts ("4 leg byes");
 	break;
     }
 }
@@ -626,17 +627,17 @@ void byes (void)
     switch (d6()) {
     case 1:
     case 2:
-	one ();
+	puts ("1 bye");
 	break;
     case 3:
     case 4:
-	two ();
+	puts ("2 byes");
 	break;
     case 5:
-	three ();
+	puts ("3 byes");
 	break;
     case 6:
-	four ();
+	puts ("4 byes");
 	break;
     }
 }    
@@ -645,6 +646,7 @@ void noball (void)
 {
     puts ("No ball");
     t->runs++;
+    t->runs_in_over++;
     t->balls++;
     t->ball_ordinality++;
     ball (die1 (), die2 ());
@@ -686,6 +688,18 @@ void projected_score (void)
 		(int) (t->runs + runrate (t->runs, t->overs) * (max_overs - t->overs)));
 }    
 
+int runs_in_boundaries (team *t)
+{
+    return (t->fours * 4 + t->sixes * 6);
+}
+
+double percentage_runs_in_boundaries (team *t)
+{
+    if (t->runs == 0)
+	return 0;
+    return (double) (runs_in_boundaries (t) * 100) / t->runs;
+}    
+
 void match_analysis (void)
 {
     scoreline (t);
@@ -694,7 +708,9 @@ void match_analysis (void)
 	printf ("Runs needed: %d    ", target - t->runs);
 	printf ("Run rate required: %.2f\n", (double) (target - t->runs) / (max_overs - t->overs));
     }
-    printf ("Fours: %d    Sixes: %d\n", t->fours, t->sixes);
+    printf ("Fours: %d    Sixes: %d    ", t->fours, t->sixes);
+    printf ("Runs in boundaries: %d (%.1f%%)\n", runs_in_boundaries (t), percentage_runs_in_boundaries (t));
+    printf ("Maidens: %d\n", nt->maidens);
     projected_score ();
 }    
 
@@ -785,7 +801,7 @@ void do_monadic_unless_match_underway (monadic *command)
     if (match_under_way == true)
 	command->set_aggression (command->aggr);
     else
-	puts ("The is no match in progress yet.");
+	puts ("There is no match in progress yet.");
 }
 
 void try_executing (char *command_name)
