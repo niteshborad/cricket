@@ -37,50 +37,62 @@ team *make_team (void)
 
 void get_team_names (team *a, team *b)
 {
-    char *nl;
     char one [MAX_TEAM_NAME_SIZE], two [MAX_TEAM_NAME_SIZE];
+    char *nl;
     bool found_newline_in_buffer = false;
     size_t a_name_size, b_name_size;
+    bool duplicate_names = false;
 
-    puts ("Enter the names of the teams playing on the next two lines.");
-    puts ("(Use only alphabets and digits, please.)");
-    while (fputs ("> ", stdout), fgets (one, MAX_TEAM_NAME_SIZE, stdin) != NULL) {
-    	nl = strchr (one, '\n');
-    	if (nl != NULL) {
-    	    *nl = '\0';
-	    found_newline_in_buffer = true;
+    do {
+	puts ("Enter the names of the teams playing on the next two lines.");
+	puts ("(Use only alphabets and digits, please.)");
+	while (fputs ("> ", stdout), fgets (one, MAX_TEAM_NAME_SIZE, stdin) != NULL) {
+	    nl = strchr (one, '\n');
+	    if (nl != NULL) {
+		*nl = '\0';
+		found_newline_in_buffer = true;
+	    }
+	    else
+		found_newline_in_buffer = false;
+	    if (alphabetic_numeric (one) == false) {
+		puts ("Please use only alphabets and digits.");
+		continue;
+	    }
+	    else
+		break;
 	}
-	else
-	    found_newline_in_buffer = false;
-    	if (alphabetic_numeric (one) == false) {
-    	    puts ("Please use only alphabets and digits.");
-    	    continue;
-    	}
-    	else
-    	    break;
-    }
-    if (found_newline_in_buffer == false)
-	while (getchar () != '\n')
-	    ;
+	if (found_newline_in_buffer == false)
+	    while (getchar () != '\n')
+		;
     
-    while (fputs ("> ", stdout), fgets (two, MAX_TEAM_NAME_SIZE, stdin) != NULL) {
-    	nl = strchr (two, '\n');
-    	if (nl != NULL) {
-    	    *nl = '\0';
-	    found_newline_in_buffer = true;
+	while (fputs ("> ", stdout), fgets (two, MAX_TEAM_NAME_SIZE, stdin) != NULL) {
+	    nl = strchr (two, '\n');
+	    if (nl != NULL) {
+		*nl = '\0';
+		found_newline_in_buffer = true;
+	    }
+	    else
+		found_newline_in_buffer = false;
+	    if (alphabetic_numeric (two) == false) {
+		puts ("Please use only alphabets and digits.");
+		continue;
+	    }
+	    else
+		break;
 	}
-	else
-	    found_newline_in_buffer = false;
-    	if (alphabetic_numeric (two) == false) {
-    	    puts ("Please use only alphabets and digits.");
-    	    continue;
-    	}
-    	else
-    	    break;
-    }
-    if (found_newline_in_buffer == false)
-	while (getchar () != '\n')
-	    ;
+	if (found_newline_in_buffer == false)
+	    while (getchar () != '\n')
+		;
+
+	if (strcmp (one, two) != 0)
+	    duplicate_names = false;
+	else {
+	    puts ("A team playing against itself might be confusing.");
+	    puts ("Please do not do that.");
+	    putchar ('\n');
+	    duplicate_names = true;
+	}
+    } while (duplicate_names == true);
 
     
     errno = 0;
@@ -314,7 +326,7 @@ void toss (team *a, team *b)
 	loser = a;
     }
 
-    printf ("%s won the toss.  Bat or bowl? ", winner->name);
+    printf ("%s won the toss.  Bat or bowl? ('q' to quit) ", winner->name);
     while (true) {
 	fgets (decision, MAX_TOSS_DECISION_SIZE, stdin);
 	nl = strchr (decision, '\n');
