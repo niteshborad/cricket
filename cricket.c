@@ -3,6 +3,8 @@
 #include "cricket.h"
 #include "utilities.h"
 
+#define MAX_TEAM_NAME_SIZE     30
+#define MAX_TOSS_DECISION_SIZE  6
 
 /*
  * Teams
@@ -36,13 +38,13 @@ team *make_team (void)
 void get_team_names (team *a, team *b)
 {
     char *nl;
-    char one [BUFSIZ], two [BUFSIZ];
+    char one [MAX_TEAM_NAME_SIZE], two [MAX_TEAM_NAME_SIZE];
     bool found_newline_in_buffer = false;
     size_t a_name_size, b_name_size;
 
     puts ("Enter the names of the teams playing on the next two lines.");
     puts ("(Use only alphabets and digits, please.)");
-    while (fputs ("> ", stdout), fgets (one, BUFSIZ, stdin) != NULL) {
+    while (fputs ("> ", stdout), fgets (one, MAX_TEAM_NAME_SIZE, stdin) != NULL) {
     	nl = strchr (one, '\n');
     	if (nl != NULL) {
     	    *nl = '\0';
@@ -61,7 +63,7 @@ void get_team_names (team *a, team *b)
 	while (getchar () != '\n')
 	    ;
     
-    while (fputs ("> ", stdout), fgets (two, BUFSIZ, stdin) != NULL) {
+    while (fputs ("> ", stdout), fgets (two, MAX_TEAM_NAME_SIZE, stdin) != NULL) {
     	nl = strchr (two, '\n');
     	if (nl != NULL) {
     	    *nl = '\0';
@@ -300,7 +302,7 @@ void new_match ()
 void toss (team *a, team *b)
 {
     char *nl;
-    char decision [6];
+    char decision [MAX_TOSS_DECISION_SIZE];
     team *winner, *loser;
 
     if (rand () % 2 == 0) {
@@ -314,7 +316,7 @@ void toss (team *a, team *b)
 
     printf ("%s won the toss.  Bat or bowl? ", winner->name);
     while (true) {
-	fgets (decision, 6, stdin);
+	fgets (decision, MAX_TOSS_DECISION_SIZE, stdin);
 	nl = strchr (decision, '\n');
 	if (nl != NULL)
 	    *nl = '\0';
