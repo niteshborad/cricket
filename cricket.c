@@ -7,7 +7,7 @@
 /*
  * Teams
  */
-team *make_team (char *name)
+team *make_team (void)
 {
     team *new_team;
 
@@ -18,7 +18,7 @@ team *make_team (char *name)
 	exit (1);
     }
 
-    new_team->name = name;
+    new_team->name = NULL;
     new_team->overs = 0;
     new_team->balls = 0;
     new_team->runs = 0;
@@ -313,7 +313,8 @@ void toss (team *a, team *b)
     }
 
     printf ("%s won the toss.  Bat or bowl? ", winner->name);
-    while (fgets (decision, 6, stdin) != NULL) {
+    while (true) {
+	fgets (decision, 6, stdin);
 	nl = strchr (decision, '\n');
 	if (nl != NULL)
 	    *nl = '\0';
@@ -327,6 +328,9 @@ void toss (team *a, team *b)
 	    second = winner;
 	    break;
 	}
+	else if (lexcmp (decision, "q") == 0 ||
+		 lexcmp (decision, "quit") == 0)
+	    quit ();
 	else {
 	    puts ("Only umpires can neither bat nor bowl.  Please choose again.");
 	    fputs ("Bat or bowl? ", stdout);
@@ -858,8 +862,8 @@ int main (void)
 
     srand ((unsigned) time (NULL));
 
-    team_one = make_team (NULL);
-    team_two = make_team (NULL);
+    team_one = make_team ();
+    team_two = make_team ();
 
     welcome ();
     while (fputs ("# ", stdout), fgets (line, 6, stdin) != NULL) {

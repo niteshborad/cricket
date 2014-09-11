@@ -23,7 +23,7 @@ typedef struct {
     int runs_in_over;
 } team;
 
-team *make_team (char *name);
+team *make_team (void);
 void get_team_names (team *a, team *b);
 
 /* For getting data */
