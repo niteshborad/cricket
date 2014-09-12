@@ -866,6 +866,7 @@ void help (void)
     puts ("s    - while the match is on, display the score for the team batting;");
     puts ("       will show the scorecards once the match has ended.");
     puts ("fow  - show the fall of wickets.");
+    puts ("cp   - show the current partnership.");
     puts ("ci   - after the first innings completes, prepare for the next one.");
     puts ("c n  - play with a balance between attack and defence.");
     puts ("c a  - play aggressively while increasing the risk of wickets falling.");
