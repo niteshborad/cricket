@@ -80,4 +80,7 @@ his implementation of the dice game /Ship, Captain, Crew/.
 Credits
 
 Advice and commentary by Richard Heathfield on comp.lang.c has helped
-the author and this program greatly.
+the author and this program greatly.  In particular, the code for the
+team initialization was simplified by him.  He recommended using better
+techniques to reduce the range of the RNG, and also using the
+Fisher-Yates shuffle for permuting the list of faces of a six-sided die.
