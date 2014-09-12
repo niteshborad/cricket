@@ -75,3 +75,9 @@ The idea for permuting the list of {1, 2, 3, 4, 5, 6}, i.e., the faces
 of a die, and thereby determining the chance of a wicket was partly
 inspired by how a friend of the author handled a similar situation in
 his implementation of the dice game /Ship, Captain, Crew/.
+
+
+Credits
+
+Advice and commentary by Richard Heathfield on comp.lang.c has helped
+the author and this program greatly.
