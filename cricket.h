@@ -8,10 +8,23 @@
 #include <stdbool.h>
 #include <time.h>
 
+#define MAX_PLAYERS    11
+
+const int max_players = MAX_PLAYERS;
+
+/* Fall of wickets */
+typedef struct {
+    int runs_at_fall;
+    int overs_at_fall;
+    int balls_into_over;
+} fow;
+
+
 /* Teams */
 typedef struct {
     char *name;
     int overs;
+    fow fall_of_wickets [MAX_PLAYERS];
     int balls;
     int runs;
     int wickets;
@@ -25,6 +38,8 @@ typedef struct {
 
 team *make_team (void);
 void get_team_names (team *a, team *b);
+void init_fall_of_wickets (team *t);
+void fall_of_wickets (team *t);
 
 /* For getting data */
 team *team_one;
@@ -71,11 +86,11 @@ struct pitch_condition {
     int number;
     char *description;
 } pitch_conditions [6] = {
-    {1, "Hard and dry pitch.  Bowlers will perspire."},
-    {2, "A very good wicket for batting."},
-    {3, "Nice, even pitch.  Expect a fine balance."},
-    {4, "Expect a good contest."},
-    {5, "A bowler's paradise.  Runs will be hard to get."},
+    {1, "It's a hard and dry pitch.  The bowlers will perspire."},
+    {2, "This looks like a very good wicket for batting."},
+    {3, "A nice, even pitch.  Expect a fine balance."},
+    {4, "There might be something for the bowlers.  Expect a good contest."},
+    {5, "A bowler's paradise this.  Runs will be hard to get."},
     {6, "Abandon hope, all ye that play here."}
 };
 
@@ -96,6 +111,11 @@ void four (void);
 void wicket_chance (void);
 void notout (void);
 void mode_of_dismissal (void);
+void set_fall_of_wickets (team *t);
+void caught_in_the_field (void);
+void caught_behind (void);
+void bowled (void);
+void lbw (void);
 void runout (void);
 void miscellany (void);
 void stumped (void);
@@ -118,6 +138,8 @@ void projected_score (void);
 int runs_in_boundaries (team *t);
 double percentage_runs_in_boundaries (team *t);
 void match_analysis (void);
+void print_fall_of_wickets (void);
+void current_partership (void);
 void scorecard (void);
 void score (void);
 
@@ -142,9 +164,11 @@ niladic niladic_commands [] = {
     {"q", quit},
     {"h", help},
     {"nm", new_match},
-    {"pc", pitch_condition},
     {"ma", match_analysis},
     {"s", score},
+    {"cp", current_partership},
+    {"fow", print_fall_of_wickets},
+    {"pc", pitch_condition},
     {"ci", change_innings},
     {NULL, NULL}
 };

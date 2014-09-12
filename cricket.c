@@ -9,29 +9,15 @@
 /*
  * Teams
  */
-team *make_team (void)
+team *make_team (void)		/* Due to Richard Heathfield */
 {
-    team *new_team;
-
-    errno = 0;
-    new_team = malloc (sizeof *new_team);
-    if (new_team == NULL) {
-	fprintf (stderr, "make_team: could not build a new team\n%s\n", strerror (errno));
-	exit (1);
+    team blank = {0};
+    team *new_team = malloc (sizeof *new_team);
+    if (new_team != NULL) {
+	*new_team = blank;
+	new_team->max_wickets = 10;
+	init_fall_of_wickets (new_team);
     }
-
-    new_team->name = NULL;
-    new_team->overs = 0;
-    new_team->balls = 0;
-    new_team->runs = 0;
-    new_team->wickets = 0;
-    new_team->fours = 0;
-    new_team->sixes = 0;
-    new_team->max_wickets = 10;
-    new_team->maidens = 0;
-    new_team->ball_ordinality = 0;
-    new_team->runs_in_over = 0;
-
     return new_team;
 }
 
@@ -115,6 +101,45 @@ void get_team_names (team *a, team *b)
     strncpy (b->name, two, b_name_size - 1);
     b->name [b_name_size - 1] = '\0';
 }
+
+void init_fall_of_wickets (team *t)
+{
+    int i;
+
+    for (i = 1; i < max_players; i++)
+	t->fall_of_wickets [i].runs_at_fall = -1;
+}
+
+void fall_of_wickets (team *t)
+{
+    int i;
+    fow fall;
+    
+    if (t->wickets == 0) {
+	puts ("No wickets have fallen.");
+	return;
+    }
+
+    /* Print half the list on one line */
+    for (i = 1; i <= t->max_wickets / 2; i++) {
+	fall = t->fall_of_wickets [i];
+	if (fall.runs_at_fall == -1)
+	    break;
+	printf ("%d/%d ", fall.runs_at_fall, i);
+	printf ("(%d.%d)  ", fall.overs_at_fall, fall.balls_into_over);
+    }
+    putchar ('\n');
+
+    /* Print the other half on the next line */
+    for ( ; i < t->max_wickets; i++) {
+	fall = t->fall_of_wickets [i];
+	if (fall.runs_at_fall == -1)
+	    break;
+	printf ("%d/%d ", fall.runs_at_fall, i);
+	printf ("(%d.%d)  ", fall.overs_at_fall, fall.balls_into_over);
+    }
+    putchar ('\n');
+}    
 
 
 /*
@@ -368,11 +393,12 @@ void prepare_pitch (void)
 
 void pitch_condition (void)
 {
-    /* int i; */
-    /* for (i = 0; i < pitch.number; i++) */
-    /* 	printf ("%d ", out_list [i]); */
-    /* putchar ('\n'); */
+    int i;
+    for (i = 0; i < pitch.number; i++)
+    	printf ("%d ", out_list [i]);
+    putchar ('\n');
     puts (pitch.description);
+    putchar ('\n');
 }    
 
 
@@ -495,30 +521,18 @@ void mode_of_dismissal (void)
     case 1:
     case 2:
     case 3:
-	puts ("Caught in the field");
-	t->balls++;
-	t->ball_ordinality++;
-	t->wickets++;
+	caught_in_the_field ();
 	break;
     case 4:
     case 5:
-	puts ("Caught behind");
-	t->balls++;
-	t->ball_ordinality++;
-	t->wickets++;
+	caught_behind ();
 	break;
     case 6:
     case 7:
-	puts ("Bowled");
-	t->balls++;
-	t->ball_ordinality++;
-	t->wickets++;
+	bowled ();
 	break;
     case 8:
-	puts ("LBW");
-	t->balls++;
-	t->ball_ordinality++;
-	t->wickets++;
+	lbw ();
 	break;
     case 9:
 	runout ();
@@ -529,12 +543,58 @@ void mode_of_dismissal (void)
     }
 }
 
+void set_fall_of_wickets (team *t)
+{
+    fow *fall = &(t->fall_of_wickets [t->wickets]);
+    
+    fall->runs_at_fall = t->runs;
+    fall->overs_at_fall = t->overs;
+    fall->balls_into_over = t->ball_ordinality;
+}    
+
+void caught_in_the_field (void)
+{
+    puts ("Caught in the field");
+    t->balls++;
+    t->ball_ordinality++;
+    t->wickets++;
+    set_fall_of_wickets (t);
+}    
+
+void caught_behind (void)
+{
+    puts ("Caught behind");
+    t->balls++;
+    t->ball_ordinality++;
+    t->wickets++;
+    set_fall_of_wickets (t);
+}
+
+void bowled (void)
+{
+    puts ("Bowled");
+    t->balls++;
+    t->ball_ordinality++;
+    t->wickets++;
+    set_fall_of_wickets (t);
+}
+
+void lbw (void)
+{
+    puts ("LBW");
+    t->balls++;
+    t->ball_ordinality++;
+    t->wickets++;
+    set_fall_of_wickets (t);
+}    
+
 void runout (void)
 {
     puts ("Runout");
     t->wickets++;
     t->balls++;
     t->ball_ordinality++;
+    set_fall_of_wickets (t);
 }
 
 void miscellany (void)
@@ -563,14 +623,16 @@ void stumped (void)
     t->wickets++;
     t->balls++;
     t->ball_ordinality++;
+    set_fall_of_wickets (t);
 }    
 
 void hit_wicket (void)
 {
     puts ("Hit wicket");
-    t->wickets++;
     t->balls++;
-    t->ball_ordinality++;
+    t->ball_ordinality++; 
+    t->wickets++;
+    set_fall_of_wickets (t);
 }
 
 void retired_hurt (void)
@@ -747,6 +809,20 @@ void match_analysis (void)
     projected_score ();
 }    
 
+void print_fall_of_wickets (void)
+{
+    fall_of_wickets (t);
+}    
+
+void current_partership (void)
+{
+    fow last_fall = t->fall_of_wickets [t->wickets];
+    int balls_until_last_wicket = last_fall.overs_at_fall * 6 + last_fall.balls_into_over;
+    int balls_since_last_wicket = t->overs * 6 + t->ball_ordinality;
+    int balls_for_current_partnership = balls_since_last_wicket - balls_until_last_wicket;
+    printf ("%d runs off %d balls.\n", t->runs - last_fall.runs_at_fall, balls_for_current_partnership);
+}    
+
 void scorecard (void)
 {
     scoreline (first);
@@ -789,6 +865,7 @@ void help (void)
     puts ("ma   - analyze the situation in the current innings with some statistics.");
     puts ("s    - while the match is on, display the score for the team batting;");
     puts ("       will show the scorecards once the match has ended.");
+    puts ("fow  - show the fall of wickets.");
     puts ("ci   - after the first innings completes, prepare for the next one.");
     puts ("c n  - play with a balance between attack and defence.");
     puts ("c a  - play aggressively while increasing the risk of wickets falling.");
