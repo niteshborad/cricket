@@ -1,4 +1,6 @@
 CC = gcc
+# add  -fdump-rtl-expand to the end of CFLAGS for further generating
+# call graphs using `egypt'
 CFLAGS = -Wall -Wextra -Wmissing-prototypes -Wstrict-prototypes -Wuninitialized
 OBJS = cricket.o utilities.o team.o engine.o mechanics.o analysis.o pitch.o commands.o misc.o
 
@@ -7,7 +9,7 @@ cricket: $(OBJS)
 
 cricket.o: cricket.c cricket.h utilities.c utilities.h team.c team.h \
         engine.c engine.h mechanics.c mechanics.h analysis.c analysis.h \
-        pitch.c pitch.h commands.c commands.h misc.c misc.o
+        pitch.c pitch.h commands.c commands.h misc.c misc.h
 	$(CC) $(CFLAGS) -std=c99 -pedantic -O -g -c cricket.c
 
 utilities.o: utilities.c utilities.h
