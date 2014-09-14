@@ -28,7 +28,7 @@ void ball (int die1, int die2)
     else if (die1 == 2 && die2 == 2)
 	two ();
     else if (die1 == 3 && die2 == 3)
-	three ();
+	three_configuration ();
     else if (die1 == 4 && die2 == 4)
 	four ();
     else if (die1 == 5 && die2 == 5)
