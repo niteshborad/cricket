@@ -37,5 +37,15 @@ misc.o: misc.c misc.h
 	$(CC) $(CFLAGS) -std=c99 -pedantic -O -g -c misc.c
 
 
+# Tests
+test-utilities: test-utilities.o utilities.o
+	$(CC) $(CFLAGS) -std=c99 -pedantic -O -g -o test-utilities test-utilities.o utilities.o
+
+test-utilities.o: test-utilities.c test-utilities.h
+	$(CC) $(CFLAGS) -std=c99 -pedantic -O -g -c test-utilities.c
+
+test-utilities.h: test-utilities.c
+	cproto test-utilities.c > test-utilities.h
+
 clean:
 	rm *.o cricket
