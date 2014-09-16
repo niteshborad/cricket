@@ -1,8 +1,14 @@
 #ifndef COMMANDS_H
 #define COMMANDS_H
 
+#include "team.h"
 #include "engine.h"
 #include "misc.h"
+
+/* Team */
+extern team *first;
+extern team *second;
+extern const int max_wickets;
 
 /* Commands */
 typedef struct {

@@ -72,14 +72,17 @@ void current_partership (void)
 void scorecard (void)
 {
     scoreline (first);
-    putchar ('\n');
     scoreline (second);
 }
 
-void score (void)
+void summarize_match (void)
 {
-    if (which_innings == 2 && innings_finished == true)
-	scorecard ();
+    scorecard ();
+    putchar ('\n');
+    if (first->runs > second->runs)
+        printf ("%s win by %d wickets\n", first->name, max_wickets - first->wickets);
+    else if (first->runs < second->runs)
+        printf ("%s win by %d wickets\n", second->name, max_wickets - second->wickets);
     else
-	scoreline (t);
-}
+        puts ("Match tied");
+}    

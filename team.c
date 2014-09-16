@@ -2,6 +2,12 @@
 #include "team.h"
 
 #define MAX_TEAM_NAME_SIZE     30
+#define MAX_PLAYERS            11
+#define MAX_WICKETS            10
+
+const int max_players = MAX_PLAYERS;
+const int max_wickets = MAX_WICKETS;
+
 
 /*
  * Teams
@@ -12,7 +18,7 @@ team *make_team (void)		/* Due to Richard Heathfield */
     team *new_team = malloc (sizeof *new_team);
     if (new_team != NULL) {
 	*new_team = blank;
-	new_team->max_wickets = 10;
+	new_team->max_wickets = max_wickets;
 	init_fall_of_wickets (new_team);
     }
     return new_team;

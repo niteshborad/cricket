@@ -15,10 +15,6 @@
 #include "commands.h"
 #include "misc.h"
 
-#define MAX_PLAYERS    11
-
-const int max_players = MAX_PLAYERS;
-
 /* Team */
 /* For getting data */
 team *team_one;
@@ -30,8 +26,10 @@ team *second;
 team *t;
 team *nt;
 
+extern const int max_players;
+
 /* Pitch */
-pitch_condition pitch;
+extern pitch_condition pitch;
 
 /* Match variables */
 bool innings_finished = false;

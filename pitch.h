@@ -10,7 +10,7 @@ typedef struct {
     char *description;
 } pitch_condition;
 
-extern pitch_condition pitch;
+pitch_condition pitch;
 
 void prepare_pitch (void);
 void show_pitch_condition (void);

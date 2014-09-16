@@ -11,8 +11,6 @@
 
 #define MAX_PLAYERS    11
 
-extern const int max_players;
-
 /* Teams */
 typedef struct {
     char *name;

@@ -10,7 +10,6 @@ niladic niladic_commands [] = {
     {"h", help},
     {"nm", new_match},
     {"ma", match_analysis},
-    {"s", score},
     {"cp", current_partership},
     {"fow", print_fall_of_wickets},
     {"pc", show_pitch_condition},

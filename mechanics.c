@@ -21,6 +21,11 @@ void ball (int die1, int die2)
 	return;
     }
 
+    if (which_innings == 2 && innings_finished == true) {
+	match_under_way = false;
+	summarize_match ();
+    }
+
     if ((die1 == 1 && die2 == 1) ||
 	(die1 == 1 && die2 == 2) ||
 	(die1 == 2 && die2 == 1))

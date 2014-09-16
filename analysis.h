@@ -8,6 +8,7 @@ extern team *t;
 extern team *nt;
 extern team *first;
 extern team *second;
+extern const int max_wickets;
 
 /* Match variables */
 extern bool innings_finished;
@@ -25,6 +26,6 @@ void match_analysis (void);
 void print_fall_of_wickets (void);
 void current_partership (void);
 void scorecard (void);
-void score (void);
+void summarize_match (void);
 
 #endif
