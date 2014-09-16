@@ -14,16 +14,17 @@ void ball (int die1, int die2)
 	innings_finished = true;
     
     if (innings_finished == true) {
-	puts ("\tInnings over");
-	scoreline (t);
-	if (which_innings == 1)
+	if (which_innings == 1) {
 	    target = t->runs + 1;
+	    puts ("\tInnings over");
+	    scoreline (t);
+	}
+	if (which_innings == 2) {
+	    puts ("\tMatch over");
+	    match_under_way = false;
+	    summarize_match ();
+	}
 	return;
-    }
-
-    if (which_innings == 2 && innings_finished == true) {
-	match_under_way = false;
-	summarize_match ();
     }
 
     if ((die1 == 1 && die2 == 1) ||

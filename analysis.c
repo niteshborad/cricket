@@ -80,7 +80,7 @@ void summarize_match (void)
     scorecard ();
     putchar ('\n');
     if (first->runs > second->runs)
-        printf ("%s win by %d wickets\n", first->name, max_wickets - first->wickets);
+        printf ("%s win by %d runs\n", first->name, first->runs - second->runs);
     else if (first->runs < second->runs)
         printf ("%s win by %d wickets\n", second->name, max_wickets - second->wickets);
     else
