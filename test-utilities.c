@@ -60,6 +60,38 @@ void alphabetic_numeric_characters_sampling (void)
 }    
 
 
+/* bool lookup (int array [], size_t length, int key); */
+void lookup_nonexisting_key (void)
+{
+    int array [5] = {1, 2, 3, 4, 5};
+    assert (lookup (array, 5, 0) == false);
+}    
+
+void lookup_existing_first_key (void)
+{
+    int array [5] = {1, 2, 3, 4, 5};
+    assert (lookup (array, 5, 1) == true);
+}    
+
+void lookup_existing_last_key (void)
+{
+    int array [5] = {1, 2, 3, 4, 5};
+    assert (lookup (array, 5, 5) == true);
+}    
+
+void lookup_existing_intermediate_key (void)
+{
+    int array [5] = {1, 2, 3, 4, 5};
+    assert (lookup (array, 5, 4) == true);
+}
+
+void lookup_existing_double_key (void)
+{
+    int array [6] = {1, 2, 5, 3, 4, 5};
+    assert (lookup (array, 6, 5) == true);
+}
+
+
 int main (void)
 {
     /* bool alphabetic_numeric (const char *string); */
@@ -74,5 +106,12 @@ int main (void)
     alphabetic_numeric_mixed_spaces_letters ();
     alphabetic_numeric_characters_sampling ();
 
+    /* bool lookup (int array [], size_t length, int key); */
+    lookup_nonexisting_key ();
+    lookup_existing_first_key ();
+    lookup_existing_last_key ();
+    lookup_existing_intermediate_key ();
+    lookup_existing_double_key ();
+    
     return 0;
 }    
