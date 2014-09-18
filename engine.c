@@ -191,6 +191,8 @@ void change_innings (void)
 
 void new_match ()
 {
+    team_one = make_team ();
+    team_two = make_team ();
     prepare_pitch ();
     get_team_names (team_one, team_two);
     toss (team_one, team_two);
