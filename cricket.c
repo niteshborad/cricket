@@ -14,9 +14,6 @@ int main (void)
 
     srand ((unsigned) time (NULL));
 
-    team_one = make_team ();
-    team_two = make_team ();
-
     welcome ();
     while (fputs ("# ", stdout), fgets (line, 6, stdin) != NULL) {
 	nl = strchr (line, '\n');
