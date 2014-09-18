@@ -29,7 +29,7 @@
 * DONE Help function
 * DONE Sane commands
 * DONE Readme
-* TODO Print a description of the result of the match
+* DONE Print a description of the result of the match
 * DONE Fall of Wickets
 ** DONE Add an array of 11 ints to the teams.
 Waste the 0th slot and fill the rest with the scores when the wickets

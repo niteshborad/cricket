@@ -38,6 +38,8 @@ misc.o: misc.c misc.h
 
 
 # Tests
+test: test-utilities test-engine
+
 test-utilities: test-utilities.o utilities.o
 	$(CC) $(CFLAGS) -std=c99 -pedantic -O -g -o test-utilities test-utilities.o utilities.o
 
@@ -46,6 +48,7 @@ test-utilities.o: test-utilities.c test-utilities.h
 
 test-utilities.h: test-utilities.c
 	cproto test-utilities.c > test-utilities.h
+
 
 clean:
 	rm *.o cricket

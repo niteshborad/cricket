@@ -21,8 +21,9 @@ void ball (int die1, int die2)
 	}
 	if (which_innings == 2) {
 	    puts ("\tMatch over");
-	    match_under_way = false;
 	    summarize_match ();
+	    match_under_way = false;
+	    innings_finished = false;
 	}
 	return;
     }
