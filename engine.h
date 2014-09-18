@@ -21,8 +21,9 @@ typedef enum {
     VDEFENSIVE, DEFENSIVE, NORMAL, AGGRESSIVE, VAGGRESSIVE
 } aggression;
 
-/* Match variable */
+/* Match variables */
 extern bool match_under_way;
+extern bool innings_finished;
 
 int d6 (void);
 int d8 (void);
