@@ -1,7 +1,7 @@
 #include "misc.h"
 
 /*
- * Welcome and Help
+ * Miscellaneous
  */
 void welcome (void)
 {
@@ -38,4 +38,8 @@ void help (void)
     puts ("    No other commands will be recognized.");
 }    
 
+void quit (void)
+{
+    exit (0);
+}
 

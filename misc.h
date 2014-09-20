@@ -3,8 +3,9 @@
 
 #include <stdio.h>
 
-/* Welcome and Help */
+/* Miscellaneous */
 void welcome (void);
 void help (void);
+void quit (void);
 
 #endif
