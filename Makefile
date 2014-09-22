@@ -48,4 +48,4 @@ test-utilities.h: test-utilities.c
 
 
 clean:
-	rm *.o cricket
+	rm *.o cricket test-utilities

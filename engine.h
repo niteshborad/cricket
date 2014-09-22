@@ -6,6 +6,7 @@
 #include "team.h"
 #include "analysis.h"
 #include "pitch.h"
+#include "misc.h"
 
 /* Team */
 extern team *team_one;
