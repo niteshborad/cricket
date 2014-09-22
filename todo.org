@@ -39,3 +39,5 @@ fell.  Then, while printing, simply use the index i for the i'th wicket.
 * TODO Play a number of matches in succession
 Currently, nothing sane happens when trying to begin a new match just
 after one has finished.
+* TODO Match finished before over finished; still over goes through the motions
+
