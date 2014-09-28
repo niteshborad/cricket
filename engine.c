@@ -1,5 +1,6 @@
 #include "utilities.h"
 #include "engine.h"
+#include "analysis.h"
 
 #define MAX_TOSS_DECISION_SIZE  6
 
@@ -134,6 +135,10 @@ void play_over (void)
     t->overs++;
     if (t->runs_in_over == 0)
 	nt->maidens++;
+    putchar ('\n');
+    printf ("This over: %d runs\n", t->runs_in_over);
+    fputs ("Current partnership: ", stdout);
+    current_partnership ();
     t->runs_in_over = 0;
     t->ball_ordinality = 0;
     scoreline (t);
@@ -296,6 +301,7 @@ void one (void)
     puts ("1");
     t->runs += 1;
     t->runs_in_over += 1;
+    t->partnership += 1;
     t->balls++;
     t->ball_ordinality++;
 }
@@ -305,6 +311,7 @@ void two (void)
     puts ("2");
     t->runs += 2;
     t->runs_in_over += 2;
+    t->partnership += 2;
     t->balls++;
     t->ball_ordinality++;
 }
@@ -334,6 +341,7 @@ void three (void)
     puts ("3");
     t->runs += 3;
     t->runs_in_over += 3;
+    t->partnership += 3;
     t->balls++;
     t->ball_ordinality++;
 }
@@ -344,6 +352,7 @@ void four (void)
     t->fours++;
     t->runs += 4;
     t->runs_in_over += 4;
+    t->partnership += 4;
     t->balls++;
     t->ball_ordinality++;
 }
@@ -487,6 +496,7 @@ void retired_hurt (void)
 {
     puts ("Retired hurt");
     t->max_wickets--;
+    t->partnership = 0;
     t->balls++;
     t->ball_ordinality++;
 }    
@@ -513,6 +523,7 @@ void six (void)
     t->sixes++;
     t->runs += 6;
     t->runs_in_over += 6;
+    t->partnership += 6;
     t->balls++;
     t->ball_ordinality++;
 }
@@ -542,6 +553,7 @@ void wide (void)
     puts ("Wide");
     t->runs++;
     t->runs_in_over++;
+    t->partnership++;
     ball (die1 (), die2 ());
 }
 
@@ -551,16 +563,28 @@ void leg_byes (void)
     case 1:
     case 2:
 	puts ("1 leg bye");
+	t->runs += 1;
+	t->runs_in_over += 1;
+	t->partnership += 1;
 	break;
     case 3:
     case 4:
 	puts ("2 leg byes");
+	t->runs += 2;
+	t->runs_in_over += 2;
+	t->partnership += 2;
 	break;
     case 5:
 	puts ("3 leg byes");
+	t->runs += 3;
+	t->runs_in_over += 3;
+	t->partnership += 3;
 	break;
     case 6:
 	puts ("4 leg byes");
+	t->runs += 4;
+	t->runs_in_over += 4;
+	t->partnership += 4;	
 	break;
     }
 }
@@ -571,16 +595,28 @@ void byes (void)
     case 1:
     case 2:
 	puts ("1 bye");
+	t->runs += 1;
+	t->runs_in_over += 1;
+	t->partnership += 1;
 	break;
     case 3:
     case 4:
 	puts ("2 byes");
+	t->runs += 2;
+	t->runs_in_over += 2;
+	t->partnership += 2;
 	break;
     case 5:
 	puts ("3 byes");
+	t->runs += 3;
+	t->runs_in_over += 3;
+	t->partnership += 3;
 	break;
     case 6:
 	puts ("4 byes");
+	t->runs += 4;
+	t->runs_in_over += 4;
+	t->partnership += 4;
 	break;
     }
 }    
@@ -590,6 +626,7 @@ void noball (void)
     puts ("No ball");
     t->runs++;
     t->runs_in_over++;
+    t->partnership++;
     t->balls++;
     t->ball_ordinality++;
     ball (die1 (), die2 ());

@@ -109,8 +109,11 @@ void init_fall_of_wickets (team *t)
 {
     int i;
 
-    for (i = 1; i < max_players; i++)
+    for (i = 1; i < max_players; i++) {
 	t->fall_of_wickets [i].runs_at_fall = -1;
+	t->fall_of_wickets [i].overs_at_fall = -1;
+	t->fall_of_wickets [i].balls_into_over = -1;
+    }
 }
 
 void fall_of_wickets (team *t)

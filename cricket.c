@@ -19,6 +19,7 @@ int main (void)
 	nl = strchr (line, '\n');
 	if (nl != NULL)
 	    *nl = '\0';
+	putchar ('\n');
 	try_executing (line);
     }
 	

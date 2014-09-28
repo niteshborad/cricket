@@ -31,13 +31,13 @@
 * DONE Readme
 * DONE Print a description of the result of the match
 * DONE Fall of Wickets
-** DONE Add an array of 11 ints to the teams.
+** Add an array of 11 ints to the teams.
 Waste the 0th slot and fill the rest with the scores when the wickets
 fell.  Then, while printing, simply use the index i for the i'th wicket.
-* TODO Current partnership
+* DONE Fix glaring error: byes and leg byes do not contribute to runs.
+* DONE Current partnership
 ** TODO Handle partnerships when the last "wicket" was retired hurt.
 * TODO Play a number of matches in succession
 Currently, nothing sane happens when trying to begin a new match just
 after one has finished.
 * TODO Match finished before over finished; still over goes through the motions
-

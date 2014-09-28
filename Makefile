@@ -18,7 +18,7 @@ utilities.o: utilities.c utilities.h
 team.o: team.c team.h fall_of_wickets.h
 	$(CC) $(CFLAGS) -std=c99 -pedantic -O -g -c team.c
 
-engine.o: engine.c engine.h
+engine.o: engine.c engine.h analysis.o
 	$(CC) $(CFLAGS) -std=c99 -pedantic -O -g -c engine.c
 
 analysis.o: analysis.c analysis.h

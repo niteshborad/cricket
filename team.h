@@ -25,6 +25,7 @@ typedef struct {
     int maidens;
     int ball_ordinality;
     int runs_in_over;
+    int partnership;
 } team;
 
 team *make_team (void);
