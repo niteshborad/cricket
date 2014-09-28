@@ -60,7 +60,7 @@ void print_fall_of_wickets (void)
     fall_of_wickets (t);
 }    
 
-void current_partership (void)
+void current_partnership (void)
 {
     fow last_fall = t->fall_of_wickets [t->wickets];
     int balls_until_last_wicket = last_fall.overs_at_fall * 6 + last_fall.balls_into_over;

@@ -24,7 +24,7 @@ int runs_in_boundaries (team *t);
 double percentage_runs_in_boundaries (team *t);
 void match_analysis (void);
 void print_fall_of_wickets (void);
-void current_partership (void);
+void current_partnership (void);
 void scorecard (void);
 void summarize_match (void);
 
