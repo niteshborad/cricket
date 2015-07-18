@@ -37,7 +37,8 @@ fell.  Then, while printing, simply use the index i for the i'th wicket.
 * DONE Fix glaring error: byes and leg byes do not contribute to runs.
 * DONE Current partnership
 ** TODO Handle partnerships when the last "wicket" was retired hurt.
-* TODO Play a number of matches in succession
+* Play a number of matches in succession
 Currently, nothing sane happens when trying to begin a new match just
 after one has finished.
+** Obviated by exiting on finishing.
 * TODO Match finished before over finished; still over goes through the motions

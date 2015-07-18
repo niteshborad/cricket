@@ -22,8 +22,8 @@ int d10 (void)
     return uniform_int_in (1, 10);
 }
 
-int (*die1) (void) = d6;
-int (*die2) (void) = d6;
+static int (*die1) (void) = d6;
+static int (*die2) (void) = d6;
 
 
 void play2 (void)
@@ -124,7 +124,7 @@ void play10 (void)
     }
 }
 
-void (*play) (void) = play6;
+static void (*play) (void) = play6;
 
 
 void play_over (void)
@@ -136,9 +136,9 @@ void play_over (void)
     if (t->runs_in_over == 0)
 	nt->maidens++;
     putchar ('\n');
-    printf ("This over: %d runs\n", t->runs_in_over);
-    fputs ("Current partnership: ", stdout);
-    current_partnership ();
+    printf ("This over: %d run%s\n", t->runs_in_over, (t->runs_in_over == 1) ? "" : "s");
+    /* fputs ("Current partnership: ", stdout); */
+    /* current_partnership (); */
     t->runs_in_over = 0;
     t->ball_ordinality = 0;
     scoreline (t);
@@ -252,7 +252,7 @@ void toss (team *a, team *b)
  * Mechanics of deliveries
  */
 
-void ball (int die1, int die2)
+void ball (int first_die, int second_die)
 {
     if (t->overs >= max_overs || t->wickets >= t->max_wickets)
 	innings_finished = true;
@@ -270,26 +270,27 @@ void ball (int die1, int die2)
 	    puts ("\tMatch over");
 	    summarize_match ();
 	    match_under_way = false;
-	    innings_finished = false;
+	    /* innings_finished = false; */
+	    exit (0);
 	}
 	return;
     }
 
-    if ((die1 == 1 && die2 == 1) ||
-	(die1 == 1 && die2 == 2) ||
-	(die1 == 2 && die2 == 1))
+    if ((first_die == 1 && second_die == 1) ||
+	(first_die == 1 && second_die == 2) ||
+	(first_die == 2 && second_die == 1))
 	one ();
-    else if (die1 == 2 && die2 == 2)
+    else if (first_die == 2 && second_die == 2)
 	two ();
-    else if (die1 == 3 && die2 == 3)
+    else if (first_die == 3 && second_die == 3)
 	three_configuration ();
-    else if (die1 == 4 && die2 == 4)
+    else if (first_die == 4 && second_die == 4)
 	four ();
-    else if (die1 == 5 && die2 == 5)
+    else if (first_die == 5 && second_die == 5)
 	wicket_chance ();
-    else if (die1 == 6 && die2 == 6)
+    else if (first_die == 6 && second_die == 6)
 	big_hit ();
-    else if (die1 == 1 && die2 == 4)
+    else if (first_die == 1 && second_die == 4)
 	extras ();
     else
 	dot ();

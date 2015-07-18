@@ -64,13 +64,15 @@ void current_partnership (void)
 {
     fow last_fall = t->fall_of_wickets [t->wickets];
     int balls_until_last_wicket = last_fall.overs_at_fall * 6 + last_fall.balls_into_over;
-    int balls_since_last_wicket = t->overs * 6 + t->ball_ordinality;
+    int balls_till_now = t->overs * 6 + t->ball_ordinality;
     int balls_for_current_partnership;
 
-    if (t->wickets == 0)
+    if (t->wickets == 0) {
 	balls_for_current_partnership = t->balls;
+	last_fall.runs_at_fall = 0;
+    }
     else
-	balls_for_current_partnership = balls_since_last_wicket - balls_until_last_wicket;
+	balls_for_current_partnership = balls_till_now - balls_until_last_wicket;
     
     printf ("%d runs off %d balls.\n", t->runs - last_fall.runs_at_fall, balls_for_current_partnership);
 }    
