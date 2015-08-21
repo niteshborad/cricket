@@ -1,8 +1,7 @@
-CC = ccache clang
+CC = gcc
 # add  -fdump-rtl-expand to the end of CFLAGS for further generating
 # call graphs using `egypt'
-# CFLAGS = -Wall -Wextra -Wmissing-prototypes -Wstrict-prototypes -Wconversion -Wshadow -Wcast-qual -Wcast-align -Wwrite-strings
-CFLAGS = -Weverything -std=c99 -pedantic -O0 -g -pg
+CFLAGS = -std=c89 -pedantic-errors -Wall -Wextra -Werror -Og -g
 OBJS = cricket.o utilities.o team.o engine.o analysis.o pitch.o commands.o misc.o
 
 cricket: $(OBJS)
