@@ -12,10 +12,11 @@
 #define MAX_PLAYERS    11
 
 /* Teams */
-typedef struct {
+typedef struct
+{
     char *name;
     int overs;
-    fow fall_of_wickets [MAX_PLAYERS];
+    fow fall_of_wickets[MAX_PLAYERS];
     int balls;
     int runs;
     int wickets;
@@ -28,9 +29,9 @@ typedef struct {
     int partnership;
 } team;
 
-team *make_team (void);
-void get_team_names (team *a, team *b);
-void init_fall_of_wickets (team *t);
-void fall_of_wickets (team *t);
+team *make_team(void);
+void get_team_names(team *a, team *b);
+void init_fall_of_wickets(team *t);
+void fall_of_wickets(team *t);
 
 #endif
