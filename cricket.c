@@ -7,21 +7,22 @@
  * 0 - successful exit
  * 1 - error allocating memory
  */
-int main (void)
+int main(void)
 {
-    char line [6];
-    char *nl;
+  char line[6];
+  char *nl;
 
-    srand ((unsigned) time (NULL));
+  srand((unsigned) time(0));
 
-    welcome ();
-    while (fputs ("# ", stdout), fgets (line, 6, stdin) != NULL) {
-	nl = strchr (line, '\n');
-	if (nl != NULL)
-	    *nl = '\0';
-	putchar ('\n');
-	try_executing (line);
-    }
+  welcome();
+  while (fputs("# ", stdout), fgets(line, 6, stdin) != NULL)
+  {
+    nl = strchr(line, '\n');
+    if (nl != NULL)
+      *nl = '\0';
+    putchar('\n');
+    try_executing(line);
+  }
 	
-    return 0;
+  return 0;
 }    
