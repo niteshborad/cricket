@@ -5,8 +5,8 @@
 #include <stdlib.h>
 
 /* Miscellaneous */
-void welcome (void);
-void help (void);
-void quit (void);
+void welcome(void);
+void help(void);
+void quit(void);
 
 #endif
