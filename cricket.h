@@ -39,8 +39,8 @@ int max_overs = 50;
 int target;
 
 /* Engine */
-extern int (*die1) (void);
-extern int (*die2) (void);
+extern int (*die1)(void);
+extern int (*die2)(void);
 
 
 
