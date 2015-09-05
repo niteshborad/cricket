@@ -5,15 +5,16 @@
 #include <stdlib.h>
 
 /* Pitch */
-typedef struct {
+typedef struct
+{
     int number;
     char *description;
 } pitch_condition;
 
 pitch_condition pitch;
 
-void prepare_pitch (void);
-void show_pitch_condition (void);
+void prepare_pitch(void);
+void show_pitch_condition(void);
 
 
 #endif
