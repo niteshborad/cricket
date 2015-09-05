@@ -17,6 +17,11 @@ depend:
 include .depend
 
 
+# Tags
+tags:
+	etags *.[ch] > TAGS
+
+
 # Tests
 test: test-utilities test-engine
 
