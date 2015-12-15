@@ -206,7 +206,6 @@ void new_match()
   team_two = make_team();
   prepare_pitch();
   get_team_names(team_one, team_two);
-  show_pitch_condition();
   toss(team_one, team_two);
   match_under_way = true;
 }
