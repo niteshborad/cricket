@@ -41,4 +41,4 @@ fell.  Then, while printing, simply use the index i for the i'th wicket.
 Currently, nothing sane happens when trying to begin a new match just
 after one has finished.
 ** Obviated by exiting on finishing.
-* TODO Match finished before over finished; still over goes through the motions
+* TODO Match finished before over finished; over still goes through the motions
