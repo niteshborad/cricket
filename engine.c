@@ -283,8 +283,8 @@ void ball(int first_die, int second_die)
     if (which_innings == 2)
     {
       puts("\tMatch over");
-      summarize_match();
       match_under_way = false;
+      summarize_match();
 
       free(team_one->name);
       free(team_two->name);
