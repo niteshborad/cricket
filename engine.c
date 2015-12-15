@@ -285,7 +285,12 @@ void ball(int first_die, int second_die)
       puts("\tMatch over");
       summarize_match();
       match_under_way = false;
-      /* innings_finished = false; */
+
+      free(team_one->name);
+      free(team_two->name);
+      free(team_one);
+      free(team_two);
+
       exit(0);
     }
     return;
