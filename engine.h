@@ -1,34 +1,13 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
-#include <stdbool.h>
-
 #include "team.h"
-#include "analysis.h"
-#include "pitch.h"
-#include "misc.h"
-
-/* Team */
-extern team *team_one;
-extern team *team_two;
-extern team *t;
-
-/* Pitch */
-extern pitch_condition pitch;
-extern int out_list[6];
 
 /* Engine */
 typedef enum
 {
     VDEFENSIVE, DEFENSIVE, NORMAL, AGGRESSIVE, VAGGRESSIVE
 } aggression;
-
-/* Match variables */
-extern bool match_under_way;
-extern bool innings_finished;
-extern int max_overs;
-extern int which_innings;
-extern int target;
 
 
 /* Engine */

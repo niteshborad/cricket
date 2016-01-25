@@ -1,6 +1,11 @@
 #include "utilities.h"
 #include "pitch.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+
+pitch_condition pitch;
+
 /*
  * Pitch
  */
@@ -31,4 +36,4 @@ void show_pitch_condition(void)
   /* putchar('\n'); */
   puts(pitch.description);
   putchar('\n');
-}    
+}

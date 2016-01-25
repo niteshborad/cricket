@@ -1,4 +1,21 @@
+#include "team.h"
 #include "analysis.h"
+
+#include <stdio.h>
+#include <stdbool.h>
+
+/* Team */
+extern team *t;
+extern team *nt;
+extern team *first;
+extern team *second;
+extern const int max_wickets;
+
+/* Match variables */
+extern bool innings_finished;
+extern int max_overs;
+extern int which_innings;
+extern int target;
 
 /*
  * Match analysis
@@ -11,6 +28,8 @@ double runrate(int runs, int overs)
 
 void scoreline(team *t)
 {
+  extern bool match_under_way;
+  
   printf("%s    ", t->name);
   printf("Score: %d/%d    ", t->runs, t->wickets);
   printf("Overs: %d.%d    ", t->overs, t->ball_ordinality);
@@ -30,7 +49,7 @@ void projected_score(void)
   else
     printf("Projected score: %d\n",
 	   (int) (t->runs + runrate(t->runs, t->overs) * (max_overs - t->overs)));
-}    
+}
 
 int runs_in_boundaries(team *t)
 {
@@ -42,7 +61,7 @@ double percentage_runs_in_boundaries(team *t)
   if (t->runs == 0)
     return 0;
   return (double) (runs_in_boundaries(t) * 100) / t->runs;
-}    
+}
 
 void match_analysis(void)
 {
@@ -58,12 +77,12 @@ void match_analysis(void)
   printf("Runs in boundaries: %d (%.1f%%)\n", runs_in_boundaries(t), percentage_runs_in_boundaries(t));
   printf("Maidens: %d\n", nt->maidens);
   projected_score();
-}    
+}
 
 void print_fall_of_wickets(void)
 {
   fall_of_wickets(t);
-}    
+}
 
 void current_partnership(void)
 {
@@ -79,9 +98,9 @@ void current_partnership(void)
   }
   else
     balls_for_current_partnership = balls_till_now - balls_until_last_wicket;
-    
+
   printf("%d runs off %d balls.\n", t->runs - last_fall.runs_at_fall, balls_for_current_partnership);
-}    
+}
 
 void scorecard(void)
 {
@@ -99,4 +118,4 @@ void summarize_match(void)
     printf("%s win by %d wickets\n", second->name, max_wickets - second->wickets);
   else
     puts("Match tied");
-}    
+}

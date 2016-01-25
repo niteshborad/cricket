@@ -38,7 +38,7 @@ void shuffle_int_array(int array[], int length)
     array[i] = array[j];
     array[j] = temp;
   }
-}    
+}
 
 bool lookup(int array[], size_t length, int key)
 /* Search for KEY in ARRAY of size LENGTH.

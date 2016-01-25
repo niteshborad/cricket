@@ -1,9 +1,25 @@
 #include "commands.h"
+#include "team.h"
+#include "engine.h"
+#include "analysis.h"
+#include "misc.h"
+#include "pitch.h"
+
+#include <string.h>
+#include <stdbool.h>
+
+/* Team */
+extern team *first;
+extern team *second;
+extern const int max_wickets;
+
+
+extern bool match_under_way;
+  
 
 /*
  * Commands
  */
-
 niladic niladic_commands[] =
 {
   {"o", play_over},
@@ -43,7 +59,7 @@ void do_niladic_unless_match_underway(niladic *command)
     command->do_it();
   else
     puts("There is no match in progress yet.");
-}    
+}
 
 monadic *lookup_monadic_command_name(char *command_name)
 {
@@ -79,5 +95,3 @@ void try_executing(char *command_name)
   else
     puts("Unknown command.  Press 'h' for some help.");
 }
-
-

@@ -1,5 +1,12 @@
 #include "utilities.h"
 #include "team.h"
+#include "fall_of_wickets.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
+#include <errno.h>
 
 #define MAX_TEAM_NAME_SIZE     30
 #define MAX_PLAYERS            11
@@ -7,7 +14,6 @@
 
 const int max_players = MAX_PLAYERS;
 const int max_wickets = MAX_WICKETS;
-
 
 /*
  * Teams
@@ -57,7 +63,7 @@ void get_team_names(team *a, team *b)
     if (found_newline_in_buffer == false)
       while (getchar() != '\n')
 	;
-    
+
     while (fputs("> ", stdout), fgets(two, MAX_TEAM_NAME_SIZE, stdin) != NULL)
     {
       nl = strchr(two, '\n');
@@ -91,7 +97,7 @@ void get_team_names(team *a, team *b)
     }
   } while (duplicate_names == true);
 
-    
+
   errno = 0;
   a_name_size = strlen(one) + 1;
   a->name = malloc(a_name_size);
@@ -131,7 +137,7 @@ void fall_of_wickets(team *t)
 {
   int i;
   fow fall;
-    
+
   if (t->wickets == 0)
   {
     puts("No wickets have fallen.");
@@ -159,4 +165,4 @@ void fall_of_wickets(team *t)
     printf("(%d.%d)  ", fall.overs_at_fall, fall.balls_into_over);
   }
   putchar('\n');
-}    
+}

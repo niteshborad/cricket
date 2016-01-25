@@ -1,8 +1,36 @@
+#include "team.h"
+#include "analysis.h"
+#include "pitch.h"
+#include "misc.h"
 #include "utilities.h"
 #include "engine.h"
 #include "analysis.h"
 
+#include <stdbool.h>
+#include <string.h>
+
 #define MAX_TOSS_DECISION_SIZE  6
+
+/* Team */
+extern team *team_one;
+extern team *team_two;
+extern team *t;
+extern team *nt;
+extern team *first;
+extern team *second;
+
+
+/* Pitch */
+extern pitch_condition pitch;
+extern int out_list[6];
+
+/* Match variables */
+extern bool match_under_way;
+extern bool innings_finished;
+extern int max_overs;
+extern int which_innings;
+extern int target;
+
 
 /*
  * Engine
@@ -83,7 +111,7 @@ void play8(void)
   int roll_on_die2 = die2();
   int roll;
   die2 = d8;
-    
+
   switch (roll_on_die2)
   {
   case 1:
@@ -107,7 +135,7 @@ void play10(void)
   int roll_on_die2 = die2();
   int roll;
   die2 = d10;
-    
+
   switch (roll_on_die2)
   {
   case 1:
@@ -129,7 +157,6 @@ void play10(void)
 }
 
 static void (*play) (void) = play6;
-
 
 void play_over(void)
 {
@@ -157,7 +184,7 @@ void over(void)
       play();
     else
       break;
-}    
+}
 
 void change_aggression(aggression agg)
 {
@@ -184,7 +211,7 @@ void change_aggression(aggression agg)
     play = play10;
     break;
   }
-}    
+}
 
 void change_innings(void)
 {
@@ -198,7 +225,7 @@ void change_innings(void)
   }
   else
     puts("The innings cannot be changed now");
-}    
+}
 
 void new_match()
 {
@@ -258,7 +285,7 @@ void toss(team *a, team *b)
 
   t = first;
   nt = second;
-}    
+}
 
 /*
  * Mechanics of deliveries
@@ -271,7 +298,7 @@ void ball(int first_die, int second_die)
 
   if (which_innings == 2 && t->runs >= target)
     innings_finished = true;
-    
+
   if (innings_finished == true)
   {
     if (which_innings == 1)
@@ -314,7 +341,7 @@ void ball(int first_die, int second_die)
     extras();
   else
     dot();
-}    
+}
 
 
 void one(void)
@@ -359,7 +386,7 @@ void three_configuration(void)
 }
 
 void three(void)
-{    
+{
   puts("3");
   t->runs += 3;
   t->runs_in_over += 3;
@@ -392,7 +419,7 @@ void notout(void)
   puts("Not out");
   t->balls++;
   t->ball_ordinality++;
-}    
+}
 
 void mode_of_dismissal(void)
 {
@@ -425,11 +452,11 @@ void mode_of_dismissal(void)
 void set_fall_of_wickets(team *team)
 {
   fow *fall = &(t->fall_of_wickets[t->wickets]);
-    
+
   fall->runs_at_fall = team->runs;
   fall->overs_at_fall = team->overs;
   fall->balls_into_over = team->ball_ordinality;
-}    
+}
 
 void caught_in_the_field(void)
 {
@@ -438,7 +465,7 @@ void caught_in_the_field(void)
   t->ball_ordinality++;
   t->wickets++;
   set_fall_of_wickets(t);
-}    
+}
 
 void caught_behind(void)
 {
@@ -465,7 +492,7 @@ void lbw(void)
   t->ball_ordinality++;
   t->wickets++;
   set_fall_of_wickets(t);
-}    
+}
 
 void runout(void)
 {
@@ -495,7 +522,7 @@ void miscellany(void)
     retired_hurt();
     break;
   }
-}    
+}
 
 void stumped(void)
 {
@@ -504,13 +531,13 @@ void stumped(void)
   t->balls++;
   t->ball_ordinality++;
   set_fall_of_wickets(t);
-}    
+}
 
 void hit_wicket(void)
 {
   puts("Hit wicket");
   t->balls++;
-  t->ball_ordinality++; 
+  t->ball_ordinality++;
   t->wickets++;
   set_fall_of_wickets(t);
 }
@@ -522,7 +549,7 @@ void retired_hurt(void)
   t->partnership = 0;
   t->balls++;
   t->ball_ordinality++;
-}    
+}
 
 void big_hit(void)
 {
@@ -610,7 +637,7 @@ void leg_byes(void)
     puts("4 leg byes");
     t->runs += 4;
     t->runs_in_over += 4;
-    t->partnership += 4;	
+    t->partnership += 4;
     break;
   }
 }
@@ -646,7 +673,7 @@ void byes(void)
     t->partnership += 4;
     break;
   }
-}    
+}
 
 void noball(void)
 {
@@ -657,7 +684,7 @@ void noball(void)
   t->balls++;
   t->ball_ordinality++;
   ball(die1(), die2());
-}    
+}
 
 void dot(void)
 {

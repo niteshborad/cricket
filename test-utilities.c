@@ -3,13 +3,11 @@
 #include "utilities.h"
 #include "test-utilities.h"
 
-#define NDEBUG
-
 /* bool alphabetic_numeric(const char *string); */
 void alphabetic_numeric_empty(void)
 {
   assert(alphabetic_numeric("") == true);
-}    
+}
 
 void alphabetic_numeric_single_alphabet(void)
 {
@@ -19,12 +17,12 @@ void alphabetic_numeric_single_alphabet(void)
 void alphabetic_numeric_single_digit(void)
 {
   assert(alphabetic_numeric("6") == true);
-}    
+}
 
 void alphabetic_numeric_single_space(void)
 {
   assert(alphabetic_numeric(" ") == false);
-}    
+}
 
 void alphabetic_numeric_single_punctuator(void)
 {
@@ -34,12 +32,12 @@ void alphabetic_numeric_single_punctuator(void)
 void alphabetic_numeric_mixed_spaces_digits(void)
 {
   assert(alphabetic_numeric(" 1 2 3 4 5 6 7 8 9 ") == false);
-}    
+}
 
 void alphabetic_numeric_mixed_digits_spaces(void)
 {
   assert(alphabetic_numeric("1 2 3 4 5 6 7 8 9") == false);
-}    
+}
 
 void alphabetic_numeric_mixed_letters_spaces(void)
 {
@@ -54,7 +52,7 @@ void alphabetic_numeric_mixed_spaces_letters(void)
 void alphabetic_numeric_characters_sampling(void)
 {
   assert(alphabetic_numeric("!'a:@,oq#.ej$puk%yix^fdb&ghm*ctw{rnv}lsz/(-+)\\") == false);
-}    
+}
 
 
 /* bool lookup(int array[], size_t length, int key); */
@@ -62,19 +60,19 @@ void lookup_nonexisting_key(void)
 {
   int array[5] = {1, 2, 3, 4, 5};
   assert(lookup(array, 5, 0) == false);
-}    
+}
 
 void lookup_existing_first_key(void)
 {
   int array[5] = {1, 2, 3, 4, 5};
   assert(lookup(array, 5, 1) == true);
-}    
+}
 
 void lookup_existing_last_key(void)
 {
   int array[5] = {1, 2, 3, 4, 5};
   assert(lookup(array, 5, 5) == true);
-}    
+}
 
 void lookup_existing_intermediate_key(void)
 {
@@ -109,6 +107,6 @@ int main(void)
   lookup_existing_last_key();
   lookup_existing_intermediate_key();
   lookup_existing_double_key();
-    
+
   return 0;
-}    
+}

@@ -1,12 +1,7 @@
 #ifndef TEAM_H
 #define TEAM_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <string.h>
-#include <errno.h>
-
+#include "team.h"
 #include "fall_of_wickets.h"
 
 #define MAX_PLAYERS    11

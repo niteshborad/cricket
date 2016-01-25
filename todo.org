@@ -13,7 +13,7 @@
 ** DONE Write wicket_chance()
 *** DONE Write mode_of_dismissal()
 **** DONE enums for dismissals?  Or some struct or array?
-***** None right now.  Simple switch-case for printing. 
+***** None right now.  Simple switch-case for printing.
 ** DONE Write big-hit()
 ** DONE Write extras()
 *** DONE wide

@@ -3,19 +3,6 @@
 
 #include "team.h"
 
-/* Team */
-extern team *t;
-extern team *nt;
-extern team *first;
-extern team *second;
-extern const int max_wickets;
-
-/* Match variables */
-extern bool innings_finished;
-extern int max_overs;
-extern int which_innings;
-extern int target;
-
 /* Match analysis */
 double runrate(int runs, int overs);
 void scoreline(team *t);

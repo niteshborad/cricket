@@ -1,7 +1,8 @@
 CC = gcc
 # add  -fdump-rtl-expand to the end of CFLAGS for further generating
 # call graphs using `egypt'
-CFLAGS = -std=c89 -pedantic-errors -Wall -Wextra -Werror -Og -g
+CFLAGS = -std=c99 -pedantic-errors -Wall -Wextra -Werror -Og -g
+# CFLAGS = -std=c99 -pedantic-errors -Weverything -Werror -O0 -g
 
 OBJS = cricket.o utilities.o team.o engine.o analysis.o pitch.o commands.o misc.o
 # Headers generated with     echo *.h

@@ -9,7 +9,7 @@ void welcome(void)
   puts("A diminutive cricket simulator.");
   putchar ('\n');
   puts("Type 'h' for some help.");
-}    
+}
 
 void help(void)
 {
@@ -36,10 +36,9 @@ void help(void)
   puts("c vd - play very defensively while further decreasing the flow of runs.");
   putchar('\n');
   puts("    No other commands will be recognized.");
-}    
+}
 
 void quit(void)
 {
   exit(0);
 }
-
