@@ -55,7 +55,7 @@ niladic *lookup_niladic_command_name(char *command_name)
 
 void do_niladic_unless_match_underway(niladic *command)
 {
-  if (match_under_way == true)
+  if (match_under_way)
     command->do_it();
   else
     puts("There is no match in progress yet.");
@@ -72,7 +72,7 @@ monadic *lookup_monadic_command_name(char *command_name)
 
 void do_monadic_unless_match_underway(monadic *command)
 {
-  if (match_under_way == true)
+  if (match_under_way)
     command->set_aggression(command->aggr);
   else
     puts("There is no match in progress yet.");

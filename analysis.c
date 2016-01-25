@@ -34,8 +34,8 @@ void scoreline(team *t)
   printf("Score: %d/%d    ", t->runs, t->wickets);
   printf("Overs: %d.%d    ", t->overs, t->ball_ordinality);
   if (t->overs > 0) {
-    printf("Run rate: %.2f%s", runrate (t->runs, t->overs), (which_innings == 1) ? "\n" : " ");
-    if (match_under_way == true && which_innings == 2)
+    printf("Run rate: %.2f%s", runrate (t->runs, t->overs), (match_under_way && which_innings == 1) ? "\n" : " ");
+    if (match_under_way && which_innings == 2)
       printf("Run rate required: %.2f\n", (double) (target - t->runs) / (max_overs - t->overs));
   }
   else
@@ -71,7 +71,7 @@ void match_analysis(void)
   {
     printf("Target: %d    ", target);
     printf("Runs needed: %d    ", target - t->runs);
-    printf("Run rate required: %.2f\n", (double) (target - t->runs) / (max_overs - t->overs));
+    printf("   Run rate required: %.2f\n", (double) (target - t->runs) / (max_overs - t->overs));
   }
   printf("Fours: %d    Sixes: %d    ", t->fours, t->sixes);
   printf("Runs in boundaries: %d (%.1f%%)\n", runs_in_boundaries(t), percentage_runs_in_boundaries(t));
@@ -99,7 +99,7 @@ void current_partnership(void)
   else
     balls_for_current_partnership = balls_till_now - balls_until_last_wicket;
 
-  printf("%d runs off %d balls.\n", t->runs - last_fall.runs_at_fall, balls_for_current_partnership);
+  printf("Current partnership: %d runs off %d balls.\n", t->runs - last_fall.runs_at_fall, balls_for_current_partnership);
 }
 
 void scorecard(void)
