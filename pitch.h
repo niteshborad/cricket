@@ -4,8 +4,8 @@
 /* Pitch */
 typedef struct
 {
-    int number;
-    char *description;
+  int number;
+  char *description;
 } pitch_condition;
 
 void prepare_pitch(void);

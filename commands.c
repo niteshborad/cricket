@@ -15,7 +15,7 @@ extern const int max_wickets;
 
 
 extern bool match_under_way;
-  
+
 
 /*
  * Commands
