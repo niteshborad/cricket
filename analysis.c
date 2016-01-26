@@ -34,9 +34,22 @@ void scoreline(team *t)
   printf("Score: %d/%d    ", t->runs, t->wickets);
   printf("Overs: %d.%d    ", t->overs, t->ball_ordinality);
   if (t->overs > 0) {
-    printf("Run rate: %.2f%s", runrate (t->runs, t->overs), (match_under_way && which_innings == 1) ? "\n" : " ");
-    if (match_under_way && which_innings == 2)
-      printf("Run rate required: %.2f\n", (double) (target - t->runs) / (max_overs - t->overs));
+    printf("Run rate: %.2f", runrate (t->runs, t->overs),);
+    if (match_under_way)
+    {
+      switch (which_innings)
+      {
+      case 1: putchar('\n');
+	break;
+      case 2: putchar(' ');
+      }
+      if (which_innings == 2)
+	printf("Run rate required: %.2f\n", (double) (target - t->runs) / (max_overs - t->overs));
+    }
+    else
+    {
+      putchar('\n');
+    }
   }
   else
     putchar('\n');
