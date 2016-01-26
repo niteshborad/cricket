@@ -6,6 +6,7 @@
 #include "engine.h"
 #include "analysis.h"
 
+#include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
 
