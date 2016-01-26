@@ -5,6 +5,4 @@
 extern int (*die1)(void);
 extern int (*die2)(void);
 
-
-
 #endif
