@@ -24,7 +24,7 @@ tags:
 
 
 # Tests
-test: test-utilities test-engine
+test: test-utilities
 
 test-utilities: test-utilities.o utilities.o
 	$(CC) $(CFLAGS)  -o test-utilities test-utilities.o utilities.o
