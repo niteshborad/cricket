@@ -10,7 +10,6 @@
 #define UTILITIES_H
 
 #include <stdlib.h>
-#include <ctype.h>
 #include <stdbool.h>
 
 int uniform_int_in(int min, int max);

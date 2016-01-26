@@ -8,6 +8,8 @@
 
 #include "utilities.h"
 
+#include <ctype.h>
+
 int uniform_int_in(int min, int max)
 /* Pick a number in [MIN, MAX] with uniform probability, where
  *             0 <= min <= max <= 32767
