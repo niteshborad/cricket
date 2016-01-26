@@ -42,3 +42,4 @@ Currently, nothing sane happens when trying to begin a new match just
 after one has finished.
 ** Obviated by exiting on finishing.
 * TODO Match finished before over finished; over still goes through the motions
+* TODO 's' does nothing during the match, but help says it should.
