@@ -1,5 +1,9 @@
 #include "misc.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+
+
 /*
  * Miscellaneous
  */
