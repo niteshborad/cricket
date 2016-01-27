@@ -28,8 +28,6 @@ void help(void)
   puts("o    - play the next over, unless the innings has ended.");
   puts("pc   - tell something about the condition of the pitch.");
   puts("ma   - analyze the situation in the current innings with some statistics.");
-  puts("s    - while the match is on, display the score for the team batting;");
-  puts("       will show the scorecards once the match has ended.");
   puts("fow  - show the fall of wickets.");
   puts("cp   - show the current partnership.");
   puts("ci   - after the first innings completes, prepare for the next one.");
