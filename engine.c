@@ -162,7 +162,7 @@ static void (*play) (void) = play6;
 void play_over(void)
 {
   over();
-  if (innings_finished == true)
+  if (innings_finished)
     return;
   t->overs++;
   if (t->runs_in_over == 0)
