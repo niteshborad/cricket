@@ -181,10 +181,10 @@ void over(void)
   int i;
 
   for (i = 0; i < 6; i++)
-    if (innings_finished == false)
-      play();
-    else
-      break;
+  {
+    if (innings_finished) break;
+    else play();
+  }
 }
 
 void change_aggression(aggression agg)
