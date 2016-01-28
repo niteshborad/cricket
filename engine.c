@@ -456,7 +456,10 @@ void set_fall_of_wickets(team *team)
 
   fall->runs_at_fall = team->runs;
   fall->overs_at_fall = team->overs;
-  fall->balls_into_over = team->ball_ordinality;
+  if (team->ball_ordinality == 6)
+    fall->balls_into_over = 0;
+  else
+    fall->balls_into_over = team->ball_ordinality;
 }
 
 void caught_in_the_field(void)
