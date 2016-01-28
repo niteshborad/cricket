@@ -1,6 +1,6 @@
 CC = gcc
-# add  -fdump-rtl-expand to the end of CFLAGS for further generating
-# call graphs using `egypt'
+# add  -fdump-rtl-expand to the end of CFLAGS for generating call graphs
+# using `egypt'
 CFLAGS = -std=c99 -pedantic-errors -Wall -Wextra -Werror -Og -g
 
 OBJS = cricket.o utilities.o team.o engine.o analysis.o pitch.o commands.o misc.o
