@@ -44,7 +44,7 @@ void scoreline(team *t)
       case 2: putchar(' ');
       }
       if (which_innings == 2)
-	printf("Run rate required: %.2f\n", (double) (target - t->runs) / (max_overs - t->overs));
+	printf(" Run rate required: %.2f\n", (double) (target - t->runs) / (max_overs - t->overs));
     }
     else
     {
