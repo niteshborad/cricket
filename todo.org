@@ -43,6 +43,5 @@ after one has finished.
 ** Obviated by exiting on finishing.
 * TODO Match finished before over finished; over still goes through the motions
 * DONE 's' does nothing during the match, but help says it should.
-* TODO 42/1 (6.1)  168/2 (18.6)  
+* DONE 42/1 (6.1)  168/2 (18.6)
 This should say (19.0)
-
