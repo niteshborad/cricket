@@ -237,7 +237,7 @@ void new_match()
     free(team_one);
     free(team_two);
   }
-  
+
   team_one = make_team();
   team_two = make_team();
   prepare_pitch();
