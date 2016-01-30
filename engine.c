@@ -230,6 +230,14 @@ void change_innings(void)
 
 void new_match()
 {
+  if (match_under_way)
+  {
+    free(team_one->name);
+    free(team_two->name);
+    free(team_one);
+    free(team_two);
+  }
+  
   team_one = make_team();
   team_two = make_team();
   prepare_pitch();
