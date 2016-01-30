@@ -1,8 +1,20 @@
 #include "misc.h"
+#include "team.h"
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
+/* Match variables */
+extern bool match_under_way;
+
+/* Team */
+extern team *team_one;
+extern team *team_two;
+extern team *t;
+extern team *nt;
+extern team *first;
+extern team *second;
 
 /*
  * Miscellaneous
@@ -42,5 +54,11 @@ void help(void)
 
 void quit(void)
 {
+  match_under_way = false;
+  free(team_one->name);
+  free(team_two->name);
+  free(team_one);
+  free(team_two);
+
   exit(0);
 }
