@@ -76,7 +76,7 @@ double percentage_runs_in_boundaries(team *t)
 
 void match_analysis(void)
 {
-  scoreline (t);
+  scoreline(t);
   current_partnership();
   if (which_innings == 2)
   {
