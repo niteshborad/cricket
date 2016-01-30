@@ -1,10 +1,10 @@
 analysis.o: analysis.c team.h fall_of_wickets.h analysis.h
 commands.o: commands.c commands.h engine.h team.h fall_of_wickets.h \
-  analysis.h misc.h pitch.h
+ analysis.h misc.h pitch.h
 cricket.o: cricket.c cricket.h team.h fall_of_wickets.h engine.h \
-  analysis.h pitch.h commands.h misc.h
+ analysis.h pitch.h commands.h misc.h
 engine.o: engine.c team.h fall_of_wickets.h analysis.h pitch.h misc.h \
-  utilities.h engine.h
+ utilities.h engine.h
 misc.o: misc.c misc.h team.h fall_of_wickets.h
 pitch.o: pitch.c utilities.h pitch.h
 team.o: team.c utilities.h team.h fall_of_wickets.h
