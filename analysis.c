@@ -30,7 +30,7 @@ void scoreline(team *t)
 {
   extern bool match_under_way;
 
-  printf("%s    ", t->name);
+  printf("%-12s ", t->name);
   printf("Score: %d/%d    ", t->runs, t->wickets);
   printf("Overs: %d.%d    ", t->overs, t->ball_ordinality);
   if (t->overs > 0) {
