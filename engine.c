@@ -228,7 +228,6 @@ void change_innings(void)
   {
     puts("The innings cannot be changed now");
   }
-
 }
 
 void new_match()
