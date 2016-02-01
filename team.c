@@ -61,8 +61,12 @@ void get_team_names(team *a, team *b)
 	break;
     }
     if (found_newline_in_buffer == false)
+    {
       while (getchar() != '\n')
-	;
+      {
+	/* NOP */
+      }
+    }
 
     while (fputs("> ", stdout), fgets(two, MAX_TEAM_NAME_SIZE, stdin) != NULL)
     {
