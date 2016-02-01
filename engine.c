@@ -308,7 +308,7 @@ void ball(int first_die, int second_die)
   if (which_innings == 2 && t->runs >= target)
     innings_finished = true;
 
-  if (innings_finished == true)
+  if (innings_finished)
   {
     if (which_innings == 1)
     {
