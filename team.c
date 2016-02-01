@@ -42,7 +42,7 @@ void get_team_names(team *a, team *b)
   do {
     puts("Enter the names of the teams playing on the next two lines.");
     puts("(Use only alphabets and digits, please.)");
-    while (fputs("> ", stdout), fgets (one, MAX_TEAM_NAME_SIZE, stdin) != NULL)
+    while (fputs("> ", stdout), fgets(one, MAX_TEAM_NAME_SIZE, stdin) != NULL)
     {
       nl = strchr(one, '\n');
       if (nl != NULL)
@@ -64,7 +64,6 @@ void get_team_names(team *a, team *b)
 	break;
       }
     }
-#if 0
     if (found_newline_in_buffer)
     {
       while (getchar() != '\n')
@@ -72,7 +71,7 @@ void get_team_names(team *a, team *b)
 	/* NOP */
       }
     }
-#endif 
+
     while (fputs("> ", stdout), fgets(two, MAX_TEAM_NAME_SIZE, stdin) != NULL)
     {
       nl = strchr(two, '\n');
