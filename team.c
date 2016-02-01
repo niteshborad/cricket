@@ -54,7 +54,7 @@ void get_team_names(team *a, team *b)
       {
 	found_newline_in_buffer = false;
       }
-      if (alphabetic_numeric(one) == false)
+      if (!alphabetic_numeric(one))
       {
 	puts("Please use only alphabets and digits.");
 	continue;
