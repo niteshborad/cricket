@@ -51,14 +51,18 @@ void get_team_names(team *a, team *b)
 	found_newline_in_buffer = true;
       }
       else
+      {
 	found_newline_in_buffer = false;
+      }
       if (alphabetic_numeric(one) == false)
       {
 	puts("Please use only alphabets and digits.");
 	continue;
       }
       else
+      {
 	break;
+      }
     }
     if (found_newline_in_buffer)
     {
@@ -77,21 +81,31 @@ void get_team_names(team *a, team *b)
 	found_newline_in_buffer = true;
       }
       else
+      {
 	found_newline_in_buffer = false;
+      }
       if (alphabetic_numeric(two) == false)
       {
 	puts("Please use only alphabets and digits.");
 	continue;
       }
       else
+      {
 	break;
+      }
     }
-    if (found_newline_in_buffer == false)
+    if (found_newline_in_buffer)
+    {
       while (getchar() != '\n')
-	;
+      {
+	/* NOP */
+      }
+    }
 
     if (strcmp(one, two) != 0)
+    {
       duplicate_names = false;
+    }
     else
     {
       puts("A team playing against itself might be confusing.");
@@ -99,7 +113,7 @@ void get_team_names(team *a, team *b)
       putchar('\n');
       duplicate_names = true;
     }
-  } while (duplicate_names == true);
+  } while (duplicate_names);
 
 
   errno = 0;
