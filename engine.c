@@ -225,7 +225,10 @@ void change_innings(void)
     change_aggression(NORMAL);
   }
   else
+  {
     puts("The innings cannot be changed now");
+  }
+
 }
 
 void new_match()
