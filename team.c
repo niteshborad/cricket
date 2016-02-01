@@ -64,6 +64,7 @@ void get_team_names(team *a, team *b)
 	break;
       }
     }
+#if 0
     if (found_newline_in_buffer)
     {
       while (getchar() != '\n')
@@ -71,7 +72,7 @@ void get_team_names(team *a, team *b)
 	/* NOP */
       }
     }
-
+#endif 
     while (fputs("> ", stdout), fgets(two, MAX_TEAM_NAME_SIZE, stdin) != NULL)
     {
       nl = strchr(two, '\n');
@@ -84,7 +85,7 @@ void get_team_names(team *a, team *b)
       {
 	found_newline_in_buffer = false;
       }
-      if (alphabetic_numeric(two) == false)
+      if (alphabetic_numeric(two))
       {
 	puts("Please use only alphabets and digits.");
 	continue;
