@@ -33,7 +33,8 @@ void scoreline(team *t)
   printf("%-12s ", t->name);
   printf("Score: %d/%d    ", t->runs, t->wickets);
   printf("Overs: %d.%d    ", t->overs, t->ball_ordinality);
-  if (t->overs > 0) {
+  if (t->overs > 0)
+  {
     printf("Run rate: %.2f", runrate (t->runs, t->overs));
     if (match_under_way)
     {
@@ -52,7 +53,9 @@ void scoreline(team *t)
     }
   }
   else
+  {
     putchar('\n');
+  }
 }
 
 void projected_score(void)
