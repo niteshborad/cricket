@@ -60,7 +60,7 @@ void get_team_names(team *a, team *b)
       else
 	break;
     }
-    if (found_newline_in_buffer == false)
+    if (found_newline_in_buffer)
     {
       while (getchar() != '\n')
       {
