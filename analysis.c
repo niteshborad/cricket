@@ -111,7 +111,9 @@ void current_partnership(void)
     last_fall.runs_at_fall = 0;
   }
   else
+  {
     balls_for_current_partnership = balls_till_now - balls_until_last_wicket;
+  }
 
   printf("Current partnership: %d runs off %d balls.\n", t->runs - last_fall.runs_at_fall, balls_for_current_partnership);
 }
