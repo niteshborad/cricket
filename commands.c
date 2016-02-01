@@ -88,7 +88,6 @@ void try_executing(char *command_name)
       strcmp("q", command_name) == 0 ||
       strcmp("h", command_name) == 0)
     lookup_niladic_command_name(command_name)->do_it();
-
   else if ((ncmd = lookup_niladic_command_name(command_name)) != NULL)
     do_niladic_unless_match_underway(ncmd);
   else if ((mcmd = lookup_monadic_command_name(command_name)) != NULL)
