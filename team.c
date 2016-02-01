@@ -35,7 +35,7 @@ void get_team_names(team *a, team *b)
 {
   char one[MAX_TEAM_NAME_SIZE], two[MAX_TEAM_NAME_SIZE];
   char *nl;
-  bool found_newline_in_buffer = false;
+  /* bool found_newline_in_buffer = false; */
   size_t a_name_size, b_name_size;
   bool duplicate_names = false;
 
@@ -48,11 +48,11 @@ void get_team_names(team *a, team *b)
       if (nl != NULL)
       {
 	*nl = '\0';
-	found_newline_in_buffer = true;
+	/* found_newline_in_buffer = true; */
       }
       else
       {
-	found_newline_in_buffer = false;
+	/* found_newline_in_buffer = false; */
       }
       if (!alphabetic_numeric(one))
       {
@@ -64,6 +64,8 @@ void get_team_names(team *a, team *b)
 	break;
       }
     }
+#if 0
+    putchar('\n');
     if (found_newline_in_buffer)
     {
       while (getchar() != '\n')
@@ -71,20 +73,21 @@ void get_team_names(team *a, team *b)
 	/* NOP */
       }
     }
-
+#endif
+    
     while (fputs("> ", stdout), fgets(two, MAX_TEAM_NAME_SIZE, stdin) != NULL)
     {
       nl = strchr(two, '\n');
       if (nl != NULL)
       {
 	*nl = '\0';
-	found_newline_in_buffer = true;
+	/* found_newline_in_buffer = true; */
       }
       else
       {
-	found_newline_in_buffer = false;
+	/* found_newline_in_buffer = false; */
       }
-      if (alphabetic_numeric(two))
+      if (!alphabetic_numeric(two))
       {
 	puts("Please use only alphabets and digits.");
 	continue;
@@ -94,6 +97,8 @@ void get_team_names(team *a, team *b)
 	break;
       }
     }
+#if 0
+    putchar('\n');
     if (found_newline_in_buffer)
     {
       while (getchar() != '\n')
@@ -101,7 +106,8 @@ void get_team_names(team *a, team *b)
 	/* NOP */
       }
     }
-
+#endif
+    
     if (strcmp(one, two) != 0)
     {
       duplicate_names = false;
