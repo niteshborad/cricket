@@ -286,7 +286,9 @@ void toss(team *a, team *b)
     }
     else if (lexcmp(decision, "q") == 0 ||
 	     lexcmp(decision, "quit") == 0)
+    {
       quit();
+    }
     else
     {
       puts("Only umpires can neither bat nor bowl.  Please choose again.");
