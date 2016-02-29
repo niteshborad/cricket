@@ -8,19 +8,19 @@
 /* Teams */
 typedef struct
 {
-  char *name;
-  int overs;
-  fow fall_of_wickets[MAX_PLAYERS];
-  int balls;
-  int runs;
-  int wickets;
-  int fours;
-  int sixes;
-  int max_wickets;
-  int maidens;
-  int ball_ordinality;
-  int runs_in_over;
-  int partnership;
+     char *name;
+     int overs;
+     fow fall_of_wickets[MAX_PLAYERS];
+     int balls;
+     int runs;
+     int wickets;
+     int fours;
+     int sixes;
+     int max_wickets;
+     int maidens;
+     int ball_ordinality;
+     int runs_in_over;
+     int partnership;
 } team;
 
 team *make_team(void);
