@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+unsigned long int random_number();
 int uniform_int_in(int min, int max);
 void shuffle_int_array(int array[], int length);
 bool lookup(int array[], size_t length, int key);

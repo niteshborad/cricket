@@ -6,16 +6,16 @@
 /* Commands */
 typedef struct
 {
-     char *name;
-     void (*do_it)(void);
+  char *name;
+  void (*do_it)(void);
 } niladic;
 
 
 typedef struct
 {
-     char *name;
-     void (*set_aggression)(aggression aggr);
-     aggression aggr;
+  char *name;
+  void (*set_aggression)(aggression aggr);
+  aggression aggr;
 } monadic;
 
 
