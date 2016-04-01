@@ -8,5 +8,4 @@ engine.o: engine.c team.h fall_of_wickets.h analysis.h pitch.h misc.h \
 misc.o: misc.c misc.h team.h fall_of_wickets.h
 pitch.o: pitch.c utilities.h pitch.h
 team.o: team.c utilities.h team.h fall_of_wickets.h
-test-utilities.o: test-utilities.c utilities.h test-utilities.h
 utilities.o: utilities.c utilities.h

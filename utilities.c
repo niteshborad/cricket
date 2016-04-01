@@ -12,32 +12,6 @@
 #include <errno.h>
 #include <ctype.h>
 
-unsigned long int random_number()
-{
-  FILE *randdev;
-  char *randdevname = "/dev/urandom";
-  unsigned long int randnum;
-
-  errno = 0;
-  randdev = fopen(randdevname, "r");
-  if (!randdev)
-  {
-    perror("Could not open random device");
-  }
-     
-  setvbuf(randdev, NULL, _IONBF, 0);
-
-  errno = 0;
-  if (fread(&randnum, sizeof(unsigned long), 1, randdev) < 1)
-  {
-    perror("Could not read from random device");
-  }
-
-  fclose(randdev);
-
-  return randnum;
-}
-
 int uniform_int_in(int min, int max)
 /* Pick a number in [MIN, MAX] with uniform probability, where
  *             0 <= min <= max <= 32767
@@ -52,7 +26,7 @@ int uniform_int_in(int min, int max)
   {
     return -1;
   }
-  return min + (max - min + 1) * (random_number() / (RAND_MAX + 1.0));
+  return min + (max - min + 1) * (rand() / (RAND_MAX + 1.0));
 }
 
 void shuffle_int_array(int array[], int length)
