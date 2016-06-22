@@ -13,6 +13,7 @@ extern const int max_wickets;
 
 /* Match variables */
 extern bool innings_finished;
+extern bool match_under_way;
 extern int max_overs;
 extern int which_innings;
 extern int target;
@@ -28,8 +29,6 @@ double runrate(int runs, int overs)
 
 void scoreline(team *t)
 {
-  extern bool match_under_way;
-
   printf("%-12s ", t->name);
   printf("Score: %d/%d    ", t->runs, t->wickets);
   printf("Overs: %d.%d    ", t->overs, t->ball_ordinality);
