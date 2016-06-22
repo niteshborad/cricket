@@ -17,7 +17,7 @@
 
 #define CMDLINESIZE    6
 
-/* Team */
+/* Teams */
 team *team_one;
 team *team_two;
 /* Deciding the order of play */
