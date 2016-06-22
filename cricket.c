@@ -18,9 +18,10 @@
 #define CMDLINESIZE    6
 
 /* Teams */
+/* These hold the states of the teams */
 team *team_one;
 team *team_two;
-/* Deciding the order of play */
+/* These deciding the order of play */
 team *first;
 team *second;
 /* In an innings, t is the team batting, nt is the one bowling */
