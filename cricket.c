@@ -46,10 +46,10 @@ int main(void)
  * 1 - error allocating memory
  */
 {
+  srand((unsigned) time(0));
+
   char line[CMDLINESIZE];
   char *nl;
-
-  srand((unsigned) time(0));
 
   welcome();
   while (fputs("# ", stdout), fgets(line, CMDLINESIZE, stdin) != NULL)
