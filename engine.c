@@ -238,9 +238,12 @@ void new_match()
 {
   if (match_under_way)
   {
+    puts("There is already a match in progress.");
+    puts("Stop it?");
+
     free(team_one->name);
-    free(team_two->name);
     free(team_one);
+    free(team_two->name);
     free(team_two);
   }
 
