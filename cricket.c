@@ -40,11 +40,11 @@ int target;
 /* Pitch */
 extern pitch_condition pitch;
 
-/* Main return codes:
+int main(void)
+/* Exit codes:
  * 0 - successful exit
  * 1 - error allocating memory
  */
-int main(void)
 {
   char line[CMDLINESIZE];
   char *nl;
