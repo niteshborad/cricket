@@ -16,8 +16,8 @@ the degree of attack or defense while batting: a more aggressive style
 increases the likelihood of scoring runs, but also the chance of losing
 wickets.  Vice versa for a more defensive style.
 
-The simulator is written to conform to ISO/IEC 9899:1999 ("C99").  As
-such, it only uses these facilities of the Standard:
+The simulator is written to conform to ISO/IEC 9899:1999 ("C99").  It only uses
+these facilities of the C99 Standard:
 
 * stdbool.h for the boolean type  bool
 
