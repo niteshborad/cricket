@@ -45,3 +45,6 @@ after one has finished.
 * DONE 's' does nothing during the match, but help says it should.
 * DONE 42/1 (6.1)  168/2 (18.6)
 This should say (19.0)
+* <2016-06-22 Wed> nm after nm
+Handle the case where there is a match in progress and we type 'nm'.
+
