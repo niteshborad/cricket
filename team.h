@@ -1,9 +1,15 @@
 #ifndef TEAM_H
 #define TEAM_H
 
-#include "fall_of_wickets.h"
-
 #define MAX_PLAYERS    11
+
+/* Fall of wickets */
+typedef struct
+{
+  int runs_at_fall;
+  int overs_at_fall;
+  int balls_into_over;
+} fow;
 
 /* Teams */
 typedef struct
