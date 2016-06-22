@@ -15,6 +15,7 @@
 #include <stdbool.h>
 #include <time.h>
 
+#define CMDLINESIZE    6
 
 /* Team */
 team *team_one;
@@ -44,13 +45,13 @@ extern pitch_condition pitch;
  */
 int main(void)
 {
-  char line[6];
+  char line[CMDLINESIZE];
   char *nl;
 
   srand((unsigned) time(0));
 
   welcome();
-  while (fputs("# ", stdout), fgets(line, 6, stdin) != NULL)
+  while (fputs("# ", stdout), fgets(line, CMDLINESIZE, stdin) != NULL)
   {
     nl = strchr(line, '\n');
     if (nl != NULL)
