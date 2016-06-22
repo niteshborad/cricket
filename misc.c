@@ -55,10 +55,17 @@ void help(void)
 void quit(void)
 {
   match_under_way = false;
-  free(team_one->name);
-  free(team_two->name);
-  free(team_one);
-  free(team_two);
+
+  if (team_one)
+  {
+    free(team_one->name);
+    free(team_one);
+  }
+  if (team_one)
+  {
+    free(team_two->name);
+    free(team_two);
+  }
 
   exit(0);
 }
