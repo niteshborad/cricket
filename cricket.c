@@ -17,7 +17,6 @@
 
 
 /* Team */
-/* For getting data */
 team *team_one;
 team *team_two;
 /* Deciding the order of play */
