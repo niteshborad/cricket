@@ -252,6 +252,7 @@ void try_new_match(void)
       {
 	*nl = '\0';
       }
+      getchar();
       answer = ans_line[0];
       switch (answer)
       {
