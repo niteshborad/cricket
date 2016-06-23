@@ -234,19 +234,55 @@ void change_innings(void)
   }
 }
 
-void new_match(void)
+void try_new_match(void)
 {
   if (match_under_way)
   {
     puts("There is already a match in progress.");
-    puts("Stop it?");
-
-    free(team_one->name);
-    free(team_one);
-    free(team_two->name);
-    free(team_two);
+    
+    bool got_answer = false;
+    char answer = ' ';
+    char ans_line[2];
+    char *nl;
+    while (!got_answer && (fputs("Stop the match? [y/n] ", stdout),
+			   fgets(ans_line, 2, stdin) != NULL))
+    {
+      nl = strchr(ans_line, '\n');
+      if (nl != NULL)
+      {
+	*nl = '\0';
+      }
+      answer = ans_line[0];
+      switch (answer)
+      {
+      case 'y':
+	match_under_way = false;
+	got_answer = true;
+	
+	free(team_one->name);
+	free(team_one);
+	free(team_two->name);
+	free(team_two);
+	new_match();
+	
+	break;
+      case 'n':
+	got_answer = true;
+	break;
+      default:
+	puts("Didn't get that.");
+	break;
+      }
+    }
   }
+  else
+  {
+    new_match();
+  }
+}
 
+void new_match(void)
+{
   team_one = make_team();
   team_two = make_team();
   prepare_pitch();

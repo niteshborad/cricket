@@ -26,7 +26,7 @@ niladic niladic_commands[] =
   {"o", play_over},
   {"q", quit},
   {"h", help},
-  {"nm", new_match},
+  {"nm", try_new_match},
   {"ma", match_analysis},
   {"cp", current_partnership},
   {"fow", print_fall_of_wickets},

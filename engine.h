@@ -23,6 +23,7 @@ void play_over(void);
 void over(void);
 void change_aggression(aggression agg);
 void change_innings(void);
+void try_new_match(void);
 void new_match(void);
 void toss(team *a, team *b);
 
