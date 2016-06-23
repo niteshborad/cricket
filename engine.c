@@ -234,7 +234,7 @@ void change_innings(void)
   }
 }
 
-void new_match()
+void new_match(void)
 {
   if (match_under_way)
   {
