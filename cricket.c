@@ -1,6 +1,5 @@
 /* A cricket simulator */
 
-#include "cricket.h"
 #include "team.h"
 #include "engine.h"
 #include "analysis.h"
