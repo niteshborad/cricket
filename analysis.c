@@ -61,8 +61,7 @@ void projected_score(void)
 {
   if (t->overs > 0)
   {
-    printf("Projected score: %d\n",
-	   (int) (t->runs + runrate(t->runs, t->overs) * (max_overs - t->overs)));
+    printf("Projected score: %d\n", (int) (t->runs + runrate(t->runs, t->overs) * (max_overs - t->overs)));
   }
 }
 
