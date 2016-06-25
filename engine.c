@@ -730,6 +730,8 @@ void leg_byes(void)
     t->partnership += 4;
     break;
   }
+  t->balls++;
+  t->ball_ordinality++;
 }
 
 void byes(void)
@@ -763,6 +765,8 @@ void byes(void)
     t->partnership += 4;
     break;
   }
+  t->balls++;
+  t->ball_ordinality++;
 }
 
 void noball(void)
