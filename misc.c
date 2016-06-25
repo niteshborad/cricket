@@ -61,7 +61,7 @@ void quit(void)
     free(team_one->name);
     free(team_one);
   }
-  if (team_one)
+  if (team_two)
   {
     free(team_two->name);
     free(team_two);
