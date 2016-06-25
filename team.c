@@ -1,6 +1,5 @@
 #include "utilities.h"
 #include "team.h"
-#include "fall_of_wickets.h"
 
 #include <stdio.h>
 #include <stdlib.h>
