@@ -50,7 +50,7 @@ niladic *lookup_niladic_command_name(char *command_name)
   niladic *np;
   for (np = niladic_commands; np->name != NULL; np++)
   {
-    if (strcmp (command_name, np->name) == 0)
+    if (strcmp(command_name, np->name) == 0)
     {
       return np;
     }
@@ -75,7 +75,7 @@ monadic *lookup_monadic_command_name(char *command_name)
   monadic *mp;
   for (mp = monadic_commands; mp->name != NULL; mp++)
   {
-    if (strcmp (command_name, mp->name) == 0)
+    if (strcmp(command_name, mp->name) == 0)
     {
       return mp;
     }
