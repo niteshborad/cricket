@@ -30,7 +30,7 @@ double runrate(int runs, int overs)
 void scoreline(team *t)
 {
   printf("%-12s ", t->name);
-  printf("Score: %d/%d    ", t->runs, t->wickets);
+  printf("Score: %d/%-2d    ", t->runs, t->wickets);
   printf("Overs: %d.%d    ", t->overs, t->ball_ordinality);
   if (t->overs > 0)
   {
