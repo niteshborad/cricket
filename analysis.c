@@ -7,8 +7,8 @@
 /* Team */
 extern team *bat_team;
 extern team *field_team;
-extern team *first;
-extern team *second;
+extern team *team_one;
+extern team *team_two;
 extern const int max_wickets;
 
 /* Match variables */
@@ -122,21 +122,21 @@ void current_partnership(void)
 
 void scorecard(void)
 {
-  scoreline(first);
-  scoreline(second);
+  scoreline(team_one);
+  scoreline(team_two);
 }
 
 void summarize_match(void)
 {
   scorecard();
   putchar('\n');
-  if (first->runs > second->runs)
+  if (team_one->runs > team_two->runs)
   {
-    printf("%s win by %d runs\n", first->name, first->runs - second->runs);
+    printf("%s win by %d runs\n", team_one->name, team_one->runs - team_two->runs);
   }
-  else if (first->runs < second->runs)
+  else if (team_one->runs < team_two->runs)
   {
-    printf("%s win by %d wickets\n", second->name, max_wickets - second->wickets);
+    printf("%s win by %d wickets\n", team_two->name, max_wickets - team_two->wickets);
   }
   else
   {

@@ -17,8 +17,6 @@ extern team *team_one;
 extern team *team_two;
 extern team *bat_team;
 extern team *field_team;
-extern team *first;
-extern team *second;
 
 
 /* Pitch */
@@ -223,8 +221,8 @@ void change_innings(void)
   if (which_innings == 1 && innings_finished == true)
   {
     which_innings = 2;
-    bat_team = second;
-    field_team = first;
+    bat_team = team_two;
+    field_team = team_one;
     innings_finished = false;
     change_aggression(NORMAL);
   }
@@ -320,14 +318,14 @@ void toss(team *a, team *b)
     }
     if (lexcmp(decision, "bat") == 0)
     {
-      first = winner;
-      second = loser;
+      team_one = winner;
+      team_two = loser;
       break;
     }
     else if (lexcmp(decision, "bowl") == 0)
     {
-      first = loser;
-      second = winner;
+      team_one = loser;
+      team_two = winner;
       break;
     }
     else if (lexcmp(decision, "q") == 0 ||
@@ -342,8 +340,8 @@ void toss(team *a, team *b)
     }
   }
 
-  bat_team = first;
-  field_team = second;
+  bat_team = team_one;
+  field_team = team_two;
 }
 
 /*
