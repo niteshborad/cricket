@@ -15,8 +15,8 @@
 /* Team */
 extern team *team_one;
 extern team *team_two;
-extern team *t;
-extern team *nt;
+extern team *bat_team;
+extern team *field_team;
 extern team *first;
 extern team *second;
 
@@ -166,18 +166,18 @@ void play_over(void)
   {
     return;
   }
-  t->overs++;
-  if (t->runs_in_over == 0)
+  bat_team->overs++;
+  if (bat_team->runs_in_over == 0)
   {
-    nt->maidens++;
+    field_team->maidens++;
   }
   putchar('\n');
-  printf("This over: %d run%s\n", t->runs_in_over, (t->runs_in_over == 1) ? "" : "s");
+  printf("This over: %d run%s\n", bat_team->runs_in_over, (bat_team->runs_in_over == 1) ? "" : "s");
   /* fputs ("Current partnership: ", stdout); */
   /* current_partnership (); */
-  t->runs_in_over = 0;
-  t->ball_ordinality = 0;
-  scoreline(t);
+  bat_team->runs_in_over = 0;
+  bat_team->ball_ordinality = 0;
+  scoreline(bat_team);
 }
 
 void over(void)
@@ -223,8 +223,8 @@ void change_innings(void)
   if (which_innings == 1 && innings_finished == true)
   {
     which_innings = 2;
-    t = second;
-    nt = first;
+    bat_team = second;
+    field_team = first;
     innings_finished = false;
     change_aggression(NORMAL);
   }
@@ -342,8 +342,8 @@ void toss(team *a, team *b)
     }
   }
 
-  t = first;
-  nt = second;
+  bat_team = first;
+  field_team = second;
 }
 
 /*
@@ -352,12 +352,12 @@ void toss(team *a, team *b)
 
 void ball(int first_die, int second_die)
 {
-  if (t->overs >= max_overs || t->wickets >= t->max_wickets)
+  if (bat_team->overs >= max_overs || bat_team->wickets >= bat_team->max_wickets)
   {
     innings_finished = true;
   }
 
-  if (which_innings == 2 && t->runs >= target)
+  if (which_innings == 2 && bat_team->runs >= target)
   {
     innings_finished = true;
   }
@@ -366,9 +366,9 @@ void ball(int first_die, int second_die)
   {
     if (which_innings == 1)
     {
-      target = t->runs + 1;
+      target = bat_team->runs + 1;
       puts("\tInnings over");
-      scoreline(t);
+      scoreline(bat_team);
     }
     if (which_innings == 2)
     {
@@ -426,21 +426,21 @@ void ball(int first_die, int second_die)
 void one(void)
 {
   puts("1");
-  t->runs += 1;
-  t->runs_in_over += 1;
-  t->partnership += 1;
-  t->balls++;
-  t->ball_ordinality++;
+  bat_team->runs += 1;
+  bat_team->runs_in_over += 1;
+  bat_team->partnership += 1;
+  bat_team->balls++;
+  bat_team->ball_ordinality++;
 }
 
 void two(void)
 {
   puts("2");
-  t->runs += 2;
-  t->runs_in_over += 2;
-  t->partnership += 2;
-  t->balls++;
-  t->ball_ordinality++;
+  bat_team->runs += 2;
+  bat_team->runs_in_over += 2;
+  bat_team->partnership += 2;
+  bat_team->balls++;
+  bat_team->ball_ordinality++;
 }
 
 void three_configuration(void)
@@ -467,22 +467,22 @@ void three_configuration(void)
 void three(void)
 {
   puts("3");
-  t->runs += 3;
-  t->runs_in_over += 3;
-  t->partnership += 3;
-  t->balls++;
-  t->ball_ordinality++;
+  bat_team->runs += 3;
+  bat_team->runs_in_over += 3;
+  bat_team->partnership += 3;
+  bat_team->balls++;
+  bat_team->ball_ordinality++;
 }
 
 void four(void)
 {
   puts("4");
-  t->fours++;
-  t->runs += 4;
-  t->runs_in_over += 4;
-  t->partnership += 4;
-  t->balls++;
-  t->ball_ordinality++;
+  bat_team->fours++;
+  bat_team->runs += 4;
+  bat_team->runs_in_over += 4;
+  bat_team->partnership += 4;
+  bat_team->balls++;
+  bat_team->ball_ordinality++;
 }
 
 void wicket_chance(void)
@@ -500,8 +500,8 @@ void wicket_chance(void)
 void notout(void)
 {
   puts("Not out");
-  t->balls++;
-  t->ball_ordinality++;
+  bat_team->balls++;
+  bat_team->ball_ordinality++;
 }
 
 void mode_of_dismissal(void)
@@ -534,7 +534,7 @@ void mode_of_dismissal(void)
 
 void set_fall_of_wickets(team *team)
 {
-  fow *fall = &(t->fall_of_wickets[t->wickets]);
+  fow *fall = &(bat_team->fall_of_wickets[bat_team->wickets]);
 
   fall->runs_at_fall = team->runs;
   fall->overs_at_fall = team->overs;
@@ -551,46 +551,46 @@ void set_fall_of_wickets(team *team)
 void caught_in_the_field(void)
 {
   puts("Caught in the field");
-  t->balls++;
-  t->ball_ordinality++;
-  t->wickets++;
-  set_fall_of_wickets(t);
+  bat_team->balls++;
+  bat_team->ball_ordinality++;
+  bat_team->wickets++;
+  set_fall_of_wickets(bat_team);
 }
 
 void caught_behind(void)
 {
   puts("Caught behind");
-  t->balls++;
-  t->ball_ordinality++;
-  t->wickets++;
-  set_fall_of_wickets(t);
+  bat_team->balls++;
+  bat_team->ball_ordinality++;
+  bat_team->wickets++;
+  set_fall_of_wickets(bat_team);
 }
 
 void bowled(void)
 {
   puts("Bowled");
-  t->balls++;
-  t->ball_ordinality++;
-  t->wickets++;
-  set_fall_of_wickets(t);
+  bat_team->balls++;
+  bat_team->ball_ordinality++;
+  bat_team->wickets++;
+  set_fall_of_wickets(bat_team);
 }
 
 void lbw(void)
 {
   puts("LBW");
-  t->balls++;
-  t->ball_ordinality++;
-  t->wickets++;
-  set_fall_of_wickets(t);
+  bat_team->balls++;
+  bat_team->ball_ordinality++;
+  bat_team->wickets++;
+  set_fall_of_wickets(bat_team);
 }
 
 void runout(void)
 {
   puts("Runout");
-  t->wickets++;
-  t->balls++;
-  t->ball_ordinality++;
-  set_fall_of_wickets(t);
+  bat_team->wickets++;
+  bat_team->balls++;
+  bat_team->ball_ordinality++;
+  set_fall_of_wickets(bat_team);
 }
 
 void miscellany(void)
@@ -617,28 +617,28 @@ void miscellany(void)
 void stumped(void)
 {
   puts("Stumped");
-  t->wickets++;
-  t->balls++;
-  t->ball_ordinality++;
-  set_fall_of_wickets(t);
+  bat_team->wickets++;
+  bat_team->balls++;
+  bat_team->ball_ordinality++;
+  set_fall_of_wickets(bat_team);
 }
 
 void hit_wicket(void)
 {
   puts("Hit wicket");
-  t->balls++;
-  t->ball_ordinality++;
-  t->wickets++;
-  set_fall_of_wickets(t);
+  bat_team->balls++;
+  bat_team->ball_ordinality++;
+  bat_team->wickets++;
+  set_fall_of_wickets(bat_team);
 }
 
 void retired_hurt(void)
 {
   puts("Retired hurt");
-  t->max_wickets--;
-  t->partnership = 0;
-  t->balls++;
-  t->ball_ordinality++;
+  bat_team->max_wickets--;
+  bat_team->partnership = 0;
+  bat_team->balls++;
+  bat_team->ball_ordinality++;
 }
 
 void big_hit(void)
@@ -661,12 +661,12 @@ void big_hit(void)
 void six(void)
 {
   puts("6");
-  t->sixes++;
-  t->runs += 6;
-  t->runs_in_over += 6;
-  t->partnership += 6;
-  t->balls++;
-  t->ball_ordinality++;
+  bat_team->sixes++;
+  bat_team->runs += 6;
+  bat_team->runs_in_over += 6;
+  bat_team->partnership += 6;
+  bat_team->balls++;
+  bat_team->ball_ordinality++;
 }
 
 void extras(void)
@@ -693,9 +693,9 @@ void extras(void)
 void wide(void)
 {
   puts("Wide");
-  t->runs++;
-  t->runs_in_over++;
-  t->partnership++;
+  bat_team->runs++;
+  bat_team->runs_in_over++;
+  bat_team->partnership++;
   ball(die1(), die2());
 }
 
@@ -706,32 +706,32 @@ void leg_byes(void)
   case 1:
   case 2:
     puts("1 leg bye");
-    t->runs += 1;
-    t->runs_in_over += 1;
-    t->partnership += 1;
+    bat_team->runs += 1;
+    bat_team->runs_in_over += 1;
+    bat_team->partnership += 1;
     break;
   case 3:
   case 4:
     puts("2 leg byes");
-    t->runs += 2;
-    t->runs_in_over += 2;
-    t->partnership += 2;
+    bat_team->runs += 2;
+    bat_team->runs_in_over += 2;
+    bat_team->partnership += 2;
     break;
   case 5:
     puts("3 leg byes");
-    t->runs += 3;
-    t->runs_in_over += 3;
-    t->partnership += 3;
+    bat_team->runs += 3;
+    bat_team->runs_in_over += 3;
+    bat_team->partnership += 3;
     break;
   case 6:
     puts("4 leg byes");
-    t->runs += 4;
-    t->runs_in_over += 4;
-    t->partnership += 4;
+    bat_team->runs += 4;
+    bat_team->runs_in_over += 4;
+    bat_team->partnership += 4;
     break;
   }
-  t->balls++;
-  t->ball_ordinality++;
+  bat_team->balls++;
+  bat_team->ball_ordinality++;
 }
 
 void byes(void)
@@ -741,48 +741,48 @@ void byes(void)
   case 1:
   case 2:
     puts("1 bye");
-    t->runs += 1;
-    t->runs_in_over += 1;
-    t->partnership += 1;
+    bat_team->runs += 1;
+    bat_team->runs_in_over += 1;
+    bat_team->partnership += 1;
     break;
   case 3:
   case 4:
     puts("2 byes");
-    t->runs += 2;
-    t->runs_in_over += 2;
-    t->partnership += 2;
+    bat_team->runs += 2;
+    bat_team->runs_in_over += 2;
+    bat_team->partnership += 2;
     break;
   case 5:
     puts("3 byes");
-    t->runs += 3;
-    t->runs_in_over += 3;
-    t->partnership += 3;
+    bat_team->runs += 3;
+    bat_team->runs_in_over += 3;
+    bat_team->partnership += 3;
     break;
   case 6:
     puts("4 byes");
-    t->runs += 4;
-    t->runs_in_over += 4;
-    t->partnership += 4;
+    bat_team->runs += 4;
+    bat_team->runs_in_over += 4;
+    bat_team->partnership += 4;
     break;
   }
-  t->balls++;
-  t->ball_ordinality++;
+  bat_team->balls++;
+  bat_team->ball_ordinality++;
 }
 
 void noball(void)
 {
   puts("No ball");
-  t->runs++;
-  t->runs_in_over++;
-  t->partnership++;
-  t->balls++;
-  t->ball_ordinality++;
+  bat_team->runs++;
+  bat_team->runs_in_over++;
+  bat_team->partnership++;
+  bat_team->balls++;
+  bat_team->ball_ordinality++;
   ball(die1(), die2());
 }
 
 void dot(void)
 {
   puts("0");
-  t->balls++;
-  t->ball_ordinality++;
+  bat_team->balls++;
+  bat_team->ball_ordinality++;
 }

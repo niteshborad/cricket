@@ -5,8 +5,8 @@
 #include <stdbool.h>
 
 /* Team */
-extern team *t;
-extern team *nt;
+extern team *bat_team;
+extern team *field_team;
 extern team *first;
 extern team *second;
 extern const int max_wickets;
@@ -57,7 +57,7 @@ void scoreline(team *t)
   }
 }
 
-void projected_score(void)
+void projected_score(team *t)
 {
   if (t->overs > 0)
   {
@@ -81,35 +81,35 @@ double percentage_runs_in_boundaries(team *t)
 
 void match_analysis(void)
 {
-  scoreline(t);
+  scoreline(bat_team);
   current_partnership();
   if (which_innings == 2)
   {
     printf("Target: %d    ", target);
-    printf("Runs needed: %d    ", target - t->runs);
-    printf("   Run rate required: %.2f\n", (double) (target - t->runs) / (max_overs - t->overs));
+    printf("Runs needed: %d    ", target - bat_team->runs);
+    printf("   Run rate required: %.2f\n", (double) (target - bat_team->runs) / (max_overs - bat_team->overs));
   }
-  printf("Fours: %d    Sixes: %d    ", t->fours, t->sixes);
-  printf("Runs in boundaries: %d (%.1f%%)\n", runs_in_boundaries(t), percentage_runs_in_boundaries(t));
-  printf("Maidens: %d\n", nt->maidens);
-  projected_score();
+  printf("Fours: %d    Sixes: %d    ", bat_team->fours, bat_team->sixes);
+  printf("Runs in boundaries: %d (%.1f%%)\n", runs_in_boundaries(bat_team), percentage_runs_in_boundaries(bat_team));
+  printf("Maidens: %d\n", field_team->maidens);
+  projected_score(bat_team);
 }
 
 void print_fall_of_wickets(void)
 {
-  fall_of_wickets(t);
+  fall_of_wickets(bat_team);
 }
 
 void current_partnership(void)
 {
-  fow last_fall = t->fall_of_wickets[t->wickets];
+  fow last_fall = bat_team->fall_of_wickets[bat_team->wickets];
   int balls_until_last_wicket = last_fall.overs_at_fall * 6 + last_fall.balls_into_over;
-  int balls_till_now = t->overs * 6 + t->ball_ordinality;
+  int balls_till_now = bat_team->overs * 6 + bat_team->ball_ordinality;
   int balls_for_current_partnership;
 
-  if (t->wickets == 0)
+  if (bat_team->wickets == 0)
   {
-    balls_for_current_partnership = t->balls;
+    balls_for_current_partnership = bat_team->balls;
     last_fall.runs_at_fall = 0;
   }
   else
@@ -117,7 +117,7 @@ void current_partnership(void)
     balls_for_current_partnership = balls_till_now - balls_until_last_wicket;
   }
 
-  printf("Current partnership: %d runs off %d balls.\n", t->runs - last_fall.runs_at_fall, balls_for_current_partnership);
+  printf("Current partnership: %d runs off %d balls.\n", bat_team->runs - last_fall.runs_at_fall, balls_for_current_partnership);
 }
 
 void scorecard(void)

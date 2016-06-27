@@ -24,8 +24,8 @@ team *team_two;
 team *first;
 team *second;
 /* In an innings, t is the team batting, nt is the one bowling */
-team *t;
-team *nt;
+team *bat_team;
+team *field_team;
 
 extern const int max_players;
 

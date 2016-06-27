@@ -6,7 +6,7 @@
 /* Match analysis */
 double runrate(int runs, int overs);
 void scoreline(team *t);
-void projected_score(void);
+void projected_score(team *t);
 int runs_in_boundaries(team *t);
 double percentage_runs_in_boundaries(team *t);
 void match_analysis(void);
