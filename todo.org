@@ -48,4 +48,4 @@ This should say (19.0)
 * DONE <2016-06-22 Wed> nm after nm
 Handle the case where there is a match in progress and we type 'nm'.
 
-* TODO Rename hard to grok global variables `t' and `nt' to `bat_team' and 'field_team'.
+* DONE Rename hard to grok global variables `t' and `nt' to `bat_team' and 'field_team'.
