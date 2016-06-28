@@ -54,3 +54,13 @@ Handle the case where there is a match in progress and we type 'nm'.
 ** Bowlers: `bowler' and `non-bowler'?
 ** Attributes: name, runs, balls, strike rate, 4s, 6s, how_out, fow, overs, maidens, runs, wickets, run rate, keeper?
 
+I imagine another pair of header and source.  A struct that holds the
+attributes named in TODO.org; four key player objects at any point of
+the game: two batsmen and two bowlers; a new slot in the team struct
+that holds 11 players; a whole bunch of hackery in the delivery
+procedures/functions.  Key things to look out for: batsmen crossover at
+end of over; fall of wickets and determining the mode of dismissal --
+finding the player who took a catch is a known pain point from the CL
+version; and substitute players if the given fielder was retired hurt in
+the earlier innings.  Team data has to be read from a flat file, i.e.,
+parsed.  Fun times.
