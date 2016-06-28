@@ -49,3 +49,8 @@ This should say (19.0)
 Handle the case where there is a match in progress and we type 'nm'.
 
 * DONE Rename hard to grok global variables `t' and `nt' to `bat_team' and 'field_team'.
+* TODO Players
+** Batsmen: `striker' and `non-striker'
+** Bowlers: `bowler' and `non-bowler'?
+** Attributes: name, runs, balls, strike rate, 4s, 6s, how_out, fow, overs, maidens, runs, wickets, run rate, keeper?
+
