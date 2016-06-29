@@ -10,6 +10,7 @@
 #define MAX_TEAM_NAME_SIZE     30
 #define MAX_PLAYERS            11
 #define MAX_WICKETS            10
+#define NAME_SIZE              64
 
 const int max_wickets = MAX_WICKETS;
 
@@ -142,9 +143,39 @@ void get_team_names(team *a, team *b)
   b->name[b_name_size - 1] = '\0';
 }
 
-int read_team_from_file(char *file)
+int read_team_from_file(char *file, team *t)
+/* Try reading eleven names for team T from FILE.
+ * Return 0 on success.
+ * Return -1 if FILE could not be opened for reading.
+ * Return -2 if there was an error reading from FILE.
+ */
 {
-  
+  FILE *fp;
+
+  if ((fp = fopen(file, "r")) == NULL)
+  {
+    return -1;
+  }
+
+  char line[NAME_SIZE];
+  int i;
+  for (i = 0; i < MAX_PLAYERS; i++)
+  {
+    errno = 0;
+    if (fgets(line, NAME_SIZE, fp) == NULL)
+    {
+      fprintf(stderr, "Error reading from '%s': %s\n", file, strerror(errno));
+      return -2;
+    }
+
+    char *nl = strchr(line, '\n');
+    if (nl != NULL) *nl = '\0';
+
+    strncpy(t->players[i].name, line, 64);
+  }
+
+  fclose(fp);
+  return 0;
 }
 
 void show_fall_of_wickets(team *t)

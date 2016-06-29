@@ -4,6 +4,7 @@
 #include <stdbool.h>
 
 #define MAX_PLAYERS    11
+#define NAME_SIZE      64
 
 /* Batting aggression */
 typedef enum
@@ -30,7 +31,7 @@ typedef struct
 /* Players */
 typedef struct
 {
-  char *name;
+  char name[64];
   int runs_scored;
   int balls;
   double strike_rate;
@@ -66,7 +67,7 @@ typedef struct
 
 team *make_team(void);
 void get_team_names(team *a, team *b);
-int read_team_from_file(char *file);
+int read_team_from_file(char *file, team *t);
 void show_fall_of_wickets(team *t);
 
 #endif
