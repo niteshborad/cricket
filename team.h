@@ -66,6 +66,7 @@ typedef struct
 
 team *make_team(void);
 void get_team_names(team *a, team *b);
+int read_team_from_file(FILE *fp);
 void show_fall_of_wickets(team *t);
 
 #endif
