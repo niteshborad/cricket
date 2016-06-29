@@ -3,7 +3,7 @@
 
 #include "team.h"
 
-/* Engine */
+/* Batting aggression */
 typedef enum
 {
   VDEFENSIVE, DEFENSIVE, NORMAL, AGGRESSIVE, VAGGRESSIVE
