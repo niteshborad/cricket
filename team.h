@@ -5,12 +5,26 @@
 
 #define MAX_PLAYERS    11
 
+/* Batting aggression */
+typedef enum
+{
+  VDEFENSIVE, DEFENSIVE, NORMAL, AGGRESSIVE, VAGGRESSIVE
+} aggression;
+
+/* Dismissal modes */
+typedef enum
+{
+  CAUGHT_FIELD, CAUGHT_BEHIND, BOWLED, LBW, RUNOUT, STUMPED, HIT_WICKET, RETD_HURT
+} dismissal;
+
 /* Fall of wickets */
 typedef struct
 {
   int runs_at_fall;
   int overs_at_fall;
   int balls_into_over;
+  char *how_out;
+  dismissal dismiss;
 } fow;
 
 /* Players */
@@ -22,8 +36,7 @@ typedef struct
   double strike_rate;
   int fours;
   int sixes;
-  char *how_out;
-  char *fow;
+  fow fall;
   int overs;
   int maidens;
   int runs_conceded;
