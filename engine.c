@@ -12,12 +12,17 @@
 
 #define MAX_TOSS_DECISION_SIZE  6
 
-/* Team */
+/* Teams */
 extern team *team_one;
 extern team *team_two;
 extern team *bat_team;
 extern team *field_team;
 
+/* Key players */
+extern player *striker;
+extern player *non_striker;
+extern player *bowler;
+extern player *non_bowler;
 
 /* Pitch */
 extern pitch_condition pitch;
