@@ -11,7 +11,6 @@
 #define MAX_PLAYERS            11
 #define MAX_WICKETS            10
 
-const int max_players = MAX_PLAYERS;
 const int max_wickets = MAX_WICKETS;
 
 /*
@@ -24,7 +23,7 @@ team *make_team(void)		/* Due to Richard Heathfield */
   if (new_team != NULL)
   {
     *new_team = blank;
-    new_team->max_wickets = max_wickets;
+    new_team->max_wickets = MAX_WICKETS;
     init_fall_of_wickets(new_team);
   }
   return new_team;
@@ -148,7 +147,7 @@ void init_fall_of_wickets(team *t)
 {
   int i;
 
-  for (i = 1; i < max_players; i++)
+  for (i = 1; i < MAX_PLAYERS; i++)
   {
     t->fall_of_wickets[i].runs_at_fall = -1;
     t->fall_of_wickets[i].overs_at_fall = -1;
