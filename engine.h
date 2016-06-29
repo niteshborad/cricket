@@ -9,6 +9,12 @@ typedef enum
   VDEFENSIVE, DEFENSIVE, NORMAL, AGGRESSIVE, VAGGRESSIVE
 } aggression;
 
+/* Dismissal modes */
+typedef enum
+{
+  CAUGHT_FIELD, CAUGHT_BEHIND, BOWLED, LBW, RUNOUT, STUMPED, HIT_WICKET, RETD_HURT
+} dismissal;
+
 
 /* Engine */
 int d6(void);
