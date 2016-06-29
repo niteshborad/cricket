@@ -142,7 +142,7 @@ void get_team_names(team *a, team *b)
   b->name[b_name_size - 1] = '\0';
 }
 
-int read_team_from_file(FILE *fp)
+int read_team_from_file(char *file)
 {
   
 }
