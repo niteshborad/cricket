@@ -97,7 +97,7 @@ void match_analysis(void)
 
 void print_fall_of_wickets(void)
 {
-  fall_of_wickets(bat_team);
+  show_fall_of_wickets(bat_team);
 }
 
 void current_partnership(void)
