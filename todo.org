@@ -71,4 +71,3 @@ string.  Move disparate dismissal and fow strings into the fow struct.
 
 
 
-
