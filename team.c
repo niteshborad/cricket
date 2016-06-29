@@ -1,6 +1,5 @@
 #include "utilities.h"
 #include "team.h"
-#include "player.h"
 
 #include <stdio.h>
 #include <stdlib.h>
