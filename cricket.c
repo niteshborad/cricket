@@ -27,6 +27,14 @@ team *second;
 team *bat_team;
 team *field_team;
 
+/* Key players */
+/* Batsmen */
+player *striker;
+player *non_striker;
+/* Bowlers */
+player *bowler;
+player *non_bowler;
+
 extern const int max_players;
 
 /* Match variables */
