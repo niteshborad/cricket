@@ -24,7 +24,6 @@ team *make_team(void)		/* Due to Richard Heathfield */
   {
     *new_team = blank;
     new_team->max_wickets = MAX_WICKETS;
-    init_fall_of_wickets(new_team);
   }
   return new_team;
 }
@@ -143,19 +142,7 @@ void get_team_names(team *a, team *b)
   b->name[b_name_size - 1] = '\0';
 }
 
-void init_fall_of_wickets(team *t)
-{
-  int i;
-
-  for (i = 1; i < MAX_PLAYERS; i++)
-  {
-    t->fall_of_wickets[i].runs_at_fall = -1;
-    t->fall_of_wickets[i].overs_at_fall = -1;
-    t->fall_of_wickets[i].balls_into_over = -1;
-  }
-}
-
-void print_fall_of_wickets(team *t)
+void show_fall_of_wickets(team *t)
 {
   int i;
   fow fall;
