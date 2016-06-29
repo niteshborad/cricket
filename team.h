@@ -1,6 +1,8 @@
 #ifndef TEAM_H
 #define TEAM_H
 
+#include <stdbool.h>
+
 #define MAX_PLAYERS    11
 
 /* Fall of wickets */
@@ -10,6 +12,25 @@ typedef struct
   int overs_at_fall;
   int balls_into_over;
 } fow;
+
+/* Players */
+typedef struct
+{
+  char *name;
+  int runs_scored;
+  int balls;
+  double strike_rate;
+  int fours;
+  int sixes;
+  char *how_out;
+  char *fow;
+  int overs;
+  int maidens;
+  int runs_conceded;
+  int wickets;
+  double econ_rate;
+  bool is_keeper;
+} player;
 
 /* Teams */
 typedef struct
@@ -27,6 +48,7 @@ typedef struct
   int ball_ordinality;
   int runs_in_over;
   int partnership;
+  player players[MAX_PLAYERS];
 } team;
 
 team *make_team(void);
