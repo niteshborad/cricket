@@ -155,7 +155,7 @@ void init_fall_of_wickets(team *t)
   }
 }
 
-void fall_of_wickets(team *t)
+void print_fall_of_wickets(team *t)
 {
   int i;
   fow fall;
