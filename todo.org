@@ -53,7 +53,7 @@ Handle the case where there is a match in progress and we type 'nm'.
 ** Batsmen: `striker' and `non-striker'
 ** Bowlers: `bowler' and `non-bowler'?
 ** Attributes: name, runs, balls, strike rate, 4s, 6s, how_out, fow, overs, maidens, runs, wickets, run rate, keeper?
-
+** Plan
 I imagine another pair of header and source.  A struct that holds the
 attributes named in TODO.org; four key player objects at any point of
 the game: two batsmen and two bowlers; a new slot in the team struct
@@ -64,3 +64,11 @@ finding the player who took a catch is a known pain point from the CL
 version; and substitute players if the given fielder was retired hurt in
 the earlier innings.  Team data has to be read from a flat file, i.e.,
 parsed.  Fun times.
+*** Thoughts
+Index dismissals by number.  Have the strings displayed at dismissal
+time available for use outside the function -- perhaps return the
+string.  Move disparate dismissal and fow strings into the fow struct.
+
+
+
+
