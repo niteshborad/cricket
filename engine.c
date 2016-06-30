@@ -413,7 +413,7 @@ void ball(int first_die, int second_die)
   }
 
   change_aggression(striker->agg);
-  fputs(striker->name, stdout);
+  fprintf(stdout, "%s ", striker->name);
   if ((first_die == 1 && second_die == 1) ||
       (first_die == 1 && second_die == 2) ||
       (first_die == 2 && second_die == 1))
