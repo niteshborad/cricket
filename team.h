@@ -44,6 +44,8 @@ typedef struct
   int maidens;
   int runs_conceded;
   int wickets;
+  int wides;
+  int noballs;
   double econ_rate;
   bool is_keeper;
 } player;
@@ -64,6 +66,11 @@ typedef struct
   int ball_ordinality;
   int runs_in_over;
   int partnership;
+  int wides;
+  int noballs;
+  int byes;
+  int legbyes;
+  int extras;
   player players[MAX_PLAYERS];
 } team;
 
