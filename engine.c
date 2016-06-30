@@ -162,6 +162,21 @@ void play10(void)
 
 static void (*play) (void) = play6;
 
+
+void swap_batsmen(void)
+{
+  player temp = *striker;
+  *striker = *non_striker;
+  *non_striker = temp;
+}
+
+void swap_bowlers(void)
+{
+  player temp = *bowler;
+  *bowler = *non_bowler;
+  *non_bowler = temp;
+}
+
 void play_over(void)
 {
   over();
@@ -172,6 +187,7 @@ void play_over(void)
   bat_team->overs++;
   if (bat_team->runs_in_over == 0)
   {
+    bowler->maidens++;
     field_team->maidens++;
   }
   putchar('\n');
@@ -179,6 +195,11 @@ void play_over(void)
   bat_team->runs_in_over = 0;
   bat_team->ball_ordinality = 0;
   scoreline(bat_team);
+
+  swap_batsmen();
+
+  bowler->overs++;
+  swap_bowlers();
 }
 
 void over(void)
@@ -190,10 +211,6 @@ void over(void)
     if (innings_finished) break;
     else play();
   }
-
-  player temp = *striker;
-  *striker = *non_striker;
-  *non_striker = temp;
 }
 
 void change_aggression(aggression agg)
@@ -231,7 +248,9 @@ void change_innings(void)
     bat_team = team_two;
     field_team = team_one;
     innings_finished = false;
-    change_aggression(NORMAL);
+    striker = &bat_team->players[0];
+    non_striker = &bat_team->players[1];
+    change_aggression(striker->agg);
   }
   else
   {
@@ -244,7 +263,7 @@ void try_new_match(void)
   if (match_under_way)
   {
     puts("There is already a match in progress.");
-    
+
     bool got_answer = false;
     char answer = ' ';
     char ans_line[2];
@@ -264,13 +283,13 @@ void try_new_match(void)
       case 'y':
 	match_under_way = false;
 	got_answer = true;
-	
+
 	free(team_one->name);
 	free(team_one);
 	free(team_two->name);
 	free(team_two);
 	new_match();
-	
+
 	break;
       case 'n':
 	got_answer = true;
@@ -428,25 +447,31 @@ void ball(int first_die, int second_die)
   }
 }
 
-
 void one(void)
 {
   puts("1");
+  striker->runs_scored += 1;
+  striker->balls += 1;
+  swap_batsmen();
   bat_team->runs += 1;
   bat_team->runs_in_over += 1;
   bat_team->partnership += 1;
   bat_team->balls++;
   bat_team->ball_ordinality++;
+  bowler->runs_conceded += 1;
 }
 
 void two(void)
 {
   puts("2");
+  striker->runs_scored += 2;
+  striker->balls += 1;
   bat_team->runs += 2;
   bat_team->runs_in_over += 2;
   bat_team->partnership += 2;
   bat_team->balls++;
   bat_team->ball_ordinality++;
+  bowler->runs_conceded += 2;
 }
 
 void three_configuration(void)
@@ -473,22 +498,62 @@ void three_configuration(void)
 void three(void)
 {
   puts("3");
+  striker->runs_scored += 3;
+  striker->balls += 1;
+  swap_batsmen();
   bat_team->runs += 3;
   bat_team->runs_in_over += 3;
   bat_team->partnership += 3;
   bat_team->balls++;
   bat_team->ball_ordinality++;
+  bowler->runs_conceded += 3;
 }
 
 void four(void)
 {
   puts("4");
+  striker->runs_scored += 4;
+  striker->balls += 1;
+  striker->fours++;
   bat_team->fours++;
   bat_team->runs += 4;
   bat_team->runs_in_over += 4;
   bat_team->partnership += 4;
   bat_team->balls++;
   bat_team->ball_ordinality++;
+  bowler->runs_conceded += 4;
+}
+
+void six(void)
+{
+  puts("6");
+  striker->runs_scored += 6;
+  striker->balls += 1;
+  striker->sixes++;
+  bat_team->sixes++;
+  bat_team->runs += 6;
+  bat_team->runs_in_over += 6;
+  bat_team->partnership += 6;
+  bat_team->balls++;
+  bat_team->ball_ordinality++;
+  bowler->runs_conceded += 6;
+}
+
+void big_hit(void)
+{
+  switch (d6())
+  {
+  case 1:
+  case 2:
+  case 3:
+  case 4:
+    four();
+    break;
+  case 5:
+  case 6:
+    six();
+    break;
+  }
 }
 
 void wicket_chance(void)
@@ -643,34 +708,6 @@ void retired_hurt(void)
   puts("Retired hurt");
   bat_team->max_wickets--;
   bat_team->partnership = 0;
-  bat_team->balls++;
-  bat_team->ball_ordinality++;
-}
-
-void big_hit(void)
-{
-  switch (d6())
-  {
-  case 1:
-  case 2:
-  case 3:
-  case 4:
-    four();
-    break;
-  case 5:
-  case 6:
-    six();
-    break;
-  }
-}
-
-void six(void)
-{
-  puts("6");
-  bat_team->sixes++;
-  bat_team->runs += 6;
-  bat_team->runs_in_over += 6;
-  bat_team->partnership += 6;
   bat_team->balls++;
   bat_team->ball_ordinality++;
 }

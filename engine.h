@@ -12,6 +12,8 @@ void play4(void);
 void play6(void);
 void play8(void);
 void play10(void);
+void swap_batsmen(void);
+void swap_bowlers(void);
 void play_over(void);
 void over(void);
 void change_aggression(aggression agg);
