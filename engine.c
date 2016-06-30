@@ -221,7 +221,7 @@ void change_aggression(aggression agg)
 
 void change_innings(void)
 {
-  if (which_innings == 1 && innings_finished == true)
+  if (which_innings == 1 && innings_finished)
   {
     which_innings = 2;
     bat_team = team_two;
