@@ -176,8 +176,6 @@ void play_over(void)
   }
   putchar('\n');
   printf("This over: %d run%s\n", bat_team->runs_in_over, (bat_team->runs_in_over == 1) ? "" : "s");
-  /* fputs ("Current partnership: ", stdout); */
-  /* current_partnership (); */
   bat_team->runs_in_over = 0;
   bat_team->ball_ordinality = 0;
   scoreline(bat_team);
