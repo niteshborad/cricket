@@ -190,6 +190,10 @@ void over(void)
     if (innings_finished) break;
     else play();
   }
+
+  player temp = *striker;
+  *striker = *non_striker;
+  *non_striker = temp;
 }
 
 void change_aggression(aggression agg)
