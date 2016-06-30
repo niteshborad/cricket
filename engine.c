@@ -761,6 +761,8 @@ void wide(void)
   bat_team->runs++;
   bat_team->runs_in_over++;
   bat_team->partnership++;
+  bowler->wides++;
+  field_team->wides++;
   ball(die1(), die2());
 }
 
@@ -774,6 +776,7 @@ void leg_byes(void)
     bat_team->runs += 1;
     bat_team->runs_in_over += 1;
     bat_team->partnership += 1;
+    field_team->legbyes += 1;
     break;
   case 3:
   case 4:
@@ -781,18 +784,21 @@ void leg_byes(void)
     bat_team->runs += 2;
     bat_team->runs_in_over += 2;
     bat_team->partnership += 2;
+    field_team->legbyes += 2;
     break;
   case 5:
     puts("3 leg byes");
     bat_team->runs += 3;
     bat_team->runs_in_over += 3;
     bat_team->partnership += 3;
+    field_team->legbyes += 3;
     break;
   case 6:
     puts("4 leg byes");
     bat_team->runs += 4;
     bat_team->runs_in_over += 4;
     bat_team->partnership += 4;
+    field_team->legbyes += 4;
     break;
   }
   bat_team->balls++;
@@ -809,6 +815,7 @@ void byes(void)
     bat_team->runs += 1;
     bat_team->runs_in_over += 1;
     bat_team->partnership += 1;
+    field_team->byes += 1;
     break;
   case 3:
   case 4:
@@ -816,18 +823,21 @@ void byes(void)
     bat_team->runs += 2;
     bat_team->runs_in_over += 2;
     bat_team->partnership += 2;
+    field_team->byes += 2;
     break;
   case 5:
     puts("3 byes");
     bat_team->runs += 3;
     bat_team->runs_in_over += 3;
     bat_team->partnership += 3;
+    field_team->byes += 3;
     break;
   case 6:
     puts("4 byes");
     bat_team->runs += 4;
     bat_team->runs_in_over += 4;
     bat_team->partnership += 4;
+    field_team->byes += 4;
     break;
   }
   bat_team->balls++;
@@ -842,12 +852,15 @@ void noball(void)
   bat_team->partnership++;
   bat_team->balls++;
   bat_team->ball_ordinality++;
+  bowler->runs_conceded++;
+  field_team->noballs++;
   ball(die1(), die2());
 }
 
 void dot(void)
 {
   puts("0");
+  striker->balls++;
   bat_team->balls++;
   bat_team->ball_ordinality++;
 }
