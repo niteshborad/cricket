@@ -4,7 +4,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#define MAX_PLAYERS    11
+#define MAX_PLAYERS     11
+#define DISMISSAL_SIZE 100
 
 /* Batting aggression */
 typedef enum
@@ -24,7 +25,7 @@ typedef struct
   int runs_at_fall;
   int overs_at_fall;
   int balls_into_over;
-  char *how_out;
+  char how_out[DISMISSAL_SIZE];
   dismissal dismiss;
 } fow;
 

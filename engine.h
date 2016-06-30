@@ -32,7 +32,7 @@ void four(void);
 void wicket_chance(void);
 void notout(void);
 void mode_of_dismissal(void);
-void set_fall_of_wickets(team *t);
+void set_fall_of_wickets(void);
 void caught_in_the_field(void);
 void caught_behind(void);
 void bowled(void);

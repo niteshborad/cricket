@@ -574,6 +574,7 @@ void wicket_chance(void)
 void notout(void)
 {
   puts("Not out");
+  striker->balls++;
   bat_team->balls++;
   bat_team->ball_ordinality++;
 }
@@ -606,20 +607,23 @@ void mode_of_dismissal(void)
   }
 }
 
-void set_fall_of_wickets(team *team)
+void set_fall_of_wickets(dismissal dismiss)
 {
-  fow *fall = &(bat_team->fall_of_wickets[bat_team->wickets]);
+  fow fall = bat_team->fall_of_wickets[bat_team->wickets];
 
-  fall->runs_at_fall = team->runs;
-  fall->overs_at_fall = team->overs;
-  if (team->ball_ordinality == 6)
+  fall.runs_at_fall = bat_team->runs;
+  fall.overs_at_fall = bat_team->overs;
+  fall.dismiss = dismiss;
+  if (bat_team->ball_ordinality == 6)
   {
-    fall->balls_into_over = 0;
+    fall.balls_into_over = 0;
   }
   else
   {
-    fall->balls_into_over = team->ball_ordinality;
+    fall.balls_into_over = bat_team->ball_ordinality;
   }
+
+  striker->fall = fall;
 }
 
 void caught_in_the_field(void)
@@ -628,7 +632,7 @@ void caught_in_the_field(void)
   bat_team->balls++;
   bat_team->ball_ordinality++;
   bat_team->wickets++;
-  set_fall_of_wickets(bat_team);
+  set_fall_of_wickets();
 }
 
 void caught_behind(void)
@@ -637,7 +641,7 @@ void caught_behind(void)
   bat_team->balls++;
   bat_team->ball_ordinality++;
   bat_team->wickets++;
-  set_fall_of_wickets(bat_team);
+  set_fall_of_wickets();
 }
 
 void bowled(void)
@@ -646,7 +650,7 @@ void bowled(void)
   bat_team->balls++;
   bat_team->ball_ordinality++;
   bat_team->wickets++;
-  set_fall_of_wickets(bat_team);
+  set_fall_of_wickets();
 }
 
 void lbw(void)
@@ -655,7 +659,7 @@ void lbw(void)
   bat_team->balls++;
   bat_team->ball_ordinality++;
   bat_team->wickets++;
-  set_fall_of_wickets(bat_team);
+  set_fall_of_wickets();
 }
 
 void runout(void)
@@ -664,7 +668,7 @@ void runout(void)
   bat_team->wickets++;
   bat_team->balls++;
   bat_team->ball_ordinality++;
-  set_fall_of_wickets(bat_team);
+  set_fall_of_wickets();
 }
 
 void miscellany(void)
@@ -694,7 +698,7 @@ void stumped(void)
   bat_team->wickets++;
   bat_team->balls++;
   bat_team->ball_ordinality++;
-  set_fall_of_wickets(bat_team);
+  set_fall_of_wickets();
 }
 
 void hit_wicket(void)
@@ -703,7 +707,7 @@ void hit_wicket(void)
   bat_team->balls++;
   bat_team->ball_ordinality++;
   bat_team->wickets++;
-  set_fall_of_wickets(bat_team);
+  set_fall_of_wickets();
 }
 
 void retired_hurt(void)
