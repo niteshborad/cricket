@@ -69,5 +69,9 @@ Index dismissals by number.  Have the strings displayed at dismissal
 time available for use outside the function -- perhaps return the
 string.  Move disparate dismissal and fow strings into the fow struct.
 
-
+Added a player maker and unmaker.  Also a team unmaker for symmetry.
+Ran around for a couple of hours testing and fixing mallocation and
+freeing.  Spun off read_line() from read_team_from_file(); this
+function has an interface similar to fgets(), but drops the newline.
+Able to read a test team with team name and player names.
 
