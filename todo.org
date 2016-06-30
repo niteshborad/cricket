@@ -75,3 +75,10 @@ freeing.  Spun off read_line() from read_team_from_file(); this
 function has an interface similar to fgets(), but drops the newline.
 Able to read a test team with team name and player names.
 
+The chief problem now is to store information about a team in a flat
+file; reading would have to parse it all.  The first line is the team
+name.  Each of the eleven lines afterward needs three fields: the
+player name, the batting aggression, and whether the player is the
+wicket keeper.  The Right way would be to see if there is anything
+after the aggression enum on the line. 
+
