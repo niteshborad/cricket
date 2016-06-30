@@ -32,6 +32,7 @@ typedef struct
 typedef struct
 {
   char *name;
+  aggression agg;
   int runs_scored;
   int balls;
   double strike_rate;
