@@ -1,10 +1,10 @@
 #ifndef TEAM_H
 #define TEAM_H
 
+#include <stdio.h>
 #include <stdbool.h>
 
 #define MAX_PLAYERS    11
-#define NAME_SIZE      64
 
 /* Batting aggression */
 typedef enum
@@ -31,7 +31,7 @@ typedef struct
 /* Players */
 typedef struct
 {
-  char name[64];
+  char *name;
   int runs_scored;
   int balls;
   double strike_rate;
@@ -65,8 +65,12 @@ typedef struct
   player players[MAX_PLAYERS];
 } team;
 
+player *make_player(void);
+void unmake_player(player *p);
 team *make_team(void);
+void unmake_team(team *t);
 void get_team_names(team *a, team *b);
+int read_line(char *line, size_t size, FILE *fp);
 int read_team_from_file(char *file, team *t);
 void show_fall_of_wickets(team *t);
 

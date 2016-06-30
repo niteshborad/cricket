@@ -10,13 +10,32 @@
 #define MAX_TEAM_NAME_SIZE     30
 #define MAX_PLAYERS            11
 #define MAX_WICKETS            10
-#define NAME_SIZE              64
+#define TEAM_NAME_SIZE         64
+#define PLAYER_NAME_SIZE       64
 
 const int max_wickets = MAX_WICKETS;
 
 /*
  * Teams
  */
+
+player *make_player(void)
+{
+  player blank = {0};
+  player *new_player = malloc(sizeof *new_player);
+  if (new_player != NULL)
+  {
+    *new_player = blank;
+  }
+  return new_player;
+}
+
+void unmake_player(player *p)
+{
+  free(p->name);
+  free(p);
+}
+
 team *make_team(void)		/* Due to Richard Heathfield */
 {
   team blank = {0};
@@ -27,6 +46,12 @@ team *make_team(void)		/* Due to Richard Heathfield */
     new_team->max_wickets = MAX_WICKETS;
   }
   return new_team;
+}
+
+void unmake_team(team *t)
+{
+  free(t->name);
+  free(t);
 }
 
 void get_team_names(team *a, team *b)
@@ -143,11 +168,30 @@ void get_team_names(team *a, team *b)
   b->name[b_name_size - 1] = '\0';
 }
 
+int read_line(char *line, size_t size, FILE *fp)
+/* Read a line from file FP into buffer LINE of length SIZE. Drop the
+ * newline.
+ * Return 0 on success.
+ * Return negative on failure.
+ */
+{
+  if (fgets(line, size, fp) == NULL)
+  {
+    return -1;
+  }
+
+  char *nl = strchr(line, '\n');
+  if (nl != NULL) *nl = '\0';
+
+  return 0;
+}
+
 int read_team_from_file(char *file, team *t)
 /* Try reading eleven names for team T from FILE.
  * Return 0 on success.
  * Return -1 if FILE could not be opened for reading.
  * Return -2 if there was an error reading from FILE.
+ * Return -3 if memory could not be obtained.
  */
 {
   FILE *fp;
@@ -157,21 +201,32 @@ int read_team_from_file(char *file, team *t)
     return -1;
   }
 
-  char line[NAME_SIZE];
+  char tm_line[TEAM_NAME_SIZE];
+  errno = 0;
+  if (read_line(tm_line, TEAM_NAME_SIZE, fp) < 0)
+  {
+    fprintf(stderr, "Error reading from '%s': %s\n", file, strerror(errno));
+    fclose(fp);
+    return -2;
+  }
+  t->name = malloc(sizeof *t->name * TEAM_NAME_SIZE);
+  if (t->name == NULL) return -3;
+  strncpy(t->name, tm_line, TEAM_NAME_SIZE);
+
+  char pl_line[PLAYER_NAME_SIZE];
   int i;
   for (i = 0; i < MAX_PLAYERS; i++)
   {
     errno = 0;
-    if (fgets(line, NAME_SIZE, fp) == NULL)
+    if (read_line(pl_line, PLAYER_NAME_SIZE, fp) < 0)
     {
       fprintf(stderr, "Error reading from '%s': %s\n", file, strerror(errno));
+      fclose(fp);
       return -2;
     }
-
-    char *nl = strchr(line, '\n');
-    if (nl != NULL) *nl = '\0';
-
-    strncpy(t->players[i].name, line, 64);
+    t->players[i].name = malloc(sizeof *t->players[i].name * PLAYER_NAME_SIZE);
+    if (t->players[i].name == NULL) return -3;
+    strncpy(t->players[i].name, pl_line, PLAYER_NAME_SIZE);
   }
 
   fclose(fp);
