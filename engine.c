@@ -23,6 +23,7 @@ extern player *striker;
 extern player *non_striker;
 extern player *bowler;
 extern player *non_bowler;
+extern player *keeper;
 
 /* Pitch */
 extern pitch_condition pitch;

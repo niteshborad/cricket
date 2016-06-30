@@ -34,6 +34,8 @@ player *non_striker;
 /* Bowlers */
 player *bowler;
 player *non_bowler;
+/* Wicket keeper */
+player *keeper;
 
 extern const int max_players;
 
