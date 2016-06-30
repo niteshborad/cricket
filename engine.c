@@ -314,6 +314,8 @@ void new_match(void)
   get_team_names(team_one, team_two);
   toss(team_one, team_two);
   match_under_way = true;
+  striker = &bat_team->players[0];
+  non_striker = &bat_team->players[1];
 }
 
 void toss(team *a, team *b)
@@ -411,6 +413,7 @@ void ball(int first_die, int second_die)
   }
 
   change_aggression(striker->agg);
+  fputs(striker->name, stdout);
   if ((first_die == 1 && second_die == 1) ||
       (first_die == 1 && second_die == 2) ||
       (first_die == 2 && second_die == 1))
