@@ -313,6 +313,13 @@ void new_match(void)
   team_two = make_team();
   prepare_pitch();
   get_team_names(team_one, team_two);
+
+  char file_one[16], file_two[16];
+  snprintf(file_one, 16, "teams/%s.txt", team_one->name);
+  snprintf(file_two, 16, "teams/%s.txt", team_two->name);
+  read_team_from_file(file_one, team_one);
+  read_team_from_file(file_two, team_two);
+
   toss(team_one, team_two);
   match_under_way = true;
   striker = &bat_team->players[0];
