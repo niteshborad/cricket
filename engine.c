@@ -387,6 +387,7 @@ void ball(int first_die, int second_die)
     return;
   }
 
+  change_aggression(striker->agg);
   if ((first_die == 1 && second_die == 1) ||
       (first_die == 1 && second_die == 2) ||
       (first_die == 2 && second_die == 1))
