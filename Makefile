@@ -1,5 +1,6 @@
 CC = gcc
-CFLAGS = -std=c99 -pedantic-errors -Wall -Wextra -Werror -Og -g3 -fsanitize=undefined -fsanitize=address -fsanitize=leak
+CFLAGS = -std=c99 -pedantic-errors -Wall -Wextra -Werror -Og -g3
+# -fsanitize=undefined -fsanitize=address -fsanitize=leak
 OBJS = analysis.o commands.o cricket.o engine.o misc.o pitch.o team.o utilities.o
 HEADERS = analysis.h commands.h engine.h misc.h pitch.h team.h utilities.h
 
