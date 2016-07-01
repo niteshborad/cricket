@@ -90,3 +90,8 @@ the monadic aggression commands can be rewritten as niladic ones.
 This will entail some reworking of the top level command calling
 function.
 
+I need to maintain an array of bowlers that the fielding team has used
+thus far.  It would be implementationally simple to just add a slot
+of 10 players to the team structure.  Also, instead of showing
+scorelines for batsmen and bowlers two at a time, just show the
+developing scorecards of the batting and bowling sides after each over. 
