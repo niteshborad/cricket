@@ -64,10 +64,7 @@ int main(void)
   while (fputs("# ", stdout), fgets(line, CMDLINESIZE, stdin) != NULL)
   {
     nl = strchr(line, '\n');
-    if (nl != NULL)
-    {
-      *nl = '\0';
-    }
+    if (nl != NULL) *nl = '\0';
     putchar('\n');
     try_executing(line);
   }
