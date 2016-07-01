@@ -82,3 +82,11 @@ player name, the batting aggression, and whether the player is the
 wicket keeper.  The Right way would be to see if there is anything
 after the aggression enum on the line. 
 
+I need to add a command to call on a player for bowling.  It has to be
+a command that takes an argument.  So, it has to be a monadic
+command.  Currently, the monadic commands are artificially so; each of
+the monadic aggression commands can be rewritten as niladic ones.
+
+This will entail some reworking of the top level command calling
+function.
+
