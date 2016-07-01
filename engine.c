@@ -631,7 +631,7 @@ void set_fall_of_wickets(dismissal dismiss)
     fall->balls_into_over = bat_team->ball_ordinality;
   }
 
-  striker->fall = fall;
+  striker->fall = *fall;
 }
 
 void caught_in_the_field(void)
