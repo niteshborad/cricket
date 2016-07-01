@@ -11,6 +11,7 @@
 #include <string.h>
 
 #define MAX_TOSS_DECISION_SIZE  6
+#define MAX_PLAYERS            11
 
 /* Teams */
 extern team *team_one;
@@ -163,6 +164,27 @@ void play10(void)
 
 static void (*play) (void) = play6;
 
+player *find_player(char *name, team *team)
+{
+  for (int i; i < MAX_PLAYERS; i++)
+  {
+    if (strstr(team->players[i].name, name))
+    {
+      return &team->players[i];
+    }
+  }
+
+  return NULL;
+}
+
+void set_bowler(char *name)
+{
+  bowler = find_player(name, field_team);
+  if (bowler == NULL)
+  {
+    printf("%s doesn't have a player called '%s'\n", field_team->name, name);
+  }
+}
 
 void swap_batsmen(void)
 {

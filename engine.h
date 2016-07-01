@@ -12,6 +12,8 @@ void play4(void);
 void play6(void);
 void play8(void);
 void play10(void);
+player *find_player(char *name, team *team);
+void set_bowler(char *name);
 void swap_batsmen(void);
 void swap_bowlers(void);
 double calculate_strike_rate(player *batsman);
