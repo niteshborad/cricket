@@ -177,12 +177,27 @@ player *find_player(char *name, team *team)
   return NULL;
 }
 
-void set_bowler(char *name)
+void set_bowler(void)
 {
-  bowler = find_player(name, field_team);
-  if (bowler == NULL)
+  bool found_bowler = false;
+  while (!found_bowler)
   {
-    printf("%s doesn't have a player called '%s'\n", field_team->name, name);
+    char name[32];
+    char *nl;
+    fputs("> ", stdout);
+    fgets(name, 32, stdin);
+    nl = strchr(name, '\n');
+    if (nl != NULL) *nl = '\0';
+
+    bowler = find_player(name, field_team);
+    if (bowler == NULL)
+    {
+      printf("%s doesn't have a player called '%s'\n", field_team->name, name);
+    }
+    else
+    {
+      found_bowler = true;
+    }
   }
 }
 
@@ -202,7 +217,10 @@ void swap_bowlers(void)
 
 double calculate_strike_rate(player *batsman)
 {
-  return (double) batsman->runs_scored * 100 / batsman->balls;
+  double ret;
+  if (batsman->balls == 0) ret = 0.0;
+  else ret = (double) batsman->runs_scored * 100 / batsman->balls;
+  return ret;
 }
 
 void show_batsman_scoreline(player *batsman)
@@ -214,7 +232,10 @@ void show_batsman_scoreline(player *batsman)
 
 double calculate_economy_rate(player *bowler)
 {
-  return (double) bowler->runs_conceded / bowler->overs;
+  double ret;
+  if (bowler->overs == 0) ret = 0.0;
+  else ret = (double) bowler->runs_conceded / bowler->overs;
+  return ret;
 }
 
 void show_bowler_scoreline(player *bowler)
@@ -292,6 +313,31 @@ void change_aggression(aggression agg)
     play = play10;
     break;
   }
+}
+
+void change_aggression_very_defensive(void)
+{
+  change_aggression(VDEFENSIVE);
+}
+
+void change_aggression_defensive(void)
+{
+  change_aggression(DEFENSIVE);
+}
+
+void change_aggression_normal(void)
+{
+  change_aggression(NORMAL);
+}
+
+void change_aggression_aggressive(void)
+{
+  change_aggression(AGGRESSIVE);
+}
+
+void change_aggression_very_aggressive(void)
+{
+  change_aggression(VAGGRESSIVE);
 }
 
 void change_innings(void)
