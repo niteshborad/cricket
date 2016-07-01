@@ -603,6 +603,7 @@ void wicket_chance(void)
   if (lookup(out_list, pitch.number, d6()))
   {
     mode_of_dismissal();
+    striker = &bat_team->players[bat_team->wickets + 1];
   }
   else
   {
