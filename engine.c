@@ -178,6 +178,30 @@ void swap_bowlers(void)
   *non_bowler = temp;
 }
 
+double calculate_strike_rate(player *batsman)
+{
+  return (double) batsman->runs_scored * 100 / batsman->balls;
+}
+
+void show_batsman_scoreline(player *batsman)
+{
+  printf("%s    %3d (%3d)  4s: %2d  6s: %2d  str: %5.2f\n",
+	 batsman->name, batsman->runs_scored, batsman->balls,
+	 batsman->fours, batsman->sixes, calculate_strike_rate(batsman));
+}
+
+double calculate_economy_rate(player *bowler)
+{
+  return (double) bowler->runs_conceded / bowler->overs;
+}
+
+void show_bowler_scoreline(player *bowler)
+{
+  printf("%s    %2d-%2d-%3d-%2d %4.2f\n",
+	 bowler->name, bowler->overs, bowler->maidens,
+	 bowler->runs_conceded, bowler->wickets, calculate_economy_rate(bowler));
+}
+
 void play_over(void)
 {
   over();
@@ -186,12 +210,19 @@ void play_over(void)
     return;
   }
   bat_team->overs++;
+  bowler->overs++;
   if (bat_team->runs_in_over == 0)
   {
     bowler->maidens++;
     field_team->maidens++;
   }
   putchar('\n');
+
+  show_batsman_scoreline(striker);
+  show_batsman_scoreline(non_striker);
+  putchar('\n');
+  show_bowler_scoreline(bowler);
+  show_bowler_scoreline(non_bowler);
   printf("This over: %d run%s\n", bat_team->runs_in_over, (bat_team->runs_in_over == 1) ? "" : "s");
   bat_team->runs_in_over = 0;
   bat_team->ball_ordinality = 0;
