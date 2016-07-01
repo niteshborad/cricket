@@ -166,7 +166,7 @@ static void (*play) (void) = play6;
 
 player *find_player(char *name, team *team)
 {
-  for (int i; i < MAX_PLAYERS; i++)
+  for (int i = 0; i < MAX_PLAYERS; i++)
   {
     if (strstr(team->players[i].name, name))
     {
