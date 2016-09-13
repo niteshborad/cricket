@@ -225,7 +225,7 @@ double calculate_strike_rate(player *batsman)
 
 void show_batsman_scoreline(player *batsman)
 {
-  printf("%s    %3d (%3d)  4s: %2d  6s: %2d  str: %5.2f\n",
+  printf("%-32s    %3d (%3d)  4s: %2d  6s: %2d  str: %5.2f\n",
 	 batsman->name, batsman->runs_scored, batsman->balls,
 	 batsman->fours, batsman->sixes, calculate_strike_rate(batsman));
 }
@@ -240,7 +240,7 @@ double calculate_economy_rate(player *bowler)
 
 void show_bowler_scoreline(player *bowler)
 {
-  printf("%s    %2d-%2d-%3d-%2d %4.2f\n",
+  printf("%-32s    %2d-%2d-%3d-%2d %4.2f\n",
 	 bowler->name, bowler->overs, bowler->maidens,
 	 bowler->runs_conceded, bowler->wickets, calculate_economy_rate(bowler));
 }
